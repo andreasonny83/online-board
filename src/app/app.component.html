@@ -1,3 +1,16 @@
 <h1>
   {{title}}
 </h1>
+
+<p> {{ (user | async)?.uid }} </p>
+
+<ul>
+  <li class="text" *ngFor="let item of items | async">
+    {{item.title}}
+  </li>
+</ul>
+
+<button type="button" name="button" (click)="login()">Log In</button>
+<button type="button" name="button" (click)="logout()">Log Out</button>
+
+<router-outlet></router-outlet>
