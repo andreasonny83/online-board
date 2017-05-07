@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 
 import { FirebaseService } from '../firebase.service';
+import { MdSnackBar } from '@angular/material';
 
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/toPromise';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,6 +19,7 @@ export class DashboardComponent implements OnInit {
   constructor(
     private fireBase: FirebaseService,
     private fb: FormBuilder,
+    private snackBar: MdSnackBar,
   ) {
     this.boards = fireBase.getBoards();
     this.createForm();
@@ -26,31 +29,23 @@ export class DashboardComponent implements OnInit {
 
   createForm() {
     this.newBoardForm = this.fb.group({
-      boardName: ['', this.validateBoard.bind(this)],
+      boardName: ['', Validators.required],
     });
   }
 
-  validateBoard(formCtrl: FormControl) {
-    return this.fireBase.userBoardExisits(formCtrl.value)
-      .then(val => {
-        console.log(val);
-        // console.log(val.$exists());
-        // if (!val.$exists()) {
-          // return null;
-        // }
-
-        return {
-          'validateBoard': { valid: false }
-        };
-      }, () => {
-        return null;
-      });
-  }
-
   createBoard() {
-    this.fireBase.userBoardExisits('1a23');
-      // .subscribe(val => console.log(val.$exists()));
-      // .map(val => console.log(val));
+    const val = this.newBoardForm.controls.boardName.value;
+    this.fireBase.userBoardExisits(val)
+      .subscribe(
+        res => {
+          if (!res.$exists()) {
+            this.snackBar.open(`${val} board successfully created!`, null, {duration: 4000});
+            return this.fireBase.createBoard(val);
+          }
+
+          this.snackBar.open(`A board called ${val} already exisits.`, null, {duration: 4000});
+        }
+      );
   }
 
 }

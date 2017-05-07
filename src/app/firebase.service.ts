@@ -55,19 +55,16 @@ class FirebaseService {
     return this.db.list(`/users/${this.uid}/boards`);
   }
 
-  userBoardExisits(boardName: string): Promise<any> {
-    return Promise.resolve(
-      this.db.object(`/users/${this.uid}/boards/${boardName}`)
-        .subscribe(obj => {
-          if (obj.hasOwnProperty('$value') && !obj['$value']) {
-            return Promise.reject('');
-          } else {
-            return Promise.resolve();
-          }
-        }));
+  userBoardExisits(boardName: string): FirebaseObjectObservable<any> {
+    return this.db.object(`/users/${this.uid}/boards/${boardName}`);
   }
 
   getBoard(boardUID: string): FirebaseListObservable<any[]> {
     return this.db.list(`/boards/${boardUID}`);
+  }
+
+  createBoard(boardName: string): firebase.Promise<any> {
+    return this.db.list(`/users/${this.uid}/boards`)
+      .update(boardName, { status: true });
   }
 }
