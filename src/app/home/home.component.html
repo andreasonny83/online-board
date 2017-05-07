@@ -1,3 +1,9 @@
-<p>
-  home works!
-</p>
+<md-toolbar color="primary">
+  <button md-raised-button
+          color="accent"
+          (click)="logout()">Log Out</button>
+
+  <span>{{ currUser && currUser.email || null }}</span>
+</md-toolbar>
+
+<router-outlet></router-outlet>

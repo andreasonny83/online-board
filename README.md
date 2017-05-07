@@ -1,4 +1,4 @@
-# Retro Notes
+# Online Board
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.2.
 
@@ -22,6 +22,10 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 Before running the tests make sure you are serving the app via `ng serve`.
+
+## Deployment
+
+Run `npm run deploy` to deploy using Firebase-CLI
 
 ## Further help
 

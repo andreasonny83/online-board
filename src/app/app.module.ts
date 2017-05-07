@@ -1,45 +1,73 @@
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+
 import { AppRoutingModule } from './app-routing.module';
 
+import {
+  MdToolbarModule,
+  MdCardModule,
+  MdInputModule,
+  MdButtonModule,
+  MdSnackBarModule,
+} from '@angular/material';
+
 import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule, FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import {
+  AngularFireDatabaseModule,
+  FirebaseListObservable,
+} from 'angularfire2/database';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { LoginComponent } from './login/login.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+
+import { AuthGuard } from './auth-guard.service';
+import { FirebaseService } from './firebase.service';
+import { AuthService } from './auth.service';
 
 // Must export the config
 export const firebaseConfig = {
-  apiKey: 'AIzaSyDZ5gm_A7qr9DnmRhC2kmMeCt-xa68N0QA',
-  authDomain: 'retro-notes-90884.firebaseapp.com',
-  databaseURL: 'https://retro-notes-90884.firebaseio.com',
-  storageBucket: 'retro-notes-90884.appspot.com',
+  apiKey: 'AIzaSyDFLkSi_sP-TYSSrb9OPbXYyLI681VcTXE',
+  authDomain: 'online-board.firebaseapp.com',
+  databaseURL: 'https://online-board.firebaseio.com',
+  storageBucket: 'online-board.appspot.com',
 };
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    PageNotFoundComponent,
+    LoginComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    FormsModule,
+    ReactiveFormsModule,
     HttpModule,
-
+    // AngularMaterial
+    MdToolbarModule,
+    MdCardModule,
+    MdInputModule,
+    MdButtonModule,
+    MdSnackBarModule,
+    // AngularFire
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-
+    // App Modules
     AppRoutingModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    AuthGuard,
+    FirebaseService,
+    AuthService,
+  ],
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }

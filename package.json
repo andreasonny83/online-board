@@ -1,11 +1,12 @@
 {
-  "name": "retro-notes",
+  "name": "online-board",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "deploy": "firebase deploy",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -18,6 +19,7 @@
     "@angular/core": "4.1.0",
     "@angular/forms": "4.1.0",
     "@angular/http": "4.1.0",
+    "@angular/material": "^2.0.0-beta.3",
     "@angular/platform-browser": "4.1.0",
     "@angular/platform-browser-dynamic": "4.1.0",
     "@angular/router": "4.1.0",
@@ -38,6 +40,7 @@
     "@types/jasmine": "2.5.38",
     "@types/node": "6.0.60",
     "codelyzer": "2.0.0",
+    "firebase-tools": "^3.7.0",
     "jasmine-core": "2.5.2",
     "jasmine-spec-reporter": "3.2.0",
     "karma": "1.4.1",

@@ -1,0 +1,77 @@
+<md-card class="block">
+  <md-card-title>Log In</md-card-title>
+
+  <md-card-content>
+    <form [formGroup]="loginForm"
+          (ngSubmit)="onLoginSubmit()"
+          class="form"
+          novalidate>
+      <md-input-container class="full-width">
+        <input mdInput
+               placeholder="Email address"
+               type="text"
+               name="email"
+               formControlName="email">
+      </md-input-container>
+
+      <md-input-container class="full-width">
+        <input mdInput
+               placeholder="Password"
+               type="password"
+               name="password"
+               formControlName="password">
+      </md-input-container>
+
+      <md-card-actions align="end">
+        <button md-raised-button
+                type="submit"
+                name="login"
+                [disabled]="!loginForm.valid"
+                color="accent">Log In</button>
+      </md-card-actions>
+    </form>
+  </md-card-content>
+</md-card>
+
+<md-card class="block">
+  <md-card-title>Register</md-card-title>
+
+  <md-card-content>
+    <form [formGroup]="registerForm"
+          (ngSubmit)="onRegisterSubmit()"
+          class="form"
+          novalidate>
+      <md-input-container class="full-width">
+        <input mdInput
+               placeholder="Email address"
+               type="text"
+               name="email"
+               formControlName="email">
+      </md-input-container>
+
+      <md-input-container class="full-width">
+        <input mdInput
+               placeholder="Password"
+               type="password"
+               name="password"
+               formControlName="password">
+      </md-input-container>
+
+      <md-input-container class="full-width">
+        <input mdInput
+               placeholder="Confirm Password"
+               type="password"
+               name="password_confirm"
+               formControlName="confirmPassword">
+      </md-input-container>
+
+      <md-card-actions align="end">
+        <button md-raised-button
+                type="submit"
+                name="register"
+                [disabled]="!registerForm.valid"
+                color="accent">Register</button>
+      </md-card-actions>
+    </form>
+  </md-card-content>
+</md-card>

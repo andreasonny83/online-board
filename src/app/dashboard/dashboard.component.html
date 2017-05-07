@@ -1,0 +1,38 @@
+<md-card class="block">
+  <md-card-title>My boards</md-card-title>
+
+  <md-card-content>
+    <ul>
+      <li *ngFor="let board of boards | async">
+        {{ board.$key | json }}
+      </li>
+    </ul>
+  </md-card-content>
+</md-card>
+
+<md-card class="block">
+  <md-card-title>Create a new Board</md-card-title>
+
+  <md-card-content>
+    <form [formGroup]="newBoardForm"
+          (ngSubmit)="createBoard()"
+          class="form"
+          novalidate>
+      <md-input-container class="full-width">
+        <input mdInput
+               placeholder="Board name"
+               type="text"
+               name="board-name"
+               formControlName="boardName">
+      </md-input-container>
+
+      <md-card-actions align="end">
+        <button md-raised-button
+                type="submit"
+                name="new-board"
+                [disabled]="!newBoardForm.valid"
+                color="accent">Create</button>
+      </md-card-actions>
+    </form>
+  </md-card-content>
+</md-card>

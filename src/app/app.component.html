@@ -1,16 +1,7 @@
-<h1>
-  {{title}}
-</h1>
+<md-toolbar color="primary">
+  <span>{{title}}</span>
+</md-toolbar>
 
-<p> {{ (user | async)?.uid }} </p>
-
-<ul>
-  <li class="text" *ngFor="let item of items | async">
-    {{item.title}}
-  </li>
-</ul>
-
-<button type="button" name="button" (click)="login()">Log In</button>
-<button type="button" name="button" (click)="logout()">Log Out</button>
-
-<router-outlet></router-outlet>
+<div class="app-content">
+  <router-outlet></router-outlet>
+</div>
