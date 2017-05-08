@@ -3,7 +3,7 @@
           color="accent"
           (click)="logout()">Log Out</button>
 
-  <span>{{ currUser && currUser.email || null }}</span>
+  <span>{{ (user | async)?.email }}</span>
 </md-toolbar>
 
 <router-outlet></router-outlet>

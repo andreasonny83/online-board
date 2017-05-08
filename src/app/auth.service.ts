@@ -8,6 +8,7 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class AuthService {
+
   constructor(
     private fb: FirebaseService,
     private router: Router,
@@ -22,7 +23,7 @@ export class AuthService {
             `You must verify your email address first.
             Check your inbox at ${res.email} and click the activation link inside our email.`,
             null,
-            { duration: 4000 }
+            { duration: 6000 }
           );
 
           this.logout();
@@ -31,7 +32,7 @@ export class AuthService {
         }
 
         if (!!res && !!res.uid) {
-          this.snackBar.open(`Welcome back ${res.email}`, null, { duration: 4000 });
+          this.snackBar.open(`Welcome back ${res.email}`, null, { duration: 6000 });
           return this.router.navigate(['/dashboard']);
         }
 
@@ -58,16 +59,16 @@ export class AuthService {
             `Please, check your inbox to verify that ${res.email}
             belongs to you.`,
             null,
-            { duration: 4000 }
+            { duration: 6000 }
           );
           return Promise.resolve();
         },
         err => {
-          this.snackBar.open(err.message || 'Server error.', null, { duration: 4000 });
+          this.snackBar.open(err.message || 'Server error.', null, { duration: 6000 });
           return Promise.reject(new Error(err));
         }
       ).catch((err) => {
-        this.snackBar.open(err.message || 'Server error.', null, { duration: 4000 });
+        this.snackBar.open(err.message || 'Server error.', null, { duration: 6000 });
         return Promise.reject(new Error(err));
       });
   }
@@ -76,9 +77,9 @@ export class AuthService {
     return Promise.resolve(this.fb.login(formModel.email, formModel.password))
       .then(
         res => {},
-        err => this.snackBar.open(err.message, null, { duration: 4000 })
+        err => this.snackBar.open(err.message, null, { duration: 6000 })
       ).catch((err) => {
-        this.snackBar.open(err.message || 'Server error.', null, { duration: 4000 });
+        this.snackBar.open(err.message || 'Server error.', null, { duration: 6000 });
         return Promise.reject(new Error(err));
       });
   }

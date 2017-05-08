@@ -9,6 +9,9 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export
@@ -24,13 +27,22 @@ class FirebaseService {
     private db: AngularFireDatabase,
   ) {
     this.user = afAuth.authState;
+
     afAuth.authState.subscribe(
       res => {
         this.uid = res && res.uid;
-        this.usersList = db.list(`/users/${this.uid}`);
-        db.list('/users').update(this.uid, {lastLogIn: Date.now()});
+
+        if (!!res && !!res.uid) {
+          this.usersList = db.list(`/users/${this.uid}`);
+          db.list('/users').update(this.uid, {lastLogIn: Date.now()});
+        }
       });
 
+  }
+
+  validateString(val: string) {
+    const regex = /[\.\#\$\[\]]/g;
+    return regex.test(val);
   }
 
   register(email: string, password: string): firebase.Promise<any> {
@@ -47,10 +59,6 @@ class FirebaseService {
     this.afAuth.auth.currentUser.sendEmailVerification();
   }
 
-  logout(): void {
-    this.afAuth.auth.signOut();
-  }
-
   getBoards(): FirebaseListObservable<any[]> {
     return this.db.list(`/users/${this.uid}/boards`);
   }
@@ -64,7 +72,23 @@ class FirebaseService {
   }
 
   createBoard(boardName: string): firebase.Promise<any> {
-    return this.db.list(`/users/${this.uid}/boards`)
-      .update(boardName, { status: true });
+    return this.db.list(`/boards`).push({ name: boardName });
+
+    // return this.db.list(`/users/${this.uid}/boards`)
+      // .update(boardName, { status: true });
+  }
+
+  deleteBoard(board: any) {
+    // console.log(board);
+    this.db.list(`/boards/${board.id}/`).remove();
+      // .subscribe(
+        // res => {
+          // console.log(res);
+        // }
+      // );
+  }
+
+  logout(): void {
+    this.afAuth.auth.signOut();
   }
 }

@@ -12,6 +12,8 @@ import {
   MdInputModule,
   MdButtonModule,
   MdSnackBarModule,
+  MdListModule,
+  MdIconModule,
 } from '@angular/material';
 
 import { AngularFireModule } from 'angularfire2';
@@ -56,6 +58,8 @@ export const firebaseConfig = {
     MdInputModule,
     MdButtonModule,
     MdSnackBarModule,
+    MdListModule,
+    MdIconModule,
     // AngularFire
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,

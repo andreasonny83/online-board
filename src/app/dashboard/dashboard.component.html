@@ -2,11 +2,16 @@
   <md-card-title>My boards</md-card-title>
 
   <md-card-content>
-    <ul>
-      <li *ngFor="let board of boards | async">
-        {{ board.$key | json }}
-      </li>
-    </ul>
+    <md-list>
+      <h3 md-subheader>Boards:</h3>
+      <md-list-item *ngFor="let board of boards | async">
+        <a md-line href="/boards/{{board.id}}">{{ board.$key }}</a>
+        <button md-icon-button (click)="deleteBoard(board)">
+          <md-icon color="warn">delete</md-icon>
+        </button>
+      </md-list-item>
+    </md-list>
+
   </md-card-content>
 </md-card>
 
