@@ -6,6 +6,7 @@ import { AuthGuard } from './auth-guard.service';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { BoardPageComponent } from './board-page/board-page.component';
 
 const routes: Routes = [
   // Authenticated routes
@@ -15,6 +16,7 @@ const routes: Routes = [
     canActivate: [ AuthGuard ],
     children: [
       { path: 'dashboard', component: DashboardComponent },
+      { path: 'boards/:id', component: BoardPageComponent },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     ],
   },

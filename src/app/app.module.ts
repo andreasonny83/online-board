@@ -27,6 +27,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { BoardPageComponent } from './board-page/board-page.component';
 
 import { AuthGuard } from './auth-guard.service';
 import { FirebaseService } from './firebase.service';
@@ -46,6 +47,7 @@ export const firebaseConfig = {
     HomeComponent,
     LoginComponent,
     DashboardComponent,
+    BoardPageComponent,
   ],
   imports: [
     BrowserModule,

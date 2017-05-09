@@ -34,8 +34,12 @@ export class AuthService {
           }
 
           if (!!res && !!res.uid) {
-            this.snackBar.open(`Welcome back ${res.email}`, null, { duration: 6000 });
-            return this.router.navigate(['/dashboard']);
+            if (this.router.url === '/login') {
+              this.snackBar.open(`Welcome back ${res.email}`, null, { duration: 6000 });
+              this.router.navigate(['/dashboard']);
+            }
+
+            return;
           }
 
           return this.router.navigate(['/login']);
@@ -45,9 +49,7 @@ export class AuthService {
   }
 
   isLoggedIn(): Observable<boolean> {
-    return this.fb.user.map((res) => {
-      return !!res && !!res.uid;
-    });
+    return this.fb.user.map(res => res && !!res.uid);
   }
 
   register(formModel: IUserRegister): Promise<any> {
@@ -84,6 +86,10 @@ export class AuthService {
         this.snackBar.open(err.message || 'Server error.', null, { duration: 6000 });
         return Promise.reject(new Error(err));
       });
+  }
+
+  redirectToDasboard(): void {
+    this.router.navigate(['/dashboard']);
   }
 
   logout(): void {
