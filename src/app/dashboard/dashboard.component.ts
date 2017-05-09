@@ -22,12 +22,13 @@ export class DashboardComponent implements OnInit {
     private fb: FormBuilder,
     private snackBar: MdSnackBar,
   ) {
-    this.boards = fireBase.getBoards();
-    this.createForm();
+    this.boards = fireBase.userBoards;
     this.user = fireBase.user;
+
+    this.createForm();
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   createForm() {
     this.newBoardForm = this.fb.group({
@@ -37,29 +38,22 @@ export class DashboardComponent implements OnInit {
 
   createBoard() {
     const val = this.newBoardForm.controls.boardName.value;
+
     if (this.fireBase.validateString(val)) {
       return this.snackBar.open(`Boards cannot contain ".", "#", "$", "[", or "]"`, null, {duration: 6000});
     }
 
-    this.fireBase.userBoardExisits(val)
-      .subscribe(
-        res => {
-          if (!res.$exists()) {
-            this.snackBar.open(`${val} board successfully created!`, null, {duration: 6000});
-            this.newBoardForm.reset();
-            return this.fireBase.createBoard(val);
-          }
-
-          this.snackBar.open(`A board called ${val} already exisits.`, null, {duration: 6000});
-        },
-        err => {
-          this.snackBar.open(err.message || 'Ops! Something went wrong.', null, {duration: 6000});
-        }
-      );
+    this.fireBase
+      .createBoard(val)
+      .then(() => {
+        this.newBoardForm.reset();
+        this.snackBar.open(`${val} board successfully created!`, null, {duration: 6000});
+      })
+      .catch(err => this.snackBar.open(err.message || 'Ops! Something went wrong.', null, {duration: 6000}));
   }
 
   deleteBoard(board: any) {
-    this.fireBase.deleteBoard(board);
+    this.fireBase.removeBoard(board.$key);
   }
 
 }

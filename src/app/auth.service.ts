@@ -15,31 +15,33 @@ export class AuthService {
     private route: ActivatedRoute,
     private snackBar: MdSnackBar,
   ) {
-    fb.user.subscribe(
-      res => {
-        // New users should verify their email address first
-        if (!!res && !res.emailVerified) {
-          this.snackBar.open(
-            `You must verify your email address first.
-            Check your inbox at ${res.email} and click the activation link inside our email.`,
-            null,
-            { duration: 6000 }
-          );
+    fb.user
+      .share()
+      .subscribe(
+        res => {
+          // New users should verify their email address first
+          if (!!res && !res.emailVerified) {
+            this.snackBar.open(
+              `You must verify your email address first.
+              Check your inbox at ${res.email} and click the activation link inside our email.`,
+              null,
+              { duration: 6000 }
+            );
 
-          this.logout();
+            this.logout();
+
+            return this.router.navigate(['/login']);
+          }
+
+          if (!!res && !!res.uid) {
+            this.snackBar.open(`Welcome back ${res.email}`, null, { duration: 6000 });
+            return this.router.navigate(['/dashboard']);
+          }
 
           return this.router.navigate(['/login']);
-        }
-
-        if (!!res && !!res.uid) {
-          this.snackBar.open(`Welcome back ${res.email}`, null, { duration: 6000 });
-          return this.router.navigate(['/dashboard']);
-        }
-
-        return this.router.navigate(['/login']);
-      },
-      err => this.router.navigate(['/login']),
-    );
+        },
+        err => this.router.navigate(['/login']),
+      );
   }
 
   isLoggedIn(): Observable<boolean> {
