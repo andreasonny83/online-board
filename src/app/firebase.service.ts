@@ -76,6 +76,10 @@ class FirebaseService {
     return this.db.list(`/boards/${boardUID}`);
   }
 
+  getBoardObject(boardUID: string): FirebaseObjectObservable<any[]> {
+    return this.db.object(`/boards/${boardUID}`);
+  }
+
   createBoard(boardName: string): firebase.Promise<any> {
     const userBoardData = {};
     const boardData = {

@@ -1,9 +1,9 @@
 <md-toolbar color="primary">
+  <h5 class="username">{{ (user | async)?.email }}</h5>
+
   <button md-raised-button
           color="accent"
           (click)="logout()">Log Out</button>
-
-  <span>{{ (user | async)?.email }}</span>
 </md-toolbar>
 
 <router-outlet></router-outlet>

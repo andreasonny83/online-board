@@ -1,4 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
+
+import { FirebaseService } from '../firebase.service';
+
+import { Observable } from 'rxjs/Observable';
+import * as firebase from 'firebase/app';
+
+import 'rxjs/add/operator/switchMap';
 
 @Component({
   selector: 'app-board-page',
@@ -6,10 +14,24 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./board-page.component.css']
 })
 export class BoardPageComponent implements OnInit {
+  board: any[];
+  boardUID: string;
+  boardUID$: Observable<string>;
 
-  constructor() { }
+  constructor(
+    private fireBase: FirebaseService,
+    private route: ActivatedRoute,
+  ) { }
 
   ngOnInit() {
+    this.route.params
+      .switchMap((params: Params) => this.fireBase.getBoardObject(params['id']))
+      .subscribe(res => this.board = res);
+      // .subscribe(res => console.log(res));
+      // .subscribe((boardUID) => this.board = this.fireBase.getBoard(boardUID));
+    // console.log(this.boardUID);
+    // this.board = this.fireBase.getBoard(this.boardUID);
+
   }
 
 }
