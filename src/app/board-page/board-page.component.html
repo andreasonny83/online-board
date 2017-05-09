@@ -1,7 +1,25 @@
-<md-card class="block">
+<md-card class="block-xxl">
   <md-card-title>{{board?.name}}</md-card-title>
 
   <md-card-content>
-    allo!
+    <div class="item-list-container">
+      <div class="item-list"
+           [style.background]="column.color"
+           *ngFor="let column of columns">
+
+        <h3>{{column.title}}</h3>
+
+        <ul>
+          <li *ngFor="let item of column.items">
+            <md-input-container class="full-width">
+              <textarea mdInput
+                        placeholder="Write your feedback"
+                        mdTextareaAutosize></textarea>
+            </md-input-container>
+          </li>
+        </ul>
+      </div>
+    </div>
   </md-card-content>
+
 </md-card>

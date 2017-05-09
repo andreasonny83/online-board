@@ -16,3 +16,7 @@ md-card {
 .block {
   max-width: 800px;
 }
+
+.block-xxl {
+  max-width: 1200px;
+}

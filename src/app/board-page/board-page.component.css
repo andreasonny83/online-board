@@ -1,0 +1,18 @@
+.item-list {
+  width: 33.3%;
+  padding: 6px;
+  box-sizing: border-box;
+  display: inline-block;
+}
+
+.full-width {
+  width: 100%;
+}
+
+textarea {
+  resize: none;
+}
+
+.item-list-container {
+  display: flex;
+}

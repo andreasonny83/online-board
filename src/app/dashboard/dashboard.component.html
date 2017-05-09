@@ -5,7 +5,7 @@
     <md-list>
       <h3 md-subheader>Boards:</h3>
       <md-list-item *ngFor="let board of boards | async">
-        <a md-line href="/boards/{{board.$key}}">{{ board.$value }}</a>
+        <a md-line routerLink="/boards/{{board.$key}}">{{ board.$value }}</a>
         <button md-icon-button (click)="deleteBoard(board)">
           <md-icon>delete</md-icon>
         </button>

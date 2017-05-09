@@ -17,11 +17,18 @@ export class BoardPageComponent implements OnInit {
   board: any[];
   boardUID: string;
   boardUID$: Observable<string>;
+  columns: any[];
 
   constructor(
     private fireBase: FirebaseService,
     private route: ActivatedRoute,
-  ) { }
+  ) {
+    this.columns = [
+      {title: 'Goods', color: 'lightgreen', items: [{}, {}]},
+      {title: 'Bads', color: 'lightpink', items: [{}, {}]},
+      {title: 'Questions', color: 'lightblue', items: [{}, {}]},
+    ];
+  }
 
   ngOnInit() {
     this.route.params
