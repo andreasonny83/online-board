@@ -84,7 +84,12 @@ class FirebaseService {
     const userBoardData = {};
     const boardData = {
       name: boardName,
-      members: {}
+      members: {},
+      columns: [
+        {title: 'Goods', color: 'lightgreen' },
+        {title: 'Bads', color: 'lightpink' },
+        {title: 'Questions', color: 'lightblue' },
+      ]
     };
 
     boardData.members[this.uid] = true;
@@ -104,26 +109,34 @@ class FirebaseService {
   }
 
   removeBoard(boardUID: string) {
-    const targetBoard = this.db.list(`/boards/${boardUID}/members`);
+    this.db.list(`/boards/${boardUID}/members`)
+      .remove(this.uid)
+      .then(() => this.removeUserBoard(boardUID))
+      .catch(err => this.snackBar.open(err.message, null, { duration: 6000 }));
 
-    targetBoard.subscribe(res => {
-      if (!!res && res.length === 1 && res[0].$key === this.uid) {
-        // Delete the entire board record if I'm the only member left in it
-        this.db.list(`/boards/${boardUID}`)
-          .remove()
-          // Then delete the board reference from the user boards
-          .then(() => this.removeUserBoard(boardUID))
-          .catch(err => this.snackBar.open(err.message, null, { duration: 6000 }));
-      } else {
-        // If the board is still in use by someone else, just remove me from the members
-        this.db.list(`/boards/${boardUID}/members`)
-          .remove(this.uid)
-          // Then delete the board reference from the user boards
-          .then(() => this.removeUserBoard(boardUID))
-          .catch(err => this.snackBar.open(err.message, null, { duration: 6000 }));
-      }
-    },
-    err => this.snackBar.open(err.message, null, { duration: 6000 }));
+    // const targetBoard = this.db.list(`/boards/${boardUID}/members`);
+
+    // targetBoard
+      // .subscribe(res => {
+        // console.log('removing global board');
+        // if (!!res && res.length === 1 && res[0].$key === this.uid) {
+          // Delete the entire board record if I'm the only member left in it
+          // this.db.list(`/boards/${boardUID}`)
+            // .remove()
+            // Then delete the board reference from the user boards
+            // .then(() => this.removeUserBoard(boardUID))
+            // .catch(err => this.snackBar.open(err.message, null, { duration: 6000 }));
+        // } else {
+          // If the board is still in use by someone else, just remove me from the members
+          // this.db.list(`/boards/${boardUID}/members`)
+            // .remove(this.uid)
+            // Then delete the board reference from the user boards
+            // .then(() => this.removeUserBoard(boardUID))
+            // .catch(err => this.snackBar.open(err.message, null, { duration: 6000 }));
+        // }
+      // },
+      // err => this.snackBar.open(err.message, null, { duration: 6000 })
+    // );
   }
 
   logout(): void {

@@ -5,12 +5,15 @@
     <div class="item-list-container">
       <div class="item-list"
            [style.background]="column.color"
-           *ngFor="let column of columns">
+           *ngFor="let column of board?.columns">
 
+        <h3>{{board?.items | json}}</h3>
         <h3>{{column.title}}</h3>
 
         <ul>
-          <li *ngFor="let item of column.items">
+          <li *ngFor="let item of column?.items; let i = index">
+            <!-- <span>{{item}}</span> -->
+            <!-- <input type="text" [(ngModel)]="item"> -->
             <md-input-container class="full-width">
               <textarea mdInput
                         placeholder="Write your feedback"

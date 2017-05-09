@@ -16,3 +16,10 @@ textarea {
 .item-list-container {
   display: flex;
 }
+
+.item-list ul,
+.item-list li {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
