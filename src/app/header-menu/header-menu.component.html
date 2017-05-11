@@ -1,5 +1,5 @@
-<button md-icon-button [mdMenuTriggerFor]="menu">
-    <span class="username">{{ (user | async)?.email }}</span>
+<button md-button [mdMenuTriggerFor]="menu">
+    {{ (user | async)?.email }}
   <md-icon>expand_more</md-icon>
 </button>
 <md-menu #menu="mdMenu">
