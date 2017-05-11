@@ -23,6 +23,7 @@ import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { BoardPageComponent } from './board-page/board-page.component';
 import { HeaderMenuComponent } from './header-menu/header-menu.component';
+import { MainToolbarComponent } from './main-toolbar/main-toolbar.component';
 
 import { AuthGuard } from './auth-guard.service';
 import { AuthService } from './auth.service';
@@ -38,6 +39,7 @@ import { Keyobject } from './pipes';
     BoardPageComponent,
     Keyobject,
     HeaderMenuComponent,
+    MainToolbarComponent,
   ],
   imports: [
     BrowserModule,
