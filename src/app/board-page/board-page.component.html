@@ -9,17 +9,12 @@
 
         <h3>{{column.title}}</h3>
 
-        <ul>
-          <li *ngFor="let item of column.items | keyobject; let i = index">
-            <md-input-container class="full-width">
-              <textarea mdInput
-              mdTextareaAutosize
-              [ngModel]="item.value.val"
-              readonly="true"></textarea>
-            </md-input-container>
-          </li>
-
-        </ul>
+        <md-list>
+          <md-list-item *ngFor="let item of column.items | keyobject; let i = index"
+                        class="color-{{i%2}}">
+            <span>{{item.value.val}}</span>
+          </md-list-item>
+        </md-list>
 
         <form (ngSubmit)="pushItem(newItem, column)"
               class="form">

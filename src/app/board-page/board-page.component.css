@@ -23,3 +23,7 @@ textarea {
   margin: 0;
   padding: 0;
 }
+
+md-list-item.color-1 {
+  background: rgba(152, 152, 152, 0.2);
+}
