@@ -15,6 +15,7 @@ import 'rxjs/add/operator/switchMap';
 })
 export class BoardPageComponent implements OnInit {
   boardID: string;
+  board: any[];
   columns: any;
 
   constructor(
@@ -29,6 +30,7 @@ export class BoardPageComponent implements OnInit {
         return this.fireBase.getBoardObject(this.boardID);
       })
       .subscribe(res => {
+        this.board = res;
         this.columns = this.fireBase.getBoard(`${this.boardID}/columns`);
       });
   }
