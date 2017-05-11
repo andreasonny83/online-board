@@ -10,12 +10,12 @@ import { Observable } from 'rxjs/Observable';
 export class AuthService {
 
   constructor(
-    private fb: FirebaseService,
+    private fireBase: FirebaseService,
     private router: Router,
     private route: ActivatedRoute,
     private snackBar: MdSnackBar,
   ) {
-    fb.user
+    fireBase.user
       .share()
       .subscribe(
         res => {
@@ -49,14 +49,17 @@ export class AuthService {
   }
 
   isLoggedIn(): Observable<boolean> {
-    return this.fb.user.map(res => res && !!res.uid);
+    return this.fireBase
+      .user
+      .map(res => res && !!res.uid);
   }
 
   register(formModel: IUserRegister): Promise<any> {
-    return Promise.resolve(this.fb.register(formModel.email, formModel.password))
+    return Promise.resolve(this.fireBase.register(formModel.email, formModel.password))
       .then(
         res => {
-          this.fb.sendEmailVerification();
+          this.fireBase.sendEmailVerification()
+            .catch(err => this.snackBar.open(err.message, null, { duration: 6000 }));
           this.logout();
 
           this.snackBar.open(
@@ -78,7 +81,7 @@ export class AuthService {
   }
 
   login(formModel: IUserLogin): Promise<any> {
-    return Promise.resolve(this.fb.login(formModel.email, formModel.password))
+    return Promise.resolve(this.fireBase.login(formModel.email, formModel.password))
       .then(
         res => {},
         err => this.snackBar.open(err.message, null, { duration: 6000 })
@@ -93,6 +96,6 @@ export class AuthService {
   }
 
   logout(): void {
-    this.fb.logout();
+    this.fireBase.logout();
   }
 }

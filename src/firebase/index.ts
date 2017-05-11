@@ -21,9 +21,6 @@ const firebaseConfig = {
   providers: [
     FirebaseService,
   ],
-  exports: [
-    FirebaseService,
-  ]
 })
 export class FirebaseModule { }
 

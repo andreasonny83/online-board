@@ -5,10 +5,9 @@ import {
   FirebaseListObservable,
   FirebaseObjectObservable,
 } from 'angularfire2/database';
+
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
-
-// import { MdSnackBar } from '@angular/material';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
@@ -16,8 +15,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
-export
-class FirebaseService {
+export class FirebaseService {
   public user: Observable<firebase.User>;
   // public boardsList: FirebaseListObservable<any[]>;
   public usersList: FirebaseListObservable<any[]>;
@@ -30,7 +28,6 @@ class FirebaseService {
   constructor(
     private afAuth: AngularFireAuth,
     private db: AngularFireDatabase,
-    // private snackBar: MdSnackBar,
   ) {
     this.user = afAuth.authState;
 
@@ -58,20 +55,17 @@ class FirebaseService {
 
   register(email: string, password: string): firebase.Promise<any> {
     return this.afAuth.auth
-      .createUserWithEmailAndPassword(email, password)
-      // .catch(err => this.snackBar.open(err.message, null, { duration: 6000 }));
+      .createUserWithEmailAndPassword(email, password);
   }
 
   login(email: string, password: string): firebase.Promise<any> {
     return this.afAuth.auth
-      .signInWithEmailAndPassword(email, password)
-      // .catch(err => this.snackBar.open(err.message, null, { duration: 6000 }));
+      .signInWithEmailAndPassword(email, password);
   }
 
   sendEmailVerification(): firebase.Promise<any> {
     return this.afAuth.auth.currentUser
-      .sendEmailVerification()
-      // .catch(err => this.snackBar.open(err.message, null, { duration: 6000 }));
+      .sendEmailVerification();
   }
 
   getBoard(boardUID: string): FirebaseListObservable<any[]> {
@@ -100,20 +94,19 @@ class FirebaseService {
       .then((res) => {
         userBoardData[res.key] = boardName;
         this.userList.update('boards', userBoardData);
-      })
+      });
       // .catch(err => this.snackBar.open(err.message, null, { duration: 6000 }));
   }
 
   removeUserBoard(boardUID: string) {
-    this.userBoards
-      .remove(boardUID)
+    this.userBoards.remove(boardUID);
       // .catch(err => this.snackBar.open(err.message, null, { duration: 6000 }));
   }
 
   removeBoard(boardUID: string) {
     this.db.list(`/boards/${boardUID}/members`)
       .remove(this.uid)
-      .then(() => this.removeUserBoard(boardUID))
+      .then(() => this.removeUserBoard(boardUID));
       // .catch(err => this.snackBar.open(err.message, null, { duration: 6000 }));
 
     // const targetBoard = this.db.list(`/boards/${boardUID}/members`);
