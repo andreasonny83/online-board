@@ -3,13 +3,10 @@
           color="accent"
           class="backBtn"
           *ngIf="back"
-          routerLink="/dasboard">Back</button>
-
-  <h5 class="username">{{ (user | async)?.email }}</h5>
-
-  <button md-raised-button
-          color="accent"
-          (click)="logout()">Log Out</button>
+          routerLink="/dasboard">
+    Back
+  </button>
+  <app-header-menu ></app-header-menu>
 </md-toolbar>
 
 <router-outlet></router-outlet>

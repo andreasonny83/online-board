@@ -1,0 +1,10 @@
+<button md-icon-button [mdMenuTriggerFor]="menu">
+    <span class="username">{{ (user | async)?.email }}</span>
+  <md-icon>expand_more</md-icon>
+</button>
+<md-menu #menu="mdMenu">
+  <button  md-menu-item
+          (click)="logout()">
+          <span>Log Out</span>
+  </button>
+</md-menu>
