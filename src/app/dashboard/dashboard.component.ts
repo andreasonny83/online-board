@@ -48,11 +48,13 @@ export class DashboardComponent implements OnInit {
         this.newBoardForm.reset();
         this.snackBar.open(`${val} board successfully created!`, null, {duration: 6000});
       })
-      .catch(err => this.snackBar.open(err.message || 'Ops! Something went wrong.', null, {duration: 6000}));
+      .catch(err => this.snackBar.open(err.message, null, {duration: 6000}));
   }
 
   deleteBoard(board: any) {
-    this.fireBase.removeBoard(board.$key);
+    this.fireBase
+      .removeBoard(board.$key)
+      .catch(err => this.snackBar.open(err.message, null, {duration: 6000}));
   }
 
 }

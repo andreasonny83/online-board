@@ -60,6 +60,7 @@ export class AuthService {
         res => {
           this.fireBase.sendEmailVerification()
             .catch(err => this.snackBar.open(err.message, null, { duration: 6000 }));
+
           this.logout();
 
           this.snackBar.open(
@@ -68,6 +69,7 @@ export class AuthService {
             null,
             { duration: 6000 }
           );
+
           return Promise.resolve();
         },
         err => {

@@ -21,7 +21,8 @@ export class FirebaseService {
   public usersList: FirebaseListObservable<any[]>;
   public userList: FirebaseListObservable<any[]>;
   public userBoards: FirebaseListObservable<any[]>;
-  public boardsList: FirebaseListObservable<any[]>;
+  public boardsList: any;
+  public dbRef: firebase.database.Reference;
 
   public uid: string;
 
@@ -39,6 +40,7 @@ export class FirebaseService {
           this.uid = res && res.uid;
 
           if (!!res && !!res.uid) {
+            this.dbRef = firebase.database().ref('/');
             this.usersList = db.list('/users');
             this.usersList.update(this.uid, {lastLogIn: Date.now()});
             this.userList = db.list(`/users/${this.uid}`);
@@ -95,43 +97,18 @@ export class FirebaseService {
         userBoardData[res.key] = boardName;
         this.userList.update('boards', userBoardData);
       });
-      // .catch(err => this.snackBar.open(err.message, null, { duration: 6000 }));
   }
 
-  removeUserBoard(boardUID: string) {
-    this.userBoards.remove(boardUID);
-      // .catch(err => this.snackBar.open(err.message, null, { duration: 6000 }));
-  }
-
-  removeBoard(boardUID: string) {
-    this.db.list(`/boards/${boardUID}/members`)
-      .remove(this.uid)
-      .then(() => this.removeUserBoard(boardUID));
-      // .catch(err => this.snackBar.open(err.message, null, { duration: 6000 }));
-
-    // const targetBoard = this.db.list(`/boards/${boardUID}/members`);
-
-    // targetBoard
-      // .subscribe(res => {
-        // console.log('removing global board');
-        // if (!!res && res.length === 1 && res[0].$key === this.uid) {
-          // Delete the entire board record if I'm the only member left in it
-          // this.db.list(`/boards/${boardUID}`)
-            // .remove()
-            // Then delete the board reference from the user boards
-            // .then(() => this.removeUserBoard(boardUID))
-            // .catch(err => this.snackBar.open(err.message, null, { duration: 6000 }));
-        // } else {
-          // If the board is still in use by someone else, just remove me from the members
-          // this.db.list(`/boards/${boardUID}/members`)
-            // .remove(this.uid)
-            // Then delete the board reference from the user boards
-            // .then(() => this.removeUserBoard(boardUID))
-            // .catch(err => this.snackBar.open(err.message, null, { duration: 6000 }));
-        // }
-      // },
-      // err => this.snackBar.open(err.message, null, { duration: 6000 })
-    // );
+  removeBoard(boardUID: string): firebase.Promise<any> {
+    return this.dbRef
+      .child(`boards/${boardUID}/members`)
+      .child(this.uid)
+      .remove(() => {
+        // Try to remove the entire board if this was the last member
+        this.dbRef.child('boards').child(boardUID).remove();
+        // Remove the reference from the user boards
+        this.dbRef.child(`users/${this.uid}/boards`).child(boardUID).remove();
+      });
   }
 
   getSubscriberName(uid: string) {
