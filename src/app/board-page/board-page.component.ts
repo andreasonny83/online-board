@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { FirebaseService } from '../firebase.service';
+import { FirebaseService } from '../../firebase';
 
 import { Observable } from 'rxjs/Observable';
-import * as firebase from 'firebase/app';
 
 import 'rxjs/add/operator/switchMap';
 

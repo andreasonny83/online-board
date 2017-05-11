@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { FirebaseService } from './firebase.service';
+import { FirebaseService } from '../firebase';
 import { MdSnackBar } from '@angular/material';
 
 import { Observable } from 'rxjs/Observable';

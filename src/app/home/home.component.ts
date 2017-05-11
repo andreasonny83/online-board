@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
-import { FirebaseService } from '../firebase.service';
+import { FirebaseService } from '../../firebase';
 
 import { Observable } from 'rxjs/Observable';
-import * as firebase from 'firebase/app';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +12,7 @@ import * as firebase from 'firebase/app';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  user: Observable<firebase.User>;
+  user: Observable<any>;
   back: boolean;
 
   constructor(

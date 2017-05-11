@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 
-import { FirebaseService } from '../firebase.service';
+import { FirebaseService } from '../../firebase';
 import { MdSnackBar } from '@angular/material';
 
 import { Observable } from 'rxjs/Observable';
-import * as firebase from 'firebase/app';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,7 +13,7 @@ import * as firebase from 'firebase/app';
 })
 export class DashboardComponent implements OnInit {
   boards: Observable<any>;
-  user: Observable<firebase.User>;
+  user: Observable<any>;
   newBoardForm: FormGroup;
 
   constructor(

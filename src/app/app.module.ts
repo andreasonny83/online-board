@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppRoutingModule } from './app-routing.module';
-
+import { FirebaseModule } from '../firebase';
 import {
   MdToolbarModule,
   MdCardModule,
@@ -16,13 +16,6 @@ import {
   MdIconModule,
 } from '@angular/material';
 
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireAuthModule } from 'angularfire2/auth';
-import {
-  AngularFireDatabaseModule,
-  FirebaseListObservable,
-} from 'angularfire2/database';
-
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
@@ -30,18 +23,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { BoardPageComponent } from './board-page/board-page.component';
 
 import { AuthGuard } from './auth-guard.service';
-import { FirebaseService } from './firebase.service';
 import { AuthService } from './auth.service';
 
 import { Keyobject } from './pipes';
-
-// Must export the config
-export const firebaseConfig = {
-  apiKey: 'AIzaSyDFLkSi_sP-TYSSrb9OPbXYyLI681VcTXE',
-  authDomain: 'online-board.firebaseapp.com',
-  databaseURL: 'https://online-board.firebaseio.com',
-  storageBucket: 'online-board.appspot.com',
-};
 
 @NgModule({
   declarations: [
@@ -58,6 +42,7 @@ export const firebaseConfig = {
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
+    FirebaseModule,
     // AngularMaterial
     MdToolbarModule,
     MdCardModule,
@@ -66,16 +51,11 @@ export const firebaseConfig = {
     MdSnackBarModule,
     MdListModule,
     MdIconModule,
-    // AngularFire
-    AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireDatabaseModule,
-    AngularFireAuthModule,
     // App Modules
     AppRoutingModule,
   ],
   providers: [
     AuthGuard,
-    FirebaseService,
     AuthService,
   ],
   bootstrap: [ AppComponent ]
