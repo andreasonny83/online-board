@@ -33,6 +33,8 @@ import { AuthGuard } from './auth-guard.service';
 import { FirebaseService } from './firebase.service';
 import { AuthService } from './auth.service';
 
+import { Keyobject } from './pipes';
+
 // Must export the config
 export const firebaseConfig = {
   apiKey: 'AIzaSyDFLkSi_sP-TYSSrb9OPbXYyLI681VcTXE',
@@ -48,6 +50,7 @@ export const firebaseConfig = {
     LoginComponent,
     DashboardComponent,
     BoardPageComponent,
+    Keyobject,
   ],
   imports: [
     BrowserModule,

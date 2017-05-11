@@ -5,22 +5,38 @@
     <div class="item-list-container">
       <div class="item-list"
            [style.background]="column.color"
-           *ngFor="let column of board?.columns">
+           *ngFor="let column of columns | async">
 
-        <h3>{{board?.items | json}}</h3>
         <h3>{{column.title}}</h3>
 
         <ul>
-          <li *ngFor="let item of column?.items; let i = index">
-            <!-- <span>{{item}}</span> -->
-            <!-- <input type="text" [(ngModel)]="item"> -->
+          <li *ngFor="let item of column.items | keyobject; let i = index">
             <md-input-container class="full-width">
               <textarea mdInput
-                        placeholder="Write your feedback"
-                        mdTextareaAutosize></textarea>
+              mdTextareaAutosize
+              [ngModel]="item.value.val"
+              readonly="true"></textarea>
             </md-input-container>
           </li>
+
         </ul>
+
+        <form (ngSubmit)="pushItem(newItem, column)"
+              class="form">
+          <md-input-container class="full-width">
+            <textarea mdInput
+                      #newItem
+                      placeholder="Write your feedback"
+                      mdTextareaAutosize></textarea>
+          </md-input-container>
+
+          <button md-raised-button
+                  type="submit"
+                  name="new-item"
+                  color="accent">Submit</button>
+
+        </form>
+
       </div>
     </div>
   </md-card-content>

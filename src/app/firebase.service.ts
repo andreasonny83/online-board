@@ -21,10 +21,11 @@ class FirebaseService {
   public user: Observable<firebase.User>;
   // public boardsList: FirebaseListObservable<any[]>;
   public usersList: FirebaseListObservable<any[]>;
+  public userList: FirebaseListObservable<any[]>;
   public userBoards: FirebaseListObservable<any[]>;
   public boardsList: FirebaseListObservable<any[]>;
 
-  private uid: string;
+  public uid: string;
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -41,8 +42,9 @@ class FirebaseService {
           this.uid = res && res.uid;
 
           if (!!res && !!res.uid) {
-            db.list('/users').update(this.uid, {lastLogIn: Date.now()});
-            this.usersList = db.list(`/users/${this.uid}`);
+            this.usersList = db.list('/users');
+            this.usersList.update(this.uid, {lastLogIn: Date.now()});
+            this.userList = db.list(`/users/${this.uid}`);
             this.userBoards = db.list(`/users/${this.uid}/boards`);
             this.boardsList = db.list(`/boards`);
           }
@@ -85,11 +87,11 @@ class FirebaseService {
     const boardData = {
       name: boardName,
       members: {},
-      columns: [
-        {title: 'Goods', color: 'lightgreen' },
-        {title: 'Bads', color: 'lightpink' },
-        {title: 'Questions', color: 'lightblue' },
-      ]
+      columns: {
+        first: {title: 'Goods', color: 'lightgreen', pos: 0 },
+        second: {title: 'Bads', color: 'lightpink', pos: 1 },
+        third: {title: 'Questions', color: 'lightblue', pos: 2 },
+      }
     };
 
     boardData.members[this.uid] = true;
@@ -97,7 +99,7 @@ class FirebaseService {
     return this.boardsList.push(boardData)
       .then((res) => {
         userBoardData[res.key] = boardName;
-        this.usersList.update('boards', userBoardData);
+        this.userList.update('boards', userBoardData);
       })
       .catch(err => this.snackBar.open(err.message, null, { duration: 6000 }));
   }
@@ -137,6 +139,17 @@ class FirebaseService {
       // },
       // err => this.snackBar.open(err.message, null, { duration: 6000 })
     // );
+  }
+
+  getSubscriberName(uid: string) {
+    const users: any = this.usersList;
+
+    return users.$ref
+      .child(uid)
+      .once('value')
+      .then(function(snapshot) {
+        return snapshot.val().name;
+      });
   }
 
   logout(): void {

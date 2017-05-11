@@ -14,7 +14,8 @@ import 'rxjs/add/operator/switchMap';
   styleUrls: ['./board-page.component.css']
 })
 export class BoardPageComponent implements OnInit {
-  board: any[];
+  boardID: string;
+  columns: any;
 
   constructor(
     private fireBase: FirebaseService,
@@ -23,8 +24,30 @@ export class BoardPageComponent implements OnInit {
 
   ngOnInit() {
     this.route.params
-      .switchMap((params: Params) => this.fireBase.getBoardObject(params['id']))
-      .subscribe(res => this.board = res);
+      .switchMap((params: Params) => {
+        this.boardID = params['id'];
+        return this.fireBase.getBoardObject(this.boardID);
+      })
+      .subscribe(res => {
+        this.columns = this.fireBase.getBoard(`${this.boardID}/columns`);
+      });
   }
 
+  updateVal(evt: any, column: any, item: any) {
+    this.columns.$ref
+      .child(column.$key)
+      .child('items')
+      .child(item.key)
+      .update({val: evt });
+  }
+
+  pushItem(itemVal, column) {
+    this.columns.$ref
+      .child(column.$key)
+      .child('items')
+      .push({
+        val: itemVal.value,
+        author: this.fireBase.uid,
+      });
+  }
 }
