@@ -1,3 +1,6 @@
+.block-xxl {
+  margin: 0 auto;
+}
 .item-list {
   width: 33.3%;
   padding: 6px;
@@ -67,6 +70,11 @@ md-list-item.color-1 {
   font-size: 35px;
 
 }
+
+.pinned-note, .unpinned-note {
+  width: calc(100% - 40px);
+  min-width: initial;
+}
 .pin-me-text {
   font-family: WhateverItTakesBold, helvetica;
   font-size: 30px;
@@ -82,4 +90,32 @@ md-list-item.color-1 {
 }
 .pin-me-btn {
   background-color: rgba(0, 0, 0, 0.08);
+}
+
+.notes-column {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.notes-board {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media only screen
+  and (min-device-width: 768px)
+  and (-webkit-min-device-pixel-ratio: 1) {
+    .notes-board {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+    .notes-column {
+      width: 33%;
+    }
+    .pinned-note, .unpinned-note {
+      width: initial;
+      min-width: 250px;
+    }
 }

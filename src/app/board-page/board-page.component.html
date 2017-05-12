@@ -2,8 +2,8 @@
   <h3 class="board-name">{{board?.name}}</h3>
 
   <div>
-    <div class="item-list-container">
-      <div class="item-list"
+    <div class="item-list-container notes-board">
+      <div class="item-list notes-column"
            *ngFor="let column of columns | async">
         <div class="cards-column-title">
           <span>{{column.title}}</span>
