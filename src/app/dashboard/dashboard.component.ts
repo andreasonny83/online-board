@@ -21,7 +21,7 @@ export class DashboardComponent implements OnInit {
     private fb: FormBuilder,
     private snackBar: MdSnackBar,
   ) {
-    this.boards = fireBase.userBoards;
+    this.boards = fireBase.findUserBoards();
     this.user = fireBase.user;
 
     this.createForm();

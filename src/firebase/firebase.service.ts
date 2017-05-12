@@ -17,7 +17,6 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class FirebaseService {
   public user: Observable<firebase.User>;
-  // public boardsList: FirebaseListObservable<any[]>;
   public usersList: FirebaseListObservable<any[]>;
   public userList: FirebaseListObservable<any[]>;
   public userBoards: FirebaseListObservable<any[]>;
@@ -111,15 +110,14 @@ export class FirebaseService {
       });
   }
 
-  getSubscriberName(uid: string) {
-    const users: any = this.usersList;
-
-    return users.$ref
-      .child(uid)
-      .once('value')
-      .then(function(snapshot) {
-        return snapshot.val().name;
-      });
+  findUserBoards() {
+    return this.db.list(`/boards`, {
+      query: {
+        // startAt: '-KjqxtaBNBzpk7nwRidk'
+        // limitToFirst: 2
+        equalTo: '-KjqxtaBNBzpk7nwRidk'
+      }
+    });
   }
 
   logout(): void {
