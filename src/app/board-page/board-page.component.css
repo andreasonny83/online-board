@@ -74,6 +74,8 @@ md-list-item.color-1 {
 .pinned-note, .unpinned-note {
   width: calc(100% - 40px);
   min-width: initial;
+  display: flex;
+  flex-direction: column;
 }
 .pin-me-text {
   font-family: WhateverItTakesBold, helvetica;
@@ -102,6 +104,21 @@ md-list-item.color-1 {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.pinned-note:hover .edit-icon {
+  opacity: 0.6;
+}
+
+.edit-icon {
+  opacity: 0;
+  height: 50px;
+  width: 50px;
+  height: 50px;
+  width: 50px;
+  align-self: flex-end;
+  margin-top: -20px !important;
+  margin-right: -20px;
 }
 
 @media only screen
