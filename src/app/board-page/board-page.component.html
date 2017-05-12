@@ -1,39 +1,47 @@
-<md-card class="block-xxl">
-  <md-card-title>{{board?.name}}</md-card-title>
+<div class="block-xxl">
+  <h3 class="board-name">{{board?.name}}</h3>
 
-  <md-card-content>
+  <div>
     <div class="item-list-container">
       <div class="item-list"
-           [style.background]="column.color"
            *ngFor="let column of columns | async">
+        <div class="cards-column-title">
+          <span>{{column.title}}</span>
+          <md-icon>{{cardEmoticon(column.title)}}</md-icon>
+        </div>
 
-        <h3>{{column.title}}</h3>
+        <md-card [style.background]="column.color" *ngFor="let item of column.items | keyobject; let i = index"
+                      class="pinned-note color-{{i%2}}">
 
-        <md-list>
-          <md-list-item *ngFor="let item of column.items | keyobject; let i = index"
-                        class="color-{{i%2}}">
-            <span>{{item.value.val}}</span>
-          </md-list-item>
-        </md-list>
+        <span>{{item.value.val}}</span>
+        <p class="note-author">john d.</p>
 
-        <form (ngSubmit)="pushItem(newItem, column)"
-              class="form">
-          <md-input-container class="full-width">
-            <textarea mdInput
-                      #newItem
-                      placeholder="Write your feedback"
-                      mdTextareaAutosize></textarea>
-          </md-input-container>
+        </md-card>
 
-          <button md-raised-button
-                  type="submit"
-                  name="new-item"
-                  color="accent">Submit</button>
+        <md-card [style.background]="column.color" class="unpinned-note">
+          <form (ngSubmit)="pushItem(newItem, column)"
+                class="form">
 
-        </form>
+            <md-input-container class="full-width">
+              <textarea mdInput
+                        #newItem
+                        placeholder="Write your feedback"
+                        mdTextareaAutosize></textarea>
+            </md-input-container>
 
+            <button md-button
+                    type="submit"
+                    name="new-item"
+                    class="pin-me-btn">
+                    <span class="pin-me-text"> Pin me</span>
+                    <!-- <svg src="../../assets/images/pushpin.svg"></svg> -->
+                    <img class="pin-icon" src="../../assets/images/pushpin.png" alt="">
+            </button>
+
+          </form>
+        </md-card>
       </div>
     </div>
-  </md-card-content>
+  </div>
 
-</md-card>
+</div>

@@ -20,3 +20,40 @@ md-card {
 .block-xxl {
   max-width: 1200px;
 }
+
+@font-face {
+  font-family: 'AlanisHand';
+  src: url('./assets/fonts/AlanisHand.ttf');
+}
+
+@font-face {
+  font-family: 'CoffeeTea';
+  src: url('./assets/fonts/coffee_tea.ttf');
+}
+
+@font-face {
+  font-family: 'PermanentMarker';
+  src: url('./assets/fonts/PermanentMarker.ttf');
+  src: url('./assets/fonts/PermanentMarker.ttf');
+}
+
+@font-face {
+  font-family: 'chawp';
+  src: url('./assets/fonts/chawp.ttf');
+  src: url('./assets/fonts/chawp.otf');
+}
+
+@font-face {
+  font-family: 'WhateverItTakesBold';
+  src: url('./assets/fonts/whatever_it_takes_bold.ttf');
+}
+
+@font-face {
+  font-family: 'WhateverItTakes';
+  src: url('./assets/fonts/whatever_it_takes.ttf');
+}
+
+@font-face {
+  font-family: 'StayWritter';
+  src: url('./assets/fonts/Stay_Writer.ttf');
+}

@@ -51,4 +51,20 @@ export class BoardPageComponent implements OnInit {
         author: this.fireBase.uid,
       });
   }
+
+  cardEmoticon(cardTitle: string) {
+    switch (cardTitle) {
+      case 'Goods':
+      return 'sentiment_very_satisfied';
+
+      case 'Bads':
+      return 'mood_bad';
+
+      case 'Questions':
+      return 'sentiment_neutral';
+
+      default:
+      return '';
+    }
+  }
 }

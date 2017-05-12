@@ -27,3 +27,59 @@ textarea {
 md-list-item.color-1 {
   background: rgba(152, 152, 152, 0.2);
 }
+.board-name {
+  padding: 10px;
+  font-size: 45px;
+  font-family: WhateverItTakesBold, helvetica;
+}
+.cards-column-title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 40px;
+  font-family: WhateverItTakes, helvetica;
+}
+
+.cards-column-title span {
+  padding: 0 5px 0 10px;
+}
+
+.note-author {
+  text-align: right;
+  text-transform: capitalize;
+  font-style: italic;
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+.note-author:hover {
+  opacity: 1;
+  animation: all;
+  transition: opacity 500ms cubic-bezier(0.4, 0, 1, 1);
+  font-weight: bold;
+}
+
+.unpinned-note{
+  box-shadow: 0px 24px 21px rgba(0, 0, 0, 0.27) !important;
+}
+.pinned-note span, .pinned-note p, .unpinned-note, .unpinned-note .mat-input-container {
+  font-family: WhateverItTakesBold, helvetica;
+  font-size: 35px;
+
+}
+.pin-me-text {
+  font-family: WhateverItTakesBold, helvetica;
+  font-size: 30px;
+}
+
+.pushpin {
+  height: 60px;
+  cursor: pointer;
+}
+
+.pin-icon {
+  height: 30px;
+}
+.pin-me-btn {
+  background-color: rgba(0, 0, 0, 0.08);
+}
