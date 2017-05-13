@@ -1,8 +1,7 @@
-.username {
-  flex: 1 1 auto;
+:host {
+  display: block;
 }
 
-.customize-toolbar {
-  background-color: #21B6A8;
-  box-shadow: 0 2px 5px rgba(0,0,0,.26);
+:host.back-btn {
+  margin-top: 64px;
 }

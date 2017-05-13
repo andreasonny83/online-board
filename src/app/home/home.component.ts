@@ -1,9 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-
-import { AuthService } from '../auth.service';
+import { Component, OnInit, HostBinding } from '@angular/core';
 import { Router } from '@angular/router';
-
-import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-home',
@@ -11,18 +7,15 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  back: boolean;
+  @HostBinding('class.back-btn') back = false;
 
   constructor(
-    private authService: AuthService,
     private route: Router,
   ) {
     route.events.subscribe((url: any) => {
-      if (url.urlAfterRedirects !== '/dashboard') {
-        this.back = true;
-      } else {
-        this.back = false;
-      }
+      const page: string = url.urlAfterRedirects;
+
+      this.back = page !== '/dashboard' && page !== '/login';
     });
   }
 

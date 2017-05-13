@@ -1,0 +1,16 @@
+<md-toolbar class="customize-toolbar"
+            color="primary">
+  <span class="toolbar-title">{{title}}</span>
+
+  <app-header-menu></app-header-menu>
+
+  <md-toolbar-row class="row"
+                  *ngIf="back">
+    <button md-button
+            class="backBtn"
+            color="accent"
+            routerLink="/dasboard">
+      <md-icon>chevron_left</md-icon>
+    </button>
+  </md-toolbar-row>
+</md-toolbar>

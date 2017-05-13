@@ -114,8 +114,8 @@ export class FirebaseService {
     return this.db.list(`/boards`, {
       query: {
         // startAt: '-KjqxtaBNBzpk7nwRidk'
-        // limitToFirst: 2
-        equalTo: '-KjqxtaBNBzpk7nwRidk'
+        limitToFirst: 2
+        // equalTo: '-KjqxtaBNBzpk7nwRidk'
       }
     });
   }

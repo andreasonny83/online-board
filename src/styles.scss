@@ -1,11 +1,16 @@
-/* You can add global styles to this file, and also import other style files */
-@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import 'app-theme.scss';
 
 html, body {
   margin: 0;
   padding: 0;
-
   height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: white;
 }
 
 md-card {
@@ -20,6 +25,7 @@ md-card {
 .block-xxl {
   max-width: 1200px;
 }
+
 
 @font-face {
   font-family: 'AlanisHand';

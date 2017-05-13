@@ -1,0 +1,15 @@
+<button md-button
+        class="menu-button"
+        [mdMenuTriggerFor]="menu"
+        *ngIf="(user | async)?.email">
+    {{ (user | async)?.email }}
+  <md-icon>expand_more</md-icon>
+</button>
+
+<md-menu #menu="mdMenu"
+         x-position="before">
+  <button  md-menu-item
+          (click)="logout()">
+          <span>Sign Out</span>
+  </button>
+</md-menu>

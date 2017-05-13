@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-
-import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 
-import { Observable } from 'rxjs/Observable';
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-main-toolbar',
@@ -11,29 +9,19 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./main-toolbar.component.css']
 })
 export class MainToolbarComponent implements OnInit {
-
+  back = false;
   title = 'Online Board';
-  back: boolean;
 
   constructor(
     private authService: AuthService,
     private route: Router,
   ) {
     route.events.subscribe((url: any) => {
-      if (url.urlAfterRedirects !== '/dashboard') {
-        this.back = true;
-      } else {
-        this.back = false;
-      }
+      const page: string = url.urlAfterRedirects;
+
+      this.back = page !== '/dashboard' && page !== '/login';
     });
   }
 
-  ngOnInit() {  }
-
-  public getVisibility() {
-    if (this.back) {
-      return 'visible';
-    }
-    return 'hidden';
-  }
+  ngOnInit() { }
 }

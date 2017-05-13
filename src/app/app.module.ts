@@ -14,7 +14,7 @@ import {
   MdMenuModule,
   MdSnackBarModule,
   MdListModule,
-  MdIconModule
+  MdIconModule,
 } from '@angular/material';
 
 import { AppComponent } from './app.component';
@@ -22,8 +22,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { BoardPageComponent } from './board-page/board-page.component';
-import { HeaderMenuComponent } from './header-menu/header-menu.component';
-import { MainToolbarComponent } from './main-toolbar/main-toolbar.component';
+import { HeaderModule } from './header';
 
 import { AuthGuard } from './auth-guard.service';
 import { AuthService } from './auth.service';
@@ -38,8 +37,6 @@ import { Keyobject } from './pipes';
     DashboardComponent,
     BoardPageComponent,
     Keyobject,
-    HeaderMenuComponent,
-    MainToolbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,6 +55,7 @@ import { Keyobject } from './pipes';
     MdListModule,
     MdIconModule,
     // App Modules
+    HeaderModule,
     AppRoutingModule,
   ],
   providers: [
