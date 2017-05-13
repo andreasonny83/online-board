@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../../auth.service';
@@ -9,8 +13,10 @@ import { AuthService } from '../../auth.service';
   styleUrls: ['./main-toolbar.component.css']
 })
 export class MainToolbarComponent implements OnInit {
+  @Input('version') version: string;
+  @Input('title') title: string;
+
   back = false;
-  title = 'Online Board';
 
   constructor(
     private authService: AuthService,
