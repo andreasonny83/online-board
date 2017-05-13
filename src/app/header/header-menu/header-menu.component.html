@@ -1,7 +1,7 @@
 <button md-button
         class="menu-button"
         [mdMenuTriggerFor]="menu"
-        *ngIf="(user | async)?.email">
+        *ngIf="(user | async)?.email && (user | async)?.emailVerified">
     {{ (user | async)?.email }}
   <md-icon>expand_more</md-icon>
 </button>

@@ -37,7 +37,11 @@ export class LoginComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', this.validatePassword],
-      displayName: ['', Validators.required],
+      displayName: ['', [
+        Validators.required,
+        Validators.minLength(4),
+        Validators.pattern(/^([a-zA-Z'-_]+\s){0,4}[a-zA-Z'-_]+$/)
+      ]],
     });
   }
 

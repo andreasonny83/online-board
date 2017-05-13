@@ -5,6 +5,7 @@ import { FirebaseService } from '../firebase';
 import { MdSnackBar } from '@angular/material';
 
 import { Observable } from 'rxjs/Observable';
+import * as firebase from 'firebase/app';
 
 @Injectable()
 export class AuthService {
@@ -33,7 +34,7 @@ export class AuthService {
             return this.router.navigate(['/login']);
           }
 
-          if (!!res && !!res.uid) {
+          if (!!res && !!res.uid && res.email && res.emailVerified) {
             if (this.router.url === '/login') {
               this.snackBar.open(`Welcome back ${res.email}`, null, { duration: 6000 });
               this.router.navigate(['/dashboard']);
@@ -54,42 +55,22 @@ export class AuthService {
       .map(res => res && !!res.uid);
   }
 
-  register(formModel: IUserRegister): Promise<any> {
-    return Promise.resolve(this.fireBase.register(formModel.email, formModel.password))
-      .then(
-        res => {
-          this.fireBase.sendEmailVerification()
-            .catch(err => this.snackBar.open(err.message, null, { duration: 6000 }));
-
-          this.logout();
-
-          this.snackBar.open(
-            `Please, check your inbox to verify that ${res.email}
-            belongs to you.`,
-            null,
-            { duration: 6000 }
-          );
-
-          return Promise.resolve();
-        },
-        err => {
-          this.snackBar.open(err.message || 'Server error.', null, { duration: 6000 });
-          return Promise.reject(new Error(err));
-        }
-      ).catch((err) => {
+  register(formModel: IUserRegister): firebase.Promise<any> {
+    return this.fireBase
+      .register(formModel.email, formModel.password, formModel.displayName)
+      .then(() => this.snackBar
+        .open('Please, check your inbox to verify that it belongs to you.', null, { duration: 6000 }))
+      .catch((err) => {
         this.snackBar.open(err.message || 'Server error.', null, { duration: 6000 });
-        return Promise.reject(new Error(err));
       });
   }
 
-  login(formModel: IUserLogin): Promise<any> {
-    return Promise.resolve(this.fireBase.login(formModel.email, formModel.password))
-      .then(
-        res => {},
-        err => this.snackBar.open(err.message, null, { duration: 6000 })
-      ).catch((err) => {
+  login(formModel: IUserLogin): firebase.Promise<any> {
+    return this.fireBase
+      .login(formModel.email, formModel.password)
+      .then(() => {})
+      .catch((err) => {
         this.snackBar.open(err.message || 'Server error.', null, { duration: 6000 });
-        return Promise.reject(new Error(err));
       });
   }
 

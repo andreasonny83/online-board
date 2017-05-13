@@ -1,17 +1,19 @@
-import { Pipe, Injectable } from '@angular/core';
+import { Pipe, PipeTransform, Injectable } from '@angular/core';
 
 @Pipe({
    name: 'keyobject'
 })
 @Injectable()
-export class Keyobject {
+export class Keyobject implements PipeTransform {
+  transform(value, args: string[]): any {
+    const keys = [];
 
-transform(value, args:string[]):any {
-  let keys = [];
+    for (const key in value) {
+      if (value.hasOwnProperty(key)) {
+        keys.push({key: key, value: value[key]});
+      }
+    }
 
-  for (let key in value) {
-      keys.push({key: key, value: value[key]});
+    return keys;
   }
-
-  return keys;
-}}
+}

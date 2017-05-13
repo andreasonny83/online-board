@@ -25,10 +25,13 @@ export class FirebaseService {
 
   public uid: string;
 
+  private isRegistering: boolean;
+
   constructor(
     private afAuth: AngularFireAuth,
     private db: AngularFireDatabase,
   ) {
+    this.isRegistering = false;
     this.user = afAuth.authState;
 
     // Sharing a subscriber to be used in auth.service.ts will increase performances
@@ -36,15 +39,20 @@ export class FirebaseService {
       .share()
       .subscribe(
         res => {
-          this.uid = res && res.uid;
-
-          if (!!res && !!res.uid) {
+          if (!!res && !!res.uid && !!res.emailVerified) {
+            // User is logged in and verified
+            this.uid = res && res.uid;
             this.dbRef = firebase.database().ref('/');
             this.usersList = db.list('/users');
             this.usersList.update(this.uid, {lastLogIn: Date.now()});
             this.userList = db.list(`/users/${this.uid}`);
             this.userBoards = db.list(`/users/${this.uid}/boards`);
             this.boardsList = db.list(`/boards`);
+          }
+
+          if (!!res && !res.emailVerified && !this.isRegistering) {
+            // if the user is registering don't logout
+            this.logout();
           }
         });
   }
@@ -54,9 +62,19 @@ export class FirebaseService {
     return regex.test(val);
   }
 
-  register(email: string, password: string): firebase.Promise<any> {
+  register(email: string, password: string, userName: string): firebase.Promise<any> {
     return this.afAuth.auth
-      .createUserWithEmailAndPassword(email, password);
+      .createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        this.sendEmailVerification();
+        this.isRegistering = true;
+
+        this.updateUserInfo(
+          this.afAuth.auth.currentUser.uid,
+          this.afAuth.auth.currentUser.email,
+          userName,
+        );
+      });
   }
 
   login(email: string, password: string): firebase.Promise<any> {
@@ -67,6 +85,19 @@ export class FirebaseService {
   sendEmailVerification(): firebase.Promise<any> {
     return this.afAuth.auth.currentUser
       .sendEmailVerification();
+  }
+
+  updateUserInfo(uid: string, email: string, displayName: string) {
+    const self = this;
+
+    self.db
+      .list('/users')
+      .update(uid, {
+        email: email,
+        name: displayName,
+      })
+      .then(() => self.logout())
+      .catch(() => self.logout());
   }
 
   getBoard(boardUID: string): FirebaseListObservable<any[]> {
@@ -122,5 +153,7 @@ export class FirebaseService {
 
   logout(): void {
     this.afAuth.auth.signOut();
+    this.uid = null;
+    this.isRegistering = false;
   }
 }

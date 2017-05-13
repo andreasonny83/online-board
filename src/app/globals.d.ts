@@ -7,4 +7,5 @@ interface IUserRegister {
   email: string;
   password: string;
   passwordConfirm: string;
+  displayName: string;
 }
