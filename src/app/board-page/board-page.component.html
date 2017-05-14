@@ -1,47 +1,77 @@
 <div class="block-xxl">
   <h3 class="board-name">{{board?.name}}</h3>
 
-  <div>
-    <div class="item-list-container notes-board">
-      <div class="item-list notes-column"
-           *ngFor="let column of columns | async">
-        <div class="cards-column-title">
-          <span>{{column.title}}</span>
-          <md-icon>{{cardEmoticon(column.title)}}</md-icon>
-        </div>
+  <div class="item-list-container notes-board">
+    <div class="item-list notes-column"
+         *ngFor="let column of columns | async">
+      <div class="cards-column-title">
+        <span>{{column.title}}</span>
+        <md-icon>{{cardEmoticon(column.title)}}</md-icon>
+      </div>
 
-        <md-card [style.background]="column.color" *ngFor="let item of column.items | keyobject; let i = index"
-                      class="pinned-note color-{{i%2}}">
-        <img class="edit-icon" src="../../assets/images/marker.png" alt="">
+      <md-card [style.background]="column.color"
+               *ngFor="let item of column.items | keyobject; let i = index"
+               class="pinned-note color-{{i%2}}">
+        <img class="edit-icon"
+             src="../../assets/images/marker.png"
+             alt="">
         <span>{{item.value.val}}</span>
         <p class="note-author">john d.</p>
+      </md-card>
 
-        </md-card>
+      <md-card [style.background]="column.color"
+               class="unpinned-note">
+        <form (ngSubmit)="pushItem(newItem, column)"
+              class="form">
 
-        <md-card [style.background]="column.color" class="unpinned-note">
-          <form (ngSubmit)="pushItem(newItem, column)"
-                class="form">
+          <md-input-container class="full-width">
+            <textarea mdInput
+                      #newItem
+                      placeholder="Write your feedback"
+                      mdTextareaAutosize></textarea>
+          </md-input-container>
 
-            <md-input-container class="full-width">
-              <textarea mdInput
-                        #newItem
-                        placeholder="Write your feedback"
-                        mdTextareaAutosize></textarea>
-            </md-input-container>
+          <button md-button
+                  type="submit"
+                  name="new-item"
+                  class="pin-me-btn">
+            <span class="pin-me-text"> Pin me</span>
+            <!-- <svg src="../../assets/images/pushpin.svg"></svg> -->
+            <img class="pin-icon" src="../../assets/images/pushpin.png" alt="">
+          </button>
+        </form>
+      </md-card>
 
-            <button md-button
-                    type="submit"
-                    name="new-item"
-                    class="pin-me-btn">
-                    <span class="pin-me-text"> Pin me</span>
-                    <!-- <svg src="../../assets/images/pushpin.svg"></svg> -->
-                    <img class="pin-icon" src="../../assets/images/pushpin.png" alt="">
-            </button>
-
-          </form>
-        </md-card>
-      </div>
     </div>
+  </div>
+
+  <div class="item-list-container">
+    <md-card>
+      <md-card-title>Invite more collaborators to this board:</md-card-title>
+
+      <md-card-content>
+        <form [formGroup]="collaboratorsForm"
+              (ngSubmit)="inviteCollaborator()"
+              class="form"
+              novalidate>
+          <md-input-container class="full-width">
+            <input mdInput
+                   placeholder="Board name"
+                   type="email"
+                   name="collaborator"
+                   formControlName="collaborator">
+          </md-input-container>
+
+          <md-card-actions align="end">
+            <button md-raised-button
+                    type="submit"
+                    name="new-board"
+                    [disabled]="!collaboratorsForm.valid"
+                    color="accent">Invite</button>
+          </md-card-actions>
+        </form>
+      </md-card-content>
+    </md-card>
   </div>
 
 </div>

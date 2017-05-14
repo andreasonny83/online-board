@@ -62,16 +62,19 @@ md-list-item.color-1 {
   font-weight: bold;
 }
 
-.unpinned-note{
-  box-shadow: 0px 24px 21px rgba(0, 0, 0, 0.27) !important;
+.unpinned-note {
+  box-shadow: 0 12px 12px rgba(0, 0, 0, 0.27) !important;
 }
-.pinned-note span, .pinned-note p, .unpinned-note, .unpinned-note .mat-input-container {
+
+.pinned-note span, .pinned-note p,
+.unpinned-note,
+.unpinned-note .mat-input-container {
   font-family: WhateverItTakesBold, helvetica;
   font-size: 35px;
-
 }
 
-.pinned-note, .unpinned-note {
+.pinned-note,
+.unpinned-note {
   width: calc(100% - 40px);
   min-width: initial;
   display: flex;

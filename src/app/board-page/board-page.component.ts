@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
+import { ActivatedRoute, Params, RouterState } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Http, Response } from '@angular/http';
 
 import { FirebaseService } from '../../firebase';
 
@@ -16,13 +19,20 @@ export class BoardPageComponent implements OnInit {
   boardID: string;
   board: any[];
   columns: any;
+  collaboratorsForm: FormGroup;
 
   constructor(
     private fireBase: FirebaseService,
     private route: ActivatedRoute,
-  ) { }
+    private location: Location,
+    private fb: FormBuilder,
+    private http: Http,
+  ) {
+    this.createForm();
+  }
 
   ngOnInit() {
+    console.log(location.href);
     this.route.params
       .switchMap((params: Params) => {
         this.boardID = params['id'];
@@ -32,6 +42,16 @@ export class BoardPageComponent implements OnInit {
         this.board = res;
         this.columns = this.fireBase.getBoard(`${this.boardID}/columns`);
       });
+  }
+
+  createForm() {
+    this.collaboratorsForm = this.fb.group({
+      collaborator: ['', [
+        Validators.required,
+        Validators.email,
+        Validators.pattern(/^[a-zA-Z0-9.!#$%&’*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+$/)
+      ]],
+    });
   }
 
   updateVal(evt: any, column: any, item: any) {
@@ -66,5 +86,17 @@ export class BoardPageComponent implements OnInit {
       default:
       return '';
     }
+  }
+
+  inviteCollaborator() {
+    const body = {
+      from: 'Online Board',
+      to: this.collaboratorsForm.controls.collaborator,
+      subject: 'Collaboration request',
+      text: `${this.route.url}`,
+      html: `${this.route.url}`,
+    };
+    //
+    // return this.http.post(`https://node-mailsender.herokuapp.com/send`, body)
   }
 }

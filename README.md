@@ -39,8 +39,48 @@ Run `npm test` to execute the unit tests via [Karma](https://karma-runner.github
 Run `npm run e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 Before running the tests make sure you are serving the app via `ng serve`.
 
-## Deployment
+## Deploying to Firebase
 
-Run `npm run deploy` to deploy using Firebase-CLI.
+### Prerequisites
 
-**Note** You must have access to the Firebase project to run this task.
+1. Create a free Firebase account at https://firebase.google.com
+1. Create a project from your [Firebase account console](https://console.firebase.google.com)
+1. Configure the authentication providers for your Firebase project from your Firebase account console
+
+### Configure this app with your project-specific details
+
+```javascript
+// .firebaserc
+
+{
+  "projects": {
+    "default": "your-project-id"
+  }
+}
+```
+
+```javascript
+// src/firebase/index.ts
+
+const firebaseConfig = {
+  apiKey: 'your api key',
+  authDomain: 'your-project-id.firebaseapp.com',
+  databaseURL: 'https://your-project-id.firebaseio.com',
+  storageBucket: 'your-project-id.appspot.com'
+};
+```
+
+### Install firebase-tools
+
+```sh
+$ npm install -g firebase-tools
+```
+
+### Build and deploy the app
+
+```sh
+$ npm run build
+$ firebase login
+$ firebase use default
+$ firebase deploy
+```
