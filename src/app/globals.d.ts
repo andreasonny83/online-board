@@ -9,3 +9,10 @@ interface IUserRegister {
   passwordConfirm: string;
   displayName: string;
 }
+
+interface IUserInfo {
+  email: string;
+  name: string;
+  lastLogIn: number;
+  boards?: any;
+}

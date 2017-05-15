@@ -24,6 +24,7 @@ export class FirebaseService {
   public dbRef: firebase.database.Reference;
 
   public uid: string;
+  public userInfo: IUserInfo;
 
   private isRegistering: boolean;
 
@@ -45,9 +46,11 @@ export class FirebaseService {
             this.dbRef = firebase.database().ref('/');
             this.usersList = db.list('/users');
             this.usersList.update(this.uid, {lastLogIn: Date.now()});
-            this.userList = db.list(`/users/${this.uid}`);
+            this.userList = this.db.list(`/users/${this.uid}`);
             this.userBoards = db.list(`/users/${this.uid}/boards`);
             this.boardsList = db.list(`/boards`);
+
+            this.storeUserInfo();
           }
 
           if (!!res && !res.emailVerified && !this.isRegistering) {
@@ -55,6 +58,25 @@ export class FirebaseService {
             this.logout();
           }
         });
+  }
+
+  storeUserInfo() {
+    this.userInfo = <IUserInfo>{};
+
+    const _usersList = this.db.list(`/users/${this.uid}`, { preserveSnapshot: true});
+
+    _usersList.subscribe(
+        snapshots => {
+          snapshots.forEach((snapshot: any) => {
+            if (snapshot.key && snapshot.val()) {
+              this.userInfo[snapshot.key] = snapshot.val();
+            }
+          });
+
+          _usersList.subscribe().unsubscribe();
+        },
+        err => this.userInfo = <IUserInfo>{},
+      );
   }
 
   validateString(val: string) {
