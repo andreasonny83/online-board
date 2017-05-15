@@ -50,7 +50,7 @@ export class FirebaseService {
             this.userBoards = db.list(`/users/${this.uid}/boards`);
             this.boardsList = db.list(`/boards`);
 
-            this.storeUserInfo();
+            this.updateUserInfo();
           }
 
           if (!!res && !res.emailVerified && !this.isRegistering) {
@@ -60,23 +60,21 @@ export class FirebaseService {
         });
   }
 
-  storeUserInfo() {
+  updateUserInfo() {
     this.userInfo = <IUserInfo>{};
 
-    const _usersList = this.db.list(`/users/${this.uid}`, { preserveSnapshot: true});
+    const userTable$ = this.db.list(`/users/${this.uid}`, { preserveSnapshot: true})
+      .subscribe(snapshots => {
+        snapshots.forEach((snapshot: any) => {
+          if (snapshot.key && snapshot.val()) {
+            this.userInfo[snapshot.key] = snapshot.val();
+          }
+        });
 
-    _usersList.subscribe(
-        snapshots => {
-          snapshots.forEach((snapshot: any) => {
-            if (snapshot.key && snapshot.val()) {
-              this.userInfo[snapshot.key] = snapshot.val();
-            }
-          });
-
-          _usersList.subscribe().unsubscribe();
-        },
-        err => this.userInfo = <IUserInfo>{},
-      );
+        userTable$.unsubscribe();
+      },
+      err => this.userInfo = <IUserInfo>{},
+    );
   }
 
   validateString(val: string) {
@@ -91,7 +89,7 @@ export class FirebaseService {
         this.sendEmailVerification();
         this.isRegistering = true;
 
-        this.updateUserInfo(
+        this.updateUsersTable(
           this.afAuth.auth.currentUser.uid,
           this.afAuth.auth.currentUser.email,
           userName,
@@ -109,7 +107,7 @@ export class FirebaseService {
       .sendEmailVerification();
   }
 
-  updateUserInfo(uid: string, email: string, displayName: string) {
+  updateUsersTable(uid: string, email: string, displayName: string) {
     const self = this;
 
     self.db

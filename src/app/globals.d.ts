@@ -16,3 +16,11 @@ interface IUserInfo {
   lastLogIn: number;
   boards?: any;
 }
+
+interface IMailSender {
+  from: string;
+  to: string;
+  subject: string;
+  text?: string;
+  html?: string;
+}
