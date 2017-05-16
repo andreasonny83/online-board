@@ -1,4 +1,8 @@
 .customize-toolbar {
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.customize-toolbar.floating {
   box-shadow: 0 2px 5px rgba(0,0,0,.26);
 }
 

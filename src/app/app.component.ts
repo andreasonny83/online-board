@@ -7,10 +7,16 @@ import { environment } from '../environments/environment';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Online Board';
+  title: string;
+  floatingClass: boolean;
   version: number;
 
   constructor() {
     this.version = environment.version;
+    this.title = 'Online Board';
+  }
+
+  onScroll(event) {
+    this.floatingClass = event.target.scrollTop > 0;
   }
 }

@@ -14,6 +14,7 @@ import { AuthService } from '../../auth.service';
 })
 export class MainToolbarComponent implements OnInit {
   @Input('version') version: string;
+  @Input('floating') floating: boolean;
   @Input('title') title: string;
 
   back = false;

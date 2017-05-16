@@ -1,7 +1,8 @@
 <app-main-toolbar class="app-toolbar"
                   [title]="title"
+                  [floating]="floatingClass"
                   [version]="version"></app-main-toolbar>
 
-<div class="app-content">
+<div class="app-content" (scroll)="onScroll($event)">
   <router-outlet></router-outlet>
 </div>
