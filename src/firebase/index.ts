@@ -4,6 +4,12 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { FirebaseService } from './firebase.service';
 
+import {
+  AngularFireDatabase,
+  FirebaseListObservable,
+  FirebaseObjectObservable,
+} from 'angularfire2/database';
+
 // Must export the config
 const firebaseConfig = {
   apiKey: 'AIzaSyDFLkSi_sP-TYSSrb9OPbXYyLI681VcTXE',
@@ -26,4 +32,7 @@ export class FirebaseModule { }
 
 export {
   FirebaseService,
+  AngularFireDatabase,
+  FirebaseListObservable,
+  FirebaseObjectObservable,
 };

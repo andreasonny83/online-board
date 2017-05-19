@@ -8,6 +8,7 @@ import {
 
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
+import { MdSnackBar } from '@angular/material';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
@@ -19,6 +20,7 @@ export class FirebaseService {
   public user: Observable<firebase.User>;
   public usersList: FirebaseListObservable<any[]>;
   public userList: FirebaseListObservable<any[]>;
+  public userInvites: FirebaseListObservable<any[]>;
   public userBoards: FirebaseListObservable<any[]>;
   public boardsList: any;
   public dbRef: firebase.database.Reference;
@@ -31,6 +33,7 @@ export class FirebaseService {
   constructor(
     private afAuth: AngularFireAuth,
     private db: AngularFireDatabase,
+    private snackBar: MdSnackBar,
   ) {
     this.isRegistering = false;
     this.user = afAuth.authState;
@@ -44,13 +47,15 @@ export class FirebaseService {
             // User is logged in and verified
             this.uid = res && res.uid;
             this.dbRef = firebase.database().ref('/');
-            this.usersList = db.list('/users');
+            this.usersList = this.db.list('/users');
             this.usersList.update(this.uid, {lastLogIn: Date.now()});
             this.userList = this.db.list(`/users/${this.uid}`);
-            this.userBoards = db.list(`/users/${this.uid}/boards`);
-            this.boardsList = db.list(`/boards`);
+            this.userBoards = this.db.list(`/users/${this.uid}/boards`);
+            this.boardsList = this.db.list(`/boards`);
+            this.userInvites = this.db.list('/invites', {query: { orderByChild: 'email', equalTo: res.email }} );
 
             this.updateUserInfo();
+            this.checkForInvites();
           }
 
           if (!!res && !res.emailVerified && !this.isRegistering) {
@@ -58,6 +63,28 @@ export class FirebaseService {
             this.logout();
           }
         });
+  }
+
+  checkForInvites() {
+    const self = this;
+
+    this.userInvites
+      .subscribe(invites => {
+        invites.forEach((invite)  => {
+          const boardElement = {};
+          boardElement[invite.boardID] = invite.boardName;
+
+          self.userList
+            .update('boards', boardElement)
+            .then(() => {
+              self.db.list('/invites').remove(invite.$key);
+              self.snackBar.open(
+                `Wow! Looks like someone invited you to collaborate with a new board.
+                Check out your dashboard.`,
+                null, { duration: 6000 });
+            });
+        });
+      });
   }
 
   updateUserInfo() {
@@ -169,6 +196,19 @@ export class FirebaseService {
         // equalTo: '-KjqxtaBNBzpk7nwRidk'
       }
     });
+  }
+
+  inviteCollaborator(email: string, boardID: string, boardName: string) {
+    this.getBoard(`${boardID}/invites`)
+      .push({'email': email});
+
+    this.db
+      .list('/invites')
+      .push({
+        email: email,
+        boardID: boardID,
+        boardName: boardName,
+      });
   }
 
   logout(): void {

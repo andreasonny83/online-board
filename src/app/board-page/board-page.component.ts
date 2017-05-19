@@ -4,13 +4,20 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
 
-import { FirebaseService } from '../../firebase';
+import { FirebaseService, FirebaseListObservable, FirebaseObjectObservable } from '../../firebase';
 import { EmailsGenerator } from '../../email-templates';
 import { MdSnackBar } from '@angular/material';
 
 import { Observable } from 'rxjs/Observable';
+import * as firebase from 'firebase/app';
 
 import 'rxjs/add/operator/switchMap';
+
+interface IBoardObj {
+  columns: any[];
+  invites: any[];
+  name: string;
+}
 
 @Component({
   selector: 'app-board-page',
@@ -19,8 +26,9 @@ import 'rxjs/add/operator/switchMap';
 })
 export class BoardPageComponent implements OnInit {
   boardID: string;
-  board: any[];
-  columns: any;
+  boardName: string;
+  board: FirebaseListObservable<any[]>;
+  columns: FirebaseListObservable<any[]>;
   collaboratorsForm: FormGroup;
 
   constructor(
@@ -41,8 +49,13 @@ export class BoardPageComponent implements OnInit {
         return this.fireBase.getBoardObject(this.boardID);
       })
       .subscribe(res => {
-        this.board = res;
+        this.board = this.fireBase.getBoard(this.boardID);
         this.columns = this.fireBase.getBoard(`${this.boardID}/columns`);
+      });
+
+    this.fireBase.getBoardObject(this.boardID)
+      .subscribe(res => {
+        this.boardName = res['name'];
       });
   }
 
@@ -73,7 +86,7 @@ export class BoardPageComponent implements OnInit {
   }
 
   updateVal(evt: any, column: any, item: any) {
-    this.columns.$ref
+    this.columns.$ref.ref
       .child(column.$key)
       .child('items')
       .child(item.key)
@@ -81,12 +94,17 @@ export class BoardPageComponent implements OnInit {
   }
 
   pushItem(itemVal, column) {
-    this.columns.$ref
+    const self = this;
+
+    this.columns.$ref.ref
       .child(column.$key)
       .child('items')
       .push({
         val: itemVal.value,
-        author: this.fireBase.uid,
+        author: this.fireBase.userInfo.name,
+      })
+      .catch(err => {
+        self.snackBar.open('Please, make sure the feedback is not empty, then try again.', null, { duration: 6000 });
       });
   }
 
@@ -94,14 +112,14 @@ export class BoardPageComponent implements OnInit {
     const self = this;
 
     const html = EmailsGenerator.inviteCollaborator(
-        this.fireBase.userInfo.name,
-        this.location.prepareExternalUrl(location.origin + this.location.path()),
+        self.fireBase.userInfo.name,
+        self.location.prepareExternalUrl(self.location.path()),
         location.origin,
       );
 
     const body: IMailSender = {
       from: 'Online Board',
-      to: this.collaboratorsForm.controls.collaborator.value,
+      to: self.collaboratorsForm.controls.collaborator.value,
       subject: 'Collaboration request',
       text: '',
       html: html,
@@ -110,20 +128,36 @@ export class BoardPageComponent implements OnInit {
     const headers = new Headers({ 'Content-Type': 'application/json' }); // Set content type to JSON
     const options = new RequestOptions({ headers: headers }); // Create a request option
 
-    this.http
+    self.http
       .post(`https://node-mailsender.herokuapp.com/send`, JSON.stringify(body), options)
       .map(res => res.json())
-      .catch(() => this.errorHandler())
+      .catch(() => self.errorHandler())
       .subscribe(
         res => {
           if (!!res.sent && /^250 OK/.test(res.sent)) {
             self.collaboratorsForm.reset();
+            this.fireBase.inviteCollaborator(
+              self.collaboratorsForm.controls.collaborator.value,
+              self.boardID,
+              self.boardName,
+            );
             self.snackBar.open('Your message has been correctly delivered.', null, { duration: 6000 });
           } else {
-            this.errorHandler();
+            self.errorHandler();
           }
         },
-        err => this.errorHandler());
+        err => self.errorHandler());
+  }
+
+  editItem(item) {
+    // const email = this.fireBase.dbRef.child('users').orderByChild('email').equalTo('andreasonny83@gmail.com');
+    // email.once('value').then((res) => console.log(res));
+
+    // this.board.update('members', {test: true});
+
+    this.snackBar.open(`Ops! this is not yet available.
+                       Please, try again in future as we're currently working on it.`,
+                       null, { duration: 6000 });
   }
 
   errorHandler(): Observable<any> {

@@ -13,10 +13,11 @@
                *ngFor="let item of column.items | keyobject; let i = index"
                class="pinned-note color-{{i%2}}">
         <img class="edit-icon"
+             (click)="editItem(item)"
              src="../../assets/images/marker.png"
              alt="">
         <span>{{item.value.val}}</span>
-        <p class="note-author">john d.</p>
+        <p class="note-author">{{item.value.author}}</p>
       </md-card>
 
       <md-card [style.background]="column.color"
