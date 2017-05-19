@@ -113,7 +113,7 @@ export class BoardPageComponent implements OnInit {
 
     const html = EmailsGenerator.inviteCollaborator(
         self.fireBase.userInfo.name,
-        self.location.prepareExternalUrl(self.location.path()),
+        location.origin + self.location.prepareExternalUrl(self.location.path()),
         location.origin,
       );
 

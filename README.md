@@ -2,6 +2,8 @@
 
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
+This project is running Live at [online-board.firebaseapp.com](https://online-board.firebaseapp.com)
+
 ## Note
 
 If you are updating from a version <= 0.1.0, you must reinstall all the
