@@ -48,14 +48,14 @@ export class BoardPageComponent implements OnInit {
         this.boardID = params['id'];
         return this.fireBase.getBoardObject(this.boardID);
       })
-      .subscribe(res => {
+      .subscribe((res: IBoardObj) => {
         this.board = this.fireBase.getBoard(this.boardID);
         this.columns = this.fireBase.getBoard(`${this.boardID}/columns`);
       });
 
     this.fireBase.getBoardObject(this.boardID)
-      .subscribe(res => {
-        this.boardName = res['name'];
+      .subscribe((res: IBoardObj) => {
+        this.boardName = res.name;
       });
   }
 
@@ -135,12 +135,14 @@ export class BoardPageComponent implements OnInit {
       .subscribe(
         res => {
           if (!!res.sent && /^250 OK/.test(res.sent)) {
-            self.collaboratorsForm.reset();
-            this.fireBase.inviteCollaborator(
+            self.fireBase.inviteCollaborator(
               self.collaboratorsForm.controls.collaborator.value,
               self.boardID,
               self.boardName,
             );
+
+            self.collaboratorsForm.reset();
+
             self.snackBar.open('Your message has been correctly delivered.', null, { duration: 6000 });
           } else {
             self.errorHandler();

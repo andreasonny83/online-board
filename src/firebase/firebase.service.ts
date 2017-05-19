@@ -72,14 +72,19 @@ export class FirebaseService {
       .subscribe(invites => {
         invites.forEach((invite)  => {
           const boardElement = {};
+          const boardMember = {};
           boardElement[invite.boardID] = invite.boardName;
+          boardMember[self.uid] = true;
+
+          self.getBoard(invite.boardID)
+            .update('members', boardMember);
 
           self.userList
-            .update('boards', boardElement)
+            .update(`boards`, boardElement)
             .then(() => {
               self.db.list('/invites').remove(invite.$key);
-              self.snackBar.open(
-                `Wow! Looks like someone invited you to collaborate with a new board.
+              self.snackBar.open(`
+                Wow! Looks like someone invited you to collaborate with a new board.
                 Check out your dashboard.`,
                 null, { duration: 6000 });
             });
@@ -151,7 +156,7 @@ export class FirebaseService {
     return this.db.list(`/boards/${boardUID}`);
   }
 
-  getBoardObject(boardUID: string): FirebaseObjectObservable<any[]> {
+  getBoardObject(boardUID: string): FirebaseObjectObservable<any> {
     return this.db.object(`/boards/${boardUID}`);
   }
 
@@ -199,6 +204,13 @@ export class FirebaseService {
   }
 
   inviteCollaborator(email: string, boardID: string, boardName: string) {
+    if (!email || !boardID || !boardName) {
+      return this.snackBar
+        .open(`
+          Ops! Something went wrong while trying to send the invitation. Please try again.`,
+          null, { duration: 6000 });
+    }
+
     this.getBoard(`${boardID}/invites`)
       .push({'email': email});
 

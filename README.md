@@ -1,5 +1,7 @@
 # Online Board
 
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+
 ## Note
 
 If you are updating from a version <= 0.1.0, you must reinstall all the
@@ -84,3 +86,24 @@ $ firebase login
 $ firebase use default
 $ firebase deploy
 ```
+
+## Contributing
+
+This package is using the AngularJS commit messages as default way to contribute
+with [Commitizen node package](https://github.com/commitizen/cz-cli/blob/master/README.md)
+integrated in this repository.
+
+1.  Fork it!
+1.  Create your feature branch: `git checkout -b my-new-feature`
+1.  Add your changes: `git add .`
+1.  Commit your changes: `npm run commit`
+1.  Push to the branch: `git push origin my-new-feature`
+1.  Submit a pull request :sunglasses:
+
+## Changelog
+
+Changelog available [here](https://github.com/andreasonny83/online-board/releases)
+
+## License
+
+[MIT License](https://github.com/andreasonny83/online-board/blob/master/LICENSE) © Andrea SonnY
