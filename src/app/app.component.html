@@ -1,8 +1,11 @@
-<app-main-toolbar class="app-toolbar"
-                  [title]="title"
-                  [floating]="floatingClass"
-                  [version]="version"></app-main-toolbar>
+<div id="app-container"
+     [@fadeIn]="visibility">
+  <app-main-toolbar class="app-toolbar"
+                    [title]="title"
+                    [floating]="floatingClass"
+                    [version]="version"></app-main-toolbar>
 
-<div class="app-content" (scroll)="onScroll($event)">
-  <router-outlet></router-outlet>
+  <div class="app-content" (scroll)="onScroll($event)">
+    <router-outlet></router-outlet>
+  </div>
 </div>
