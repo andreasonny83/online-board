@@ -1,4 +1,5 @@
-@import 'app-theme.scss';
+@import 'globals/app-theme';
+@import 'globals/loader';
 
 html, body {
   margin: 0;
