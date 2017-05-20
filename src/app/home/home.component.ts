@@ -1,5 +1,4 @@
-import { Component, OnInit, HostBinding } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-home',
@@ -7,17 +6,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  @HostBinding('class.back-btn') back = false;
-
-  constructor(
-    private route: Router,
-  ) {
-    route.events.subscribe((url: any) => {
-      const page: string = url.urlAfterRedirects;
-
-      this.back = page !== '/dashboard' && page !== '/login';
-    });
-  }
+  constructor() { }
 
   ngOnInit() {  }
 }

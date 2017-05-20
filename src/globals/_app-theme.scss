@@ -2,6 +2,8 @@
 
 @include mat-core();
 
+$light-gray: mat-color($mat-grey, 200);
+
 $online-board-primary: mat-palette($mat-cyan, 500, 100, 900);
 $online-board-accent:  mat-palette($mat-amber, A200, A100, A400);
 

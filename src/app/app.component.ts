@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from '../environments/environment';
+import { Router } from '@angular/router';
 import {
   trigger,
   state,
@@ -27,6 +28,17 @@ export class AppComponent implements OnInit {
   public title: string;
   public floatingClass: boolean;
   public version: number;
+  public tall: boolean;
+
+  constructor(
+    private route: Router,
+  ) {
+    route.events.subscribe((url: any) => {
+      const page: string = url.urlAfterRedirects;
+
+      this.tall = page !== '/dashboard' && page !== '/login';
+    });
+  }
 
   ngOnInit() {
     this.version = environment.version;

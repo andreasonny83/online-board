@@ -17,3 +17,13 @@
   padding-top: 80px;
   box-sizing: border-box;
 }
+
+.app-content.tall {
+  padding-top: 112px;
+}
+
+@media (min-width: 601px) {
+  .app-content.tall {
+    padding-top: 128px;
+  }
+}

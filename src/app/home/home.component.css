@@ -1,7 +1,0 @@
-:host {
-  display: block;
-}
-
-:host.back-btn {
-  margin-top: 64px;
-}

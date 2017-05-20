@@ -22,7 +22,7 @@ interface IBoardObj {
 @Component({
   selector: 'app-board-page',
   templateUrl: './board-page.component.html',
-  styleUrls: ['./board-page.component.css']
+  styleUrls: ['./board-page.component.scss']
 })
 export class BoardPageComponent implements OnInit {
   boardID: string;
@@ -32,6 +32,7 @@ export class BoardPageComponent implements OnInit {
   columns: FirebaseListObservable<any[]>;
   collaboratorsForm: FormGroup;
   sendingInvite: boolean;
+  cardElevations: any;
 
   constructor(
     private fireBase: FirebaseService,
@@ -42,6 +43,7 @@ export class BoardPageComponent implements OnInit {
     private snackBar: MdSnackBar,
   ) {
     this.createForm();
+    this.cardElevations = {};
   }
 
   ngOnInit() {
@@ -83,6 +85,18 @@ export class BoardPageComponent implements OnInit {
       default:
       return '';
     }
+  }
+
+  elevateCard(i: number): void {
+    this.cardElevations[i] = true;
+  }
+
+  isElevated(i: number): boolean {
+    return this.cardElevations[i];
+  }
+
+  removeElevation(i: number): void {
+    this.cardElevations[i] = false;
   }
 
   updateVal(evt: any, column: any, item: any) {
