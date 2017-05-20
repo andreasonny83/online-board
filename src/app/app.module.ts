@@ -15,6 +15,7 @@ import {
   MdSnackBarModule,
   MdListModule,
   MdIconModule,
+  MdProgressSpinnerModule,
 } from '@angular/material';
 
 import { AppComponent } from './app.component';
@@ -54,6 +55,7 @@ import { Keyobject } from './pipes';
     MdSnackBarModule,
     MdListModule,
     MdIconModule,
+    MdProgressSpinnerModule,
     // App Modules
     HeaderModule,
     AppRoutingModule,

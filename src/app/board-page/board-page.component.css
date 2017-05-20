@@ -37,9 +37,8 @@ md-list-item.color-1 {
 }
 .cards-column-title {
   display: flex;
-  flex-direction: row;
-  align-items: center;
   font-size: 40px;
+  justify-content: center;
   font-family: WhateverItTakes, helvetica;
 }
 
@@ -122,6 +121,13 @@ md-list-item.color-1 {
   align-self: flex-end;
   margin-top: -20px !important;
   margin-right: -20px;
+}
+
+.loading-spinner {
+  width: 26px;
+  height: 26px;
+  margin-left: 4px;
+  display: inline-block;
 }
 
 @media only screen

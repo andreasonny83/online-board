@@ -1,12 +1,12 @@
 <div class="block-xxl">
-  <h3 class="board-name">{{board?.name}}</h3>
+  <h3 class="board-name">{{ boardName }}</h3>
 
   <div class="item-list-container notes-board">
     <div class="item-list notes-column"
          *ngFor="let column of columns | async">
       <div class="cards-column-title">
-        <span>{{column.title}}</span>
-        <md-icon>{{cardEmoticon(column.title)}}</md-icon>
+        <span>{{ column.title }}</span>
+        <md-icon>{{ cardEmoticon(column.title) }}</md-icon>
       </div>
 
       <md-card [style.background]="column.color"
@@ -29,16 +29,19 @@
             <textarea mdInput
                       #newItem
                       placeholder="Write your feedback"
-                      mdTextareaAutosize></textarea>
+                      mdTextareaAutosize>
+            </textarea>
           </md-input-container>
 
           <button md-button
                   type="submit"
                   name="new-item"
                   class="pin-me-btn">
-            <span class="pin-me-text"> Pin me</span>
-            <!-- <svg src="../../assets/images/pushpin.svg"></svg> -->
-            <img class="pin-icon" src="../../assets/images/pushpin.png" alt="">
+            <span class="pin-me-text">Pin me</span>
+
+            <img class="pin-icon"
+                 src="../../assets/images/pushpin.png"
+                 alt="Pin me">
           </button>
         </form>
       </md-card>
@@ -48,7 +51,9 @@
 
   <div class="item-list-container">
     <md-card>
-      <md-card-title>Invite more collaborators to this board:</md-card-title>
+      <md-card-title>
+        Invite more collaborators to this board:
+      </md-card-title>
 
       <md-card-content>
         <form [formGroup]="collaboratorsForm"
@@ -67,8 +72,14 @@
             <button md-raised-button
                     type="submit"
                     name="new-board"
-                    [disabled]="!collaboratorsForm.valid"
-                    color="accent">Invite</button>
+                    [disabled]="!collaboratorsForm.valid || sendingInvite"
+                    color="accent">
+              <span>Invite</span>
+              <md-spinner color="primary"
+                          strokeWidth="8"
+                          *ngIf="sendingInvite"
+                          class="loading-spinner"></md-spinner>
+            </button>
           </md-card-actions>
         </form>
       </md-card-content>

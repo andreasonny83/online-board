@@ -28,8 +28,10 @@ export class BoardPageComponent implements OnInit {
   boardID: string;
   boardName: string;
   board: FirebaseListObservable<any[]>;
+  boardObj: FirebaseObjectObservable<any>;
   columns: FirebaseListObservable<any[]>;
   collaboratorsForm: FormGroup;
+  sendingInvite: boolean;
 
   constructor(
     private fireBase: FirebaseService,
@@ -44,16 +46,14 @@ export class BoardPageComponent implements OnInit {
 
   ngOnInit() {
     this.route.params
-      .switchMap((params: Params) => {
-        this.boardID = params['id'];
-        return this.fireBase.getBoardObject(this.boardID);
-      })
-      .subscribe((res: IBoardObj) => {
+      .subscribe((res: {id: string}) => {
+        this.boardID = res.id;
         this.board = this.fireBase.getBoard(this.boardID);
         this.columns = this.fireBase.getBoard(`${this.boardID}/columns`);
+        this.boardObj = this.fireBase.getBoardObject(this.boardID);
       });
 
-    this.fireBase.getBoardObject(this.boardID)
+    this.boardObj
       .subscribe((res: IBoardObj) => {
         this.boardName = res.name;
       });
@@ -125,6 +125,8 @@ export class BoardPageComponent implements OnInit {
       html: html,
     };
 
+    self.sendingInvite = true;
+
     const headers = new Headers({ 'Content-Type': 'application/json' }); // Set content type to JSON
     const options = new RequestOptions({ headers: headers }); // Create a request option
 
@@ -142,7 +144,7 @@ export class BoardPageComponent implements OnInit {
             );
 
             self.collaboratorsForm.reset();
-
+            self.sendingInvite = false;
             self.snackBar.open('Your message has been correctly delivered.', null, { duration: 6000 });
           } else {
             self.errorHandler();
@@ -163,6 +165,8 @@ export class BoardPageComponent implements OnInit {
   }
 
   errorHandler(): Observable<any> {
+    this.sendingInvite = false;
+
     this.snackBar.open(`Is not possible to send the email at the moment.
                        Please, try again later or contact the support.`,
                        null, { duration: 6000 });
