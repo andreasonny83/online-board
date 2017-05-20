@@ -1,7 +1,7 @@
 {
   "name": "online-board",
   "description": "Create and share interactive boards online",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
