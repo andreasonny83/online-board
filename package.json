@@ -1,17 +1,24 @@
 {
   "name": "online-board",
   "description": "Create and share interactive boards online",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "license": "MIT",
   "homepage": "https://online-board.firebaseapp.com",
   "author": "andreasonny <andreasonny83@gmail.com>",
   "contributors": [
-    {"name": "Claudia Donea", "email": "claudia.donea24@gmail.com"},
-    {"name": "Driskyle", "url": "http://driskyle.com", "email": "driskyle@gmail.com"}
+    {
+      "name": "Claudia Donea",
+      "email": "claudia.donea24@gmail.com"
+    },
+    {
+      "name": "Driskyle",
+      "url": "http://driskyle.com",
+      "email": "driskyle@gmail.com"
+    }
   ],
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/andreasonny83/online-board.git"
+    "type": "git",
+    "url": "https://github.com/andreasonny83/online-board.git"
   },
   "bugs": {
     "url": "https://github.com/andreasonny83/online-board/issues"
