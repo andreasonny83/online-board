@@ -9,5 +9,9 @@
        [class.tall]="tall"
        (scroll)="onScroll($event)">
     <router-outlet></router-outlet>
+
+    <app-footer [version]="version"
+                [homepage]="homepage"
+                [title]="title"></app-footer>
   </div>
 </div>

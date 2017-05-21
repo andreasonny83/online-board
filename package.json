@@ -3,6 +3,19 @@
   "description": "Create and share interactive boards online",
   "version": "1.0.0",
   "license": "MIT",
+  "homepage": "https://online-board.firebaseapp.com",
+  "author": "andreasonny <andreasonny83@gmail.com>",
+  "contributors": [
+    {"name": "Claudia Donea", "email": "claudia.donea24@gmail.com"},
+    {"name": "Driskyle", "url": "http://driskyle.com", "email": "driskyle@gmail.com"}
+  ],
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/andreasonny83/online-board.git"
+  },
+  "bugs": {
+    "url": "https://github.com/andreasonny83/online-board/issues"
+  },
   "scripts": {
     "start": "webpack-dev-server --port=4200",
     "commit": "git-cz",

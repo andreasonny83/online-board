@@ -7,6 +7,7 @@ import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
 import { FirebaseModule } from '../firebase';
 import { CookieLawModule } from 'angular2-cookie-law';
+import { HeaderModule } from './header';
 import {
   MdToolbarModule,
   MdCardModule,
@@ -24,7 +25,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { BoardPageComponent } from './board-page/board-page.component';
-import { HeaderModule } from './header';
+import { FooterComponent } from './footer/footer.component';
 
 import { AuthGuard } from './auth-guard.service';
 import { AuthService } from './auth.service';
@@ -38,6 +39,7 @@ import { Keyobject } from './pipes';
     LoginComponent,
     DashboardComponent,
     BoardPageComponent,
+    FooterComponent,
     Keyobject,
   ],
   imports: [

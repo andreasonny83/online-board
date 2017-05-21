@@ -26,6 +26,7 @@ import {
 })
 export class AppComponent implements OnInit {
   public title: string;
+  public homepage: string;
   public floatingClass: boolean;
   public version: number;
   public visibility: 'show' | 'hide';
@@ -45,6 +46,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.version = environment.version;
+    this.homepage = environment.homepage;
     this.title = 'Online Board';
   }
 
