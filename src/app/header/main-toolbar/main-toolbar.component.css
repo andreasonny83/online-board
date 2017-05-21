@@ -7,6 +7,7 @@
 }
 
 .version {
+  display: none;
   font-size: 11px;
   color: rgb(255,255,255);
   color: rgba(255,255,255,.9);
@@ -19,4 +20,10 @@
 .backBtn .mat-icon {
   font-size: 30px;
   height: 30px;
+}
+
+@media (min-width: 601px) {
+  .version {
+    display: initial;
+  }
 }

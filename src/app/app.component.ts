@@ -28,11 +28,14 @@ export class AppComponent implements OnInit {
   public title: string;
   public floatingClass: boolean;
   public version: number;
+  public visibility: 'show' | 'hide';
   public tall: boolean;
 
   constructor(
     private route: Router,
   ) {
+    this.visibility = 'show';
+
     route.events.subscribe((url: any) => {
       const page: string = url.urlAfterRedirects;
 

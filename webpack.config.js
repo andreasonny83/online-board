@@ -1,58 +1,62 @@
 const path = require('path');
+
 const ProgressPlugin = require('webpack/lib/ProgressPlugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 const postcssUrl = require('postcss-url');
 const cssnano = require('cssnano');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const OfflinePlugin = require('offline-plugin');
+const WebpackPwaManifest = require('webpack-pwa-manifest');
+const HtmlElementsPlugin = require('./config/html-elements-plugin');
 
 const { NoEmitOnErrorsPlugin } = require('webpack');
-const { GlobCopyWebpackPlugin, BaseHrefWebpackPlugin } = require('@angular/cli/plugins/webpack');
+const { GlobCopyWebpackPlugin } = require('@angular/cli/plugins/webpack');
 const { CommonsChunkPlugin } = require('webpack').optimize;
 const { AotPlugin } = require('@ngtools/webpack');
 
 const nodeModules = path.join(process.cwd(), 'node_modules');
+const genDirNodeModules = path.join(process.cwd(), 'src', '$$_gendir', 'node_modules');
 const entryPoints = ["inline","polyfills","sw-register","styles","vendor","main"];
 const minimizeCss = false;
-const baseHref = "";
-const deployUrl = "";
+
+const METADATA = {
+  title: "Online Board",
+  baseUrl: "/",
+  description: "Create and share interactive retrospective boards online.",
+  keywords: "Online board,Retrospective,Kanban,Scrum,Agile,Progressive WebApp,PWA",
+  backgroundColor: "#00bcd4",
+  url: "https://online-board.firebaseapp.com",
+  thumbnail: "https://firebasestorage.googleapis.com/v0/b/online-board.appspot.com/o/oline-board.png?alt=media&token=7561b1f4-55ac-407e-9ff0-0196140f4c75",
+};
+
 const postcssPlugins = function () {
     // safe settings based on: https://github.com/ben-eb/cssnano/issues/358#issuecomment-283696193
     const importantCommentRe = /@preserve|@license|[@#]\s*source(?:Mapping)?URL|^!/i;
     const minimizeOptions = {
-        autoprefixer: false,
-        safe: true,
-        mergeLonghand: false,
-        discardComments: { remove: (comment) => !importantCommentRe.test(comment) }
+      autoprefixer: false,
+      safe: true,
+      mergeLonghand: false,
+      discardComments: { remove: (comment) => !importantCommentRe.test(comment) }
     };
+
     return [
-        postcssUrl({
-            url: (URL) => {
-                // Only convert root relative URLs, which CSS-Loader won't process into require().
-                if (!URL.startsWith('/') || URL.startsWith('//')) {
-                    return URL;
-                }
-                if (deployUrl.match(/:\/\//)) {
-                    // If deployUrl contains a scheme, ignore baseHref use deployUrl as is.
-                    return `${deployUrl.replace(/\/$/, '')}${URL}`;
-                }
-                else if (baseHref.match(/:\/\//)) {
-                    // If baseHref contains a scheme, include it as is.
-                    return baseHref.replace(/\/$/, '') +
-                        `/${deployUrl}/${URL}`.replace(/\/\/+/g, '/');
-                }
-                else {
-                    // Join together base-href, deploy-url and the original URL.
-                    // Also dedupe multiple slashes into single ones.
-                    return `/${baseHref}/${deployUrl}/${URL}`.replace(/\/\/+/g, '/');
-                }
-            }
-        }),
-        autoprefixer(),
-    ].concat(minimizeCss ? [cssnano(minimizeOptions)] : []);
+      postcssUrl({
+        url: (URL) => {
+          // Only convert root relative URLs, which CSS-Loader won't process into require().
+          if (!URL.startsWith('/') || URL.startsWith('//')) {
+            return URL;
+          }
+
+          // Dedupe multiple slashes into single ones.
+          return URL.replace(/\/\/+/g, '/');
+        }
+      }),
+      autoprefixer(),
+  ].concat(minimizeCss ? [cssnano(minimizeOptions)] : []);
 };
 
-module.exports = {
+const config = {
   "devtool": "source-map",
   "resolve": {
     "extensions": [
@@ -81,8 +85,8 @@ module.exports = {
   },
   "output": {
     "path": path.join(process.cwd(), "dist"),
-    "filename": "[name].bundle.js",
-    "chunkFilename": "[id].chunk.js"
+    "filename": "[name].[chunkhash:20].bundle.js",
+    "chunkFilename": "[id].[chunkhash:20].chunk.js"
   },
   "module": {
     "rules": [
@@ -204,15 +208,12 @@ module.exports = {
     ]
   },
   "plugins": [
-    new ExtractTextPlugin("styles.css"),
-
-
     new NoEmitOnErrorsPlugin(),
 
     new GlobCopyWebpackPlugin({
       "patterns": [
         "assets",
-        "favicon.ico"
+        "favicon.png"
       ],
       "globOptions": {
         "cwd": "./src",
@@ -224,7 +225,7 @@ module.exports = {
     new ProgressPlugin(),
 
     new HtmlWebpackPlugin({
-      "template": "./src/index.html",
+      "template": "./src/index.template.sjs",
       "filename": "./index.html",
       "hash": false,
       "inject": true,
@@ -235,24 +236,31 @@ module.exports = {
       "showErrors": true,
       "chunks": "all",
       "excludeChunks": [],
-      "title": "Webpack App",
       "xhtml": true,
+      "title": METADATA.title,
+      "metadata": METADATA,
       "chunksSortMode": function sort(left, right) {
         let leftIndex = entryPoints.indexOf(left.names[0]);
         let rightindex = entryPoints.indexOf(right.names[0]);
         if (leftIndex > rightindex) {
-            return 1;
+          return 1;
         }
         else if (leftIndex < rightindex) {
-            return -1;
+          return -1;
         }
         else {
-            return 0;
+          return 0;
         }
     }
     }),
 
-    new BaseHrefWebpackPlugin({}),
+    new ExtractTextPlugin("[name].[chunkhash:20].css"),
+
+    new HtmlElementsPlugin({
+      headTags: require('./config/head-config.common')
+    }),
+
+    new OfflinePlugin(),
 
     new CommonsChunkPlugin({
       "name": "inline",
@@ -261,7 +269,8 @@ module.exports = {
 
     new CommonsChunkPlugin({
       "name": "vendor",
-      "minChunks": (module) => module.resource && module.resource.startsWith(nodeModules),
+      "minChunks": (module) => module.resource &&
+                (module.resource.startsWith(nodeModules) || module.resource.startsWith(genDirNodeModules)),
       "chunks": [
         "main"
       ]
@@ -293,3 +302,31 @@ module.exports = {
     contentBase: 'src/',
   }
 };
+
+if (process.env.NODE_ENV === 'production') {
+  config.plugins.push(
+    new WebpackPwaManifest({
+      "name": METADATA.title,
+      "short_name": METADATA.title,
+      "description": METADATA.description,
+      "background_color": METADATA.backgroundColor,
+      "start_url": "./?utm_source=web_app_manifest",
+      "dir": "rtl",
+      "lang": "en-US",
+      "icons": [
+        {
+          "src": path.join(process.cwd(), "src/assets/icons/icon.png"),
+          "sizes": [120, 152, 167, 180, 1024],
+          "destination": path.join("icons", "ios")
+        },
+        {
+          "src": path.join(process.cwd(), "src/assets/icons/icon.png"),
+          "sizes": [32, 36, 48, 72, 96, 144, 192, 512],
+          "destination": path.join("icons", "android")
+        }
+      ]
+    })
+  );
+}
+
+module.exports = config;

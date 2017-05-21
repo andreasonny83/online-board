@@ -1,3 +1,13 @@
+@font-face {
+  font-family: 'WhateverItTakesBold';
+  src: url('./assets/fonts/whatever_it_takes_bold.ttf');
+}
+
+@font-face {
+  font-family: 'WhateverItTakes';
+  src: url('./assets/fonts/whatever_it_takes.ttf');
+}
+
 @import 'globals/app-theme';
 @import 'globals/loader';
 
@@ -31,14 +41,4 @@ md-card {
 
 .full-width {
   width: 100%;
-}
-
-@font-face {
-  font-family: 'WhateverItTakesBold';
-  src: url('./assets/fonts/whatever_it_takes_bold.ttf');
-}
-
-@font-face {
-  font-family: 'WhateverItTakes';
-  src: url('./assets/fonts/whatever_it_takes.ttf');
 }

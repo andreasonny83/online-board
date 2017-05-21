@@ -1,3 +1,10 @@
 .menu-button {
   padding: 0 7px;
+  font-size: 12px;
+}
+
+@media (min-width: 601px) {
+  .menu-button {
+    font-size: 16px;
+  }
 }
