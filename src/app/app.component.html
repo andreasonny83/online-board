@@ -6,12 +6,7 @@
                     [version]="version"></app-main-toolbar>
 
   <div class="app-content"
-       [class.tall]="tall"
        (scroll)="onScroll($event)">
     <router-outlet></router-outlet>
-
-    <app-footer [version]="version"
-                [homepage]="homepage"
-                [title]="title"></app-footer>
   </div>
 </div>

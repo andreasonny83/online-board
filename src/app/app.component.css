@@ -12,18 +12,14 @@
   top: 0;
   left: 0;
   width: 100%;
-  overflow: scroll;
   height: 100%;
-  padding-top: 80px;
+  padding-top: 56px;
+  overflow: scroll;
   box-sizing: border-box;
 }
 
-.app-content.tall {
-  padding-top: 112px;
-}
-
 @media (min-width: 601px) {
-  .app-content.tall {
-    padding-top: 128px;
+  .app-content {
+    padding-top: 64px;
   }
 }

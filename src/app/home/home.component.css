@@ -1,0 +1,10 @@
+:host {
+  display: block;
+  min-height: 100%;
+  position: relative;
+  overflow: auto;
+}
+
+.content {
+  margin-bottom: 130px;
+}

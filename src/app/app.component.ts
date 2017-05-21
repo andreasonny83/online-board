@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from '../environments/environment';
-import { Router } from '@angular/router';
 import {
   trigger,
   state,
@@ -30,18 +29,9 @@ export class AppComponent implements OnInit {
   public floatingClass: boolean;
   public version: number;
   public visibility: 'show' | 'hide';
-  public tall: boolean;
 
-  constructor(
-    private route: Router,
-  ) {
+  constructor() {
     this.visibility = 'show';
-
-    route.events.subscribe((url: any) => {
-      const page: string = url.urlAfterRedirects;
-
-      this.tall = page !== '/dashboard' && page !== '/login';
-    });
   }
 
   ngOnInit() {

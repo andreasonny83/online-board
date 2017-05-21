@@ -1,20 +1,18 @@
 <md-toolbar class="customize-toolbar"
             [class.floating]="floating"
             color="primary">
+  <button md-button
+          *ngIf="back"
+          class="backBtn"
+          color="accent"
+          routerLink="/dasboard">
+    <md-icon>chevron_left</md-icon>
+  </button>
+
   <span class="toolbar-title">
     {{title}}
     <span class="version">v.{{version}}</span>
   </span>
 
   <app-header-menu></app-header-menu>
-
-  <md-toolbar-row class="row"
-                  *ngIf="back">
-    <button md-button
-            class="backBtn"
-            color="accent"
-            routerLink="/dasboard">
-      <md-icon>chevron_left</md-icon>
-    </button>
-  </md-toolbar-row>
 </md-toolbar>
