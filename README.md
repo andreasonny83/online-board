@@ -2,7 +2,7 @@
 
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
-This project is running Live at [online-board.firebaseapp.com](https://online-board.firebaseapp.com)
+This project is running Live at [onlineboard.sonnywebdesign.com](https://onlineboard.sonnywebdesign.com)
 
 ## Note
 
