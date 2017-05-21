@@ -6,6 +6,7 @@ import { HttpModule } from '@angular/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { FirebaseModule } from '../firebase';
+import { CookieLawModule } from 'angular2-cookie-law';
 import {
   MdToolbarModule,
   MdCardModule,
@@ -46,6 +47,7 @@ import { Keyobject } from './pipes';
     ReactiveFormsModule,
     HttpModule,
     FirebaseModule,
+    CookieLawModule,
     // AngularMaterial
     MdToolbarModule,
     MdCardModule,
