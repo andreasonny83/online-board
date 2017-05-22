@@ -2,7 +2,8 @@
         class="menu-button"
         [mdMenuTriggerFor]="menu"
         *ngIf="(user | async)?.email && (user | async)?.emailVerified">
-    {{ (user | async)?.email }}
+    <md-icon class="user-avatar">account_circle</md-icon>
+    <span class="user-name">{{ (user | async)?.email }}</span>
   <md-icon class="expand-icon">expand_more</md-icon>
 </button>
 

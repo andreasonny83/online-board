@@ -25,9 +25,9 @@ li,
   display: inline-block;
   padding: 0;
   margin: 0;
-  line-height: 28px;
-  font-size: 14px;
   text-align: center;
+  font-size: 12px;
+  line-height: 18px;
 }
 
 .site-title {
@@ -35,8 +35,8 @@ li,
 }
 
 li {
-  line-height: 16px;
   box-sizing: border-box;
+  padding: 0 2px;
 }
 
 .copy {
@@ -56,7 +56,7 @@ a:hover {
   text-decoration: underline;
 }
 
-@media (min-width: 601px) {
+@media (min-width: 901px) {
   .site-footer {
     flex-direction: row;
   }
@@ -69,7 +69,7 @@ a:hover {
   li,
   .site-title {
     line-height: 16px;
-    font-size: 12px;
+    font-size: 11px;
     text-align: left;
   }
 

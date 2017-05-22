@@ -17,6 +17,12 @@
   flex: 1;
 }
 
+.backBtn {
+  min-width: 46px;
+  margin-right: 6px;
+  padding: 0;
+}
+
 .backBtn .mat-icon {
   font-size: 30px;
   height: 30px;
