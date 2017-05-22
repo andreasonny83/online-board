@@ -18,11 +18,13 @@ import {
   MdListModule,
   MdIconModule,
   MdProgressSpinnerModule,
+  MdDialogModule,
 } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { DialogResetEmail } from './login/dialog-reset-email';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { BoardPageComponent } from './board-page/board-page.component';
 import { FooterComponent } from './footer/footer.component';
@@ -40,6 +42,7 @@ import { Keyobject } from './pipes';
     DashboardComponent,
     BoardPageComponent,
     FooterComponent,
+    DialogResetEmail,
     Keyobject,
   ],
   imports: [
@@ -60,9 +63,13 @@ import { Keyobject } from './pipes';
     MdListModule,
     MdIconModule,
     MdProgressSpinnerModule,
+    MdDialogModule,
     // App Modules
     HeaderModule,
     AppRoutingModule,
+  ],
+  entryComponents: [
+    DialogResetEmail,
   ],
   providers: [
     AuthGuard,

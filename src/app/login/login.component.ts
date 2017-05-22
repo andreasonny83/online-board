@@ -8,6 +8,9 @@ import {
 } from '@angular/forms';
 
 import { AuthService } from '../auth.service';
+import { MdDialog, MdSnackBar } from '@angular/material';
+import { DialogResetEmail } from './dialog-reset-email';
+
 
 @Component({
   selector: 'app-login',
@@ -19,8 +22,10 @@ export class LoginComponent implements OnInit {
   registerForm: FormGroup;
 
   constructor(
+    public dialog: MdDialog,
     private authService: AuthService,
     private fb: FormBuilder,
+    private snackBar: MdSnackBar,
   ) {
     this.createForm();
   }
@@ -73,5 +78,13 @@ export class LoginComponent implements OnInit {
         .register(this.registerForm.value)
         .then(res => this.registerForm.reset());
     }
+  }
+
+  resetPassword() {
+    let dialogRef = this.dialog.open(DialogResetEmail);
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.snackBar.open('Email reset correctly sent.', null, { duration: 6000 });
+    });
   }
 }

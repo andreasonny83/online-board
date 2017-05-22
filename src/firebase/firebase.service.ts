@@ -139,6 +139,10 @@ export class FirebaseService {
       .sendEmailVerification();
   }
 
+  resetEmail(email: string): firebase.Promise<any> {
+    return this.afAuth.auth.sendPasswordResetEmail(email);
+  }
+
   updateUsersTable(uid: string, email: string, displayName: string) {
     const self = this;
 
