@@ -24,7 +24,7 @@ import {
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
-import { DialogResetEmail } from './login/dialog-reset-email';
+import { DialogResetEmailComponent } from './login/dialog-reset-email';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { BoardPageComponent } from './board-page/board-page.component';
 import { FooterComponent } from './footer/footer.component';
@@ -42,7 +42,7 @@ import { Keyobject } from './pipes';
     DashboardComponent,
     BoardPageComponent,
     FooterComponent,
-    DialogResetEmail,
+    DialogResetEmailComponent,
     Keyobject,
   ],
   imports: [
@@ -69,7 +69,7 @@ import { Keyobject } from './pipes';
     AppRoutingModule,
   ],
   entryComponents: [
-    DialogResetEmail,
+    DialogResetEmailComponent,
   ],
   providers: [
     AuthGuard,

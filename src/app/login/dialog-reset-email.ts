@@ -10,7 +10,7 @@ import {
 } from '@angular/forms';
 
 @Component({
-  selector: 'dialog-reset-email',
+  selector: 'app-dialog-reset-email',
   template: `
     <h2 md-dialog-title>Reset your password</h2>
 
@@ -52,12 +52,12 @@ import {
     .loading-spinner { width: 26px; height: 26px; margin-left: 4px; display: inline-block; }
   `]
 })
-export class DialogResetEmail {
+export class DialogResetEmailComponent {
   public resetForm: FormGroup;
   public loading: boolean;
 
   constructor(
-    public dialogRef: MdDialogRef<DialogResetEmail>,
+    public dialogRef: MdDialogRef<DialogResetEmailComponent>,
     private fb: FormBuilder,
     private fireBase: FirebaseService,
   ) {
@@ -75,8 +75,8 @@ export class DialogResetEmail {
     this.fireBase
       .resetEmail(this.resetForm.controls.email.value)
       .then(result => {
-        this.dialogRef.close();
+        this.dialogRef.close(true);
       })
-      .catch(() => this.dialogRef.close());
+      .catch(() => this.dialogRef.close(true));
   }
 }

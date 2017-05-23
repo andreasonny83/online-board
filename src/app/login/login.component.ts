@@ -9,8 +9,7 @@ import {
 
 import { AuthService } from '../auth.service';
 import { MdDialog, MdSnackBar } from '@angular/material';
-import { DialogResetEmail } from './dialog-reset-email';
-
+import { DialogResetEmailComponent } from './dialog-reset-email';
 
 @Component({
   selector: 'app-login',
@@ -18,8 +17,8 @@ import { DialogResetEmail } from './dialog-reset-email';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  loginForm: FormGroup;
-  registerForm: FormGroup;
+  public loginForm: FormGroup;
+  public registerForm: FormGroup;
 
   constructor(
     public dialog: MdDialog,
@@ -32,7 +31,35 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() { }
 
-  createForm() {
+  public onLoginSubmit(): void {
+    if (!!this.loginForm.valid) {
+      this.authService
+        .login(this.loginForm.value)
+        .then(res => this.loginForm.reset());
+    }
+  }
+
+  public onRegisterSubmit(): void {
+    if (!!this.registerForm.valid) {
+      this.authService
+        .register(this.registerForm.value)
+        .then(res => this.registerForm.reset());
+    }
+  }
+
+  public resetPassword(): void {
+    const dialogRef = this.dialog.open(DialogResetEmailComponent);
+
+    dialogRef.afterClosed().subscribe((res: boolean) => {
+      return !!res && this.snackBar.open(
+        'Email reset correctly sent.',
+        null,
+        { duration: 6000 }
+      );
+    });
+  }
+
+  private createForm(): void {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -50,7 +77,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  validatePassword(formCtrl: FormControl) {
+  private validatePassword(formCtrl: FormControl) {
     if ('root' in formCtrl) {
       const password: AbstractControl = formCtrl.root.get('password');
 
@@ -62,29 +89,5 @@ export class LoginComponent implements OnInit {
     return {
       'validatePassword': { valid: false }
     };
-  }
-
-  onLoginSubmit() {
-    if (!!this.loginForm.valid) {
-      this.authService
-        .login(this.loginForm.value)
-        .then(res => this.loginForm.reset());
-    }
-  }
-
-  onRegisterSubmit() {
-    if (!!this.registerForm.valid) {
-      this.authService
-        .register(this.registerForm.value)
-        .then(res => this.registerForm.reset());
-    }
-  }
-
-  resetPassword() {
-    let dialogRef = this.dialog.open(DialogResetEmail);
-
-    dialogRef.afterClosed().subscribe(result => {
-      this.snackBar.open('Email reset correctly sent.', null, { duration: 6000 });
-    });
   }
 }
