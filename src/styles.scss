@@ -1,3 +1,6 @@
+@import 'globals/app-theme';
+@import 'globals/loader';
+
 @font-face {
   font-family: 'WhateverItTakesBold';
   src: url('./assets/fonts/whatever_it_takes_bold.ttf');
@@ -7,9 +10,6 @@
   font-family: 'WhateverItTakes';
   src: url('./assets/fonts/whatever_it_takes.ttf');
 }
-
-@import 'globals/app-theme';
-@import 'globals/loader';
 
 html, body {
   margin: 0;

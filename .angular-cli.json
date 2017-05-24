@@ -10,7 +10,8 @@
       "outDir": "dist",
       "main": "main.ts",
       "styles": [
-        "styles.scss"
+        "styles.scss",
+        "globals/_app-theme.scss"
       ],
       "polyfills": "polyfills.ts",
       "test": "test.ts",
