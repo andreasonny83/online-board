@@ -3,9 +3,9 @@ language: node_js
 node_js:
 - '7'
 
-branches:
-  only:
-  - master
+# branches:
+#   only:
+#   - master
 
 before_script:
 - npm run build
