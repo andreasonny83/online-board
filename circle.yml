@@ -6,7 +6,8 @@ machine:
 
 dependencies:
   override:
-    - yarn
+    - yarn install
+    - yarn upgrade
 
 test:
   pre:
