@@ -3,11 +3,15 @@ machine:
     PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
   node:
     version: 7
+  post:
+    - curl -o- -L https://yarnpkg.com/install.sh | bash
 
 dependencies:
+  pre:
+    - yarn --version
+
   override:
     - yarn install
-    - yarn upgrade
 
 test:
   pre:
