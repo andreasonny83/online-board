@@ -1,0 +1,18 @@
+machine:
+  environment:
+    PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
+  node:
+    version: 7
+
+dependencies:
+  override:
+    - yarn
+
+test:
+  pre:
+    - npm run build
+    - npm run startserver:
+        background: true
+    - sleep 10
+  override:
+    - npm run e2e
