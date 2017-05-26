@@ -10,11 +10,11 @@ branches:
 before_script:
 - npm run build
 - npm install webdriver-manager -g
-- webdriver-manager update
+- webdriver-manager update --standalone
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
-- sleep 5 # give server time to start
-- npm run startserver > /dev/null &
+- sleep 1 # give server time to start
+- webdriver-manager start > /dev/null 2>&1 &
 
 script:
 - npm run lint
