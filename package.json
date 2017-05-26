@@ -35,8 +35,8 @@
     "e2e": "protractor ./protractor.conf.js",
     "pree2e": "webdriver-manager update",
     "startserver": "lite-server",
-    "pree2e:travis": "npm run build",
     "e2e:travis": "npm run e2e -- --browser=firefox",
+    "pree2e:travis": "npm run build",
     "webpack-dev-server": "webpack-dev-server",
     "webpack": "webpack",
     "firebase": "firebase"
