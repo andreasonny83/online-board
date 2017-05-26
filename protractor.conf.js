@@ -4,32 +4,48 @@
 const { SpecReporter } = require('jasmine-spec-reporter');
 
 exports.config = {
-  allScriptsTimeout: 60000,
+  allScriptsTimeout: 110000,
 
   specs: [
     './e2e/**/*.e2e-spec.ts'
   ],
+
   capabilities: {
-    'browserName': 'chrome'
+    'browserName': 'chrome',
+    'chromeOptions': {
+      'args': ['show-fps-counter=true']
+    }
   },
-  directConnect: false,
+
   baseUrl: 'http://localhost:4200/',
-  seleniumAddress: 'http://localhost:4444/wd/hub',
-  framework: 'jasmine',
+
+  framework: 'jasmine2',
+
   jasmineNodeOpts: {
+    showTiming: true,
     showColors: true,
-    ScriptTimeoutError: 60000,
-    defaultTimeoutInterval: 60000,
-    print: function() {}
+    isVerbose: false,
+    includeStackTrace: false,
+    defaultTimeoutInterval: 400000
   },
+
+  directConnect: true,
+
   beforeLaunch: function() {
     require('ts-node').register({
       project: 'e2e/tsconfig.e2e.json'
     });
 
-    ignoreSynchronization = true;
   },
   onPrepare() {
-    jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
-  }
+    ignoreSynchronization = true;
+  },
+
+  /**
+   * Angular 2 configuration
+   *
+   * useAllAngular2AppRoots: tells Protractor to wait for any angular2 apps on the page instead of just the one matching
+   * `rootEl`
+   */
+   useAllAngular2AppRoots: true
 };
