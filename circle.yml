@@ -18,8 +18,12 @@ test:
   pre:
     - npm run build
     - sleep 10
-    - npm run startserver:
+    - yarn run startserver:
         background: true
+    - yarn run webdriver-manager -- start > /dev/null &:
+        background: true
+    - sleep 1
   override:
     - yarn run lint
     - yarn run test:ci
+    - yarn run e2e
