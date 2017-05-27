@@ -38,7 +38,7 @@
     "pree2e": "webdriver-manager update",
     "e2e:ci": "protractor ./protractor.conf.ci.js",
     "startserver": "lite-server ./dist",
-    "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls",
+    "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "protractor": "protractor",
     "webpack": "webpack"
   },
