@@ -17,12 +17,11 @@ dependencies:
 test:
   pre:
     - npm run build
-    - sleep 10
+    - yarn run webdriver-manager -- update
     - yarn run startserver:
         background: true
-    - yarn run webdriver-manager -- start > /dev/null &:
+    - yarn run webdriver-manager -- start:
         background: true
-    - sleep 1
   override:
     - yarn run lint
     - yarn run test:ci
