@@ -1,0 +1,32 @@
+machine:
+  environment:
+    PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
+  node:
+    version: 7
+  post:
+    - curl -o- -L https://yarnpkg.com/install.sh | bash # upgrade Yarn to the latest version
+
+dependencies:
+  pre:
+    - yarn --version
+    - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+    - sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+    - sudo apt-get update
+    - sudo apt-get install google-chrome-stable
+
+  override:
+    - yarn install
+    - npm rebuild phantomjs-prebuilt node-sass # phantomjs-prebuilt fails with yarn
+
+test:
+  pre:
+    - npm run build
+    - yarn run webdriver-manager -- update
+    - yarn run startserver:
+        background: true
+    - yarn run webdriver-manager -- start:
+        background: true
+  override:
+    - yarn run lint
+    - yarn run test:ci
+    - yarn run e2e:ci
