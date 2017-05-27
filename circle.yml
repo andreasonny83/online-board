@@ -4,7 +4,7 @@ machine:
   node:
     version: 7
   post:
-    - curl -o- -L https://yarnpkg.com/install.sh | bash
+    - curl -o- -L https://yarnpkg.com/install.sh | bash # upgrade Yarn to the latest version
 
 dependencies:
   pre:
@@ -12,13 +12,13 @@ dependencies:
 
   override:
     - yarn install
-    - npm rebuild node-sass
+    - npm rebuild phantomjs-prebuilt node-sass # phantomjs-prebuilt fails with yarn
 
 test:
   pre:
     - npm run build
-    - npm run startserver:
-        background: true
-    - sleep 10
+    # - npm run startserver:
+    #     background: true
+    # - sleep 10
   override:
-    - npm run e2e
+    - yarn run test:ci
