@@ -9,11 +9,6 @@ machine:
 dependencies:
   pre:
     - yarn --version
-
-    # - curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    # - sudo dpkg -i google-chrome.deb
-    # - sudo sed -i 's|HERE/chrome\"|HERE/chrome\" --disable-setuid-sandbox|g' /opt/google/chrome/google-chrome
-    # - rm google-chrome.deb
     - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
     - sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
     - sudo apt-get update
@@ -34,4 +29,4 @@ test:
   override:
     - yarn run lint
     - yarn run test:ci
-    - yarn run e2e
+    - yarn run e2e:ci

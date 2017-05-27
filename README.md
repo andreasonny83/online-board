@@ -1,6 +1,8 @@
 # Online Board
 
 [![Build Status](https://travis-ci.org/andreasonny83/online-board.svg?branch=master)](https://travis-ci.org/andreasonny83/online-board)
+[![CircleCI](https://circleci.com/gh/andreasonny83/online-board/tree/master.svg?style=svg)](https://circleci.com/gh/andreasonny83/online-board/tree/master)
+[![Coverage Status](https://coveralls.io/repos/github/andreasonny83/online-board/badge.svg?branch=master)](https://coveralls.io/github/andreasonny83/online-board?branch=master)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 This project is running Live at [onlineboard.sonnywebdesign.com](https://onlineboard.sonnywebdesign.com)
@@ -42,7 +44,7 @@ Run `npm test` to execute the unit tests via [Karma](https://karma-runner.github
 ## Running end-to-end tests
 
 Run `npm run e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
+Before running the tests make sure you are serving the app via `npm start`.
 
 ## Deploying to Firebase
 
