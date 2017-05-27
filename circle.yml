@@ -17,8 +17,9 @@ dependencies:
 test:
   pre:
     - npm run build
-    # - npm run startserver:
-    #     background: true
-    # - sleep 10
+    - sleep 10
+    - npm run startserver:
+        background: true
   override:
+    - yarn run lint
     - yarn run test:ci

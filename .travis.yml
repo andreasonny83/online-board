@@ -16,7 +16,6 @@ before_install:
 
 before_script:
 - npm rebuild phantomjs-prebuilt node-sass # phantomjs-prebuilt fails with yarn
-- npm run build
 - sleep 3 # give server time to start
 
 script:
@@ -26,6 +25,7 @@ script:
 before_deploy:
 - npm install -g firebase-tools
 - echo 'About to deploy live...'
+- npm run build
 
 deploy:
   provider: firebase

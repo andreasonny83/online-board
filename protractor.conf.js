@@ -12,9 +12,6 @@ exports.config = {
 
   capabilities: {
     'browserName': 'chrome',
-    'chromeOptions': {
-      'args': ['show-fps-counter=true']
-    }
   },
 
   baseUrl: 'http://localhost:4200/',
@@ -26,10 +23,12 @@ exports.config = {
     showColors: true,
     isVerbose: false,
     includeStackTrace: false,
-    defaultTimeoutInterval: 400000
+    defaultTimeoutInterval: 400000,
+    print: function() {}
   },
 
-  directConnect: true,
+  directConnect: false,
+  // directConnect: true,
 
   beforeLaunch: function() {
     require('ts-node').register({
@@ -39,6 +38,7 @@ exports.config = {
   },
   onPrepare() {
     ignoreSynchronization = true;
+    jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
   },
 
   /**
