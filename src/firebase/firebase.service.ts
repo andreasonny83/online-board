@@ -151,6 +151,7 @@ export class FirebaseService {
       .update(uid, {
         email: email,
         name: displayName,
+        uid: uid,
       })
       .then(() => self.logout())
       .catch(() => self.logout());

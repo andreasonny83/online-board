@@ -11,6 +11,7 @@ interface IUserRegister {
 }
 
 interface IUserInfo {
+  uid: string;
   email: string;
   name: string;
   lastLogIn: number;

@@ -122,17 +122,19 @@ export class BoardPageComponent implements OnInit {
   }
 
   pushItem(itemVal, column) {
-    const self = this;
+    const authorName = this.fireBase.userInfo.name;
+    const authorUID = this.fireBase.userInfo.uid;
 
     this.columns.$ref.ref
       .child(column.$key)
       .child('items')
       .push({
         val: itemVal.value,
-        author: this.fireBase.userInfo.name,
+        author: authorName,
+        authorUID: authorUID,
       })
       .catch(err => {
-        self.snackBar.open('Please, make sure the feedback is not empty, then try again.', null, { duration: 6000 });
+        this.snackBar.open('Please, make sure the feedback is not empty, then try again.', null, { duration: 6000 });
       });
   }
 
