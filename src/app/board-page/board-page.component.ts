@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostBinding } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Params } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -32,9 +32,10 @@ interface IBoardObj {
   templateUrl: './board-page.component.html',
   styleUrls: ['./board-page.component.scss'],
   animations: [slideToLeft],
-  host: {'[@routerTransition]': ''},
 })
 export class BoardPageComponent implements OnInit {
+  @HostBinding('@routerTransition') routerTransition = '';
+
   public boardID: string;
   public boardName: string;
   public board: FirebaseListObservable<any[]>;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostBinding } from '@angular/core';
 import {
   FormGroup,
   FormControl,
@@ -17,9 +17,10 @@ import { DialogResetEmailComponent } from './dialog-reset-email';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
   animations: [slideToLeft],
-  host: {'[@routerTransition]': ''},
 })
 export class LoginComponent implements OnInit {
+  @HostBinding('@routerTransition') routerTransition = '';
+
   public loginForm: FormGroup;
   public registerForm: FormGroup;
   public loginLoading: boolean;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostBinding } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { slideToLeft } from '../app.animations';
 import { FirebaseService } from '../../firebase';
@@ -11,9 +11,10 @@ import { Observable } from 'rxjs/Observable';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
   animations: [ slideToLeft ],
-  host: {'[@routerTransition]': ''},
 })
 export class DashboardComponent implements OnInit {
+  @HostBinding('@routerTransition') routerTransition = '';
+
   public boards: Observable<any>;
   public user: Observable<any>;
   public newBoardForm: FormGroup;
