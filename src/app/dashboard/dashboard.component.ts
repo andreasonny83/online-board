@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl } from '@angular/forms';
-
+import { slideToLeft } from '../app.animations';
 import { FirebaseService } from '../../firebase';
 import { MdSnackBar } from '@angular/material';
 
@@ -9,7 +9,9 @@ import { Observable } from 'rxjs/Observable';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.css'],
+  animations: [ slideToLeft ],
+  host: {'[@routerTransition]': ''},
 })
 export class DashboardComponent implements OnInit {
   boards: Observable<any>;

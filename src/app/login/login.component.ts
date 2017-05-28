@@ -6,6 +6,7 @@ import {
   Validators,
   AbstractControl,
 } from '@angular/forms';
+import { slideToLeft } from '../app.animations';
 
 import { AuthService } from '../auth.service';
 import { MdDialog, MdSnackBar } from '@angular/material';
@@ -15,6 +16,8 @@ import { DialogResetEmailComponent } from './dialog-reset-email';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
+  animations: [slideToLeft],
+  host: {'[@routerTransition]': ''},
 })
 export class LoginComponent implements OnInit {
   public loginForm: FormGroup;

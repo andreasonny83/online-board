@@ -3,6 +3,7 @@ import { Location } from '@angular/common';
 import { ActivatedRoute, Params } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
+import { slideToLeft } from '../app.animations';
 
 import { FirebaseService, FirebaseListObservable, FirebaseObjectObservable } from '../../firebase';
 import { EmailsGenerator } from '../../email-templates';
@@ -22,7 +23,9 @@ interface IBoardObj {
 @Component({
   selector: 'app-board-page',
   templateUrl: './board-page.component.html',
-  styleUrls: ['./board-page.component.scss']
+  styleUrls: ['./board-page.component.scss'],
+  animations: [slideToLeft],
+  host: {'[@routerTransition]': ''},
 })
 export class BoardPageComponent implements OnInit {
   boardID: string;
