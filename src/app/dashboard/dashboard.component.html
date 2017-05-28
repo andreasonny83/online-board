@@ -1,43 +1,53 @@
-<md-card class="block">
-  <md-card-title>My boards</md-card-title>
+<div class="block-xxl">
+  <md-card class="block">
+    <md-card-title>My boards</md-card-title>
 
-  <md-card-content>
-    <md-list>
-      <h3 md-subheader>Boards:</h3>
-      <md-list-item *ngFor="let board of boards | async">
-        <a md-line routerLink="/boards/{{board.$key}}">{{ board.$value }}</a>
-        <button md-icon-button (click)="deleteBoard(board)">
-          <md-icon>delete</md-icon>
-        </button>
-      </md-list-item>
-    </md-list>
+    <md-card-content>
+      <md-spinner *ngIf="pageLoading" class="loading-spinner"></md-spinner>
 
-  </md-card-content>
-</md-card>
+      <md-list *ngIf="!pageLoading">
+        <h3 md-subheader>Boards:</h3>
+        <md-list-item *ngFor="let board of boards | async">
+          <a md-line routerLink="/boards/{{board.$key}}">{{ board.$value }}</a>
+          <button md-icon-button (click)="deleteBoard(board)">
+            <md-icon>delete</md-icon>
+          </button>
+        </md-list-item>
+      </md-list>
 
-<md-card class="block">
-  <md-card-title>Create a new Board</md-card-title>
+    </md-card-content>
+  </md-card>
 
-  <md-card-content>
-    <form [formGroup]="newBoardForm"
-          (ngSubmit)="createBoard()"
-          class="form"
-          novalidate>
-      <md-input-container class="full-width">
-        <input mdInput
-               placeholder="Board name"
-               type="text"
-               name="board-name"
-               formControlName="boardName">
-      </md-input-container>
+  <md-card class="block" *ngIf="!pageLoading">
+    <md-card-title>Create a new Board</md-card-title>
 
-      <md-card-actions align="end">
-        <button md-raised-button
-                type="submit"
-                name="new-board"
-                [disabled]="!newBoardForm.valid"
-                color="accent">Create</button>
-      </md-card-actions>
-    </form>
-  </md-card-content>
-</md-card>
+    <md-card-content>
+      <form [formGroup]="newBoardForm"
+            (ngSubmit)="createBoard()"
+            class="form"
+            novalidate>
+        <md-input-container class="full-width">
+          <input mdInput
+                 placeholder="Board name"
+                 type="text"
+                 name="board-name"
+                 formControlName="boardName">
+        </md-input-container>
+
+        <md-card-actions align="end">
+          <button md-raised-button
+                  type="submit"
+                  name="new-board"
+                  [disabled]="!newBoardForm.valid || creatingBoard"
+                  color="accent">
+            <span>Create</span>
+            <md-spinner color="primary"
+                        strokeWidth="8"
+                        *ngIf="creatingBoard"
+                        class="loading-spinner-bt"></md-spinner>
+          </button>
+        </md-card-actions>
+      </form>
+    </md-card-content>
+  </md-card>
+</div>

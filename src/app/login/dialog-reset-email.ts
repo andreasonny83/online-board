@@ -40,7 +40,7 @@ import {
                 <md-spinner color="primary"
                             strokeWidth="8"
                             *ngIf="loading"
-                            class="loading-spinner"></md-spinner>
+                            class="loading-spinner-bt"></md-spinner>
         </button>
       </md-dialog-actions>
 
@@ -49,7 +49,6 @@ import {
   styles: [`
     .form { padding: 20px; }
     .input-field { min-width: 300px; }
-    .loading-spinner { width: 26px; height: 26px; margin-left: 4px; display: inline-block; }
   `]
 })
 export class DialogResetEmailComponent {

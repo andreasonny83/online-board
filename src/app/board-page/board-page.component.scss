@@ -1,5 +1,9 @@
 @import "../../globals/app-theme";
 
+:host {
+  display: block;
+}
+
 .board-name {
   padding: 10px;
   font-size: 45px;
@@ -91,11 +95,4 @@
   max-width: 800px;
   margin-top: 100px;
   background: $light-gray;
-}
-
-.invite-collaborators .loading-spinner {
-  width: 26px;
-  height: 26px;
-  margin-left: 4px;
-  display: inline-block;
 }

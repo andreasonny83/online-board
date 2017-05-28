@@ -2,16 +2,23 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Params } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import { slideToLeft } from '../app.animations';
-
-import { FirebaseService, FirebaseListObservable, FirebaseObjectObservable } from '../../firebase';
 import { EmailsGenerator } from '../../email-templates';
 import { MdSnackBar } from '@angular/material';
+import {
+  Http,
+  Response,
+  RequestOptions,
+  Headers
+} from '@angular/http';
+import {
+  FirebaseService,
+  FirebaseListObservable,
+  FirebaseObjectObservable
+} from '../../firebase';
 
 import { Observable } from 'rxjs/Observable';
 import * as firebase from 'firebase/app';
-
 import 'rxjs/add/operator/switchMap';
 
 interface IBoardObj {
@@ -28,14 +35,15 @@ interface IBoardObj {
   host: {'[@routerTransition]': ''},
 })
 export class BoardPageComponent implements OnInit {
-  boardID: string;
-  boardName: string;
-  board: FirebaseListObservable<any[]>;
-  boardObj: FirebaseObjectObservable<any>;
-  columns: FirebaseListObservable<any[]>;
-  collaboratorsForm: FormGroup;
-  sendingInvite: boolean;
-  cardElevations: any;
+  public boardID: string;
+  public boardName: string;
+  public board: FirebaseListObservable<any[]>;
+  public boardObj: FirebaseObjectObservable<any>;
+  public columns: FirebaseListObservable<any[]>;
+  public collaboratorsForm: FormGroup;
+  public sendingInvite: boolean;
+  public cardElevations: any;
+  public pageLoading: boolean;
 
   constructor(
     private fireBase: FirebaseService,
@@ -45,6 +53,7 @@ export class BoardPageComponent implements OnInit {
     private http: Http,
     private snackBar: MdSnackBar,
   ) {
+    this.pageLoading = true;
     this.createForm();
     this.cardElevations = {};
   }
@@ -61,6 +70,7 @@ export class BoardPageComponent implements OnInit {
     this.boardObj
       .subscribe((res: IBoardObj) => {
         this.boardName = res.name;
+        this.pageLoading = false;
       });
   }
 

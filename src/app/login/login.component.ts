@@ -22,6 +22,8 @@ import { DialogResetEmailComponent } from './dialog-reset-email';
 export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
   public registerForm: FormGroup;
+  public loginLoading: boolean;
+  public registerLoading: boolean;
 
   constructor(
     public dialog: MdDialog,
@@ -36,17 +38,26 @@ export class LoginComponent implements OnInit {
 
   public onLoginSubmit(): void {
     if (!!this.loginForm.valid) {
+      this.loginLoading = true;
+
       this.authService
         .login(this.loginForm.value)
-        .then(res => this.loginForm.reset());
+        .then(res => {
+          this.loginForm.reset();
+          this.loginLoading = false;
+        });
     }
   }
 
   public onRegisterSubmit(): void {
     if (!!this.registerForm.valid) {
+      this.registerLoading = true;
       this.authService
         .register(this.registerForm.value)
-        .then(res => this.registerForm.reset());
+        .then(res => {
+          this.registerForm.reset();
+          this.registerLoading = false;
+        });
     }
   }
 

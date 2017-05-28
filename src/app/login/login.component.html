@@ -32,8 +32,14 @@
         <button md-raised-button
                 type="submit"
                 name="login"
-                [disabled]="!loginForm.valid"
-                color="accent">Log In</button>
+                [disabled]="!loginForm.valid || loginLoading"
+                color="accent">
+          Log In
+          <md-spinner color="primary"
+                      strokeWidth="8"
+                      *ngIf="loginLoading"
+                      class="loading-spinner-bt"></md-spinner>
+        </button>
       </md-card-actions>
     </form>
   </md-card-content>
@@ -83,8 +89,14 @@
         <button md-raised-button
                 type="submit"
                 name="register"
-                [disabled]="!registerForm.valid"
-                color="accent">Register</button>
+                [disabled]="!registerForm.valid || registerLoading"
+                color="accent">
+          Register
+          <md-spinner color="primary"
+                      strokeWidth="8"
+                      *ngIf="registerLoading"
+                      class="loading-spinner-bt"></md-spinner>
+        </button>
       </md-card-actions>
     </form>
   </md-card-content>

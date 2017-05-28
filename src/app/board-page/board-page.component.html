@@ -1,4 +1,6 @@
-<div class="block-xxl">
+<md-spinner *ngIf="pageLoading" class="loading-spinner"></md-spinner>
+
+<div class="block-xxl" *ngIf="!pageLoading">
   <h3 class="board-name">{{ boardName }}</h3>
 
   <div class="item-list-container">
@@ -69,7 +71,7 @@
             novalidate>
         <md-input-container class="full-width">
           <input mdInput
-                 placeholder="Board name"
+                 placeholder="Email address"
                  type="email"
                  name="collaborator"
                  formControlName="collaborator">
@@ -78,14 +80,14 @@
         <md-card-actions align="end">
           <button md-raised-button
                   type="submit"
-                  name="new-board"
+                  name="invite-collaborator"
                   [disabled]="!collaboratorsForm.valid || sendingInvite"
                   color="accent">
             <span>Invite</span>
             <md-spinner color="primary"
                         strokeWidth="8"
                         *ngIf="sendingInvite"
-                        class="loading-spinner"></md-spinner>
+                        class="loading-spinner-bt"></md-spinner>
           </button>
         </md-card-actions>
       </form>

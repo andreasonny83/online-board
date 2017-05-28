@@ -14,22 +14,28 @@ import { Observable } from 'rxjs/Observable';
   host: {'[@routerTransition]': ''},
 })
 export class DashboardComponent implements OnInit {
-  boards: Observable<any>;
-  user: Observable<any>;
-  newBoardForm: FormGroup;
+  public boards: Observable<any>;
+  public user: Observable<any>;
+  public newBoardForm: FormGroup;
+  public pageLoading: boolean;
+  public creatingBoard: boolean;
 
   constructor(
     private fireBase: FirebaseService,
     private fb: FormBuilder,
     private snackBar: MdSnackBar,
   ) {
+    this.pageLoading = true;
+    this.createForm();
     this.boards = fireBase.userBoards;
     this.user = fireBase.user;
-
-    this.createForm();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.boards.subscribe(res => {
+      this.pageLoading = false;
+    });
+  }
 
   createForm() {
     this.newBoardForm = this.fb.group({
@@ -44,13 +50,19 @@ export class DashboardComponent implements OnInit {
       return this.snackBar.open(`Boards cannot contain ".", "#", "$", "[", or "]"`, null, {duration: 6000});
     }
 
+    this.creatingBoard = true;
+
     this.fireBase
       .createBoard(val)
       .then(() => {
         this.newBoardForm.reset();
         this.snackBar.open(`${val} board successfully created!`, null, {duration: 6000});
+        this.creatingBoard = false;
       })
-      .catch(err => this.snackBar.open(err.message, null, {duration: 6000}));
+      .catch(err => {
+        this.snackBar.open(err.message, null, {duration: 6000});
+        this.creatingBoard = false;
+      });
   }
 
   deleteBoard(board: any) {
