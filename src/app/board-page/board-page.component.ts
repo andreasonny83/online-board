@@ -45,7 +45,7 @@ export class BoardPageComponent implements OnInit {
   public sendingInvite: boolean;
   public cardElevations: any;
   public pageLoading: boolean;
-  public items: boolean[];
+  public editEl: string;
 
   constructor(
     private fireBase: FirebaseService,
@@ -58,8 +58,6 @@ export class BoardPageComponent implements OnInit {
     this.pageLoading = true;
     this.createForm();
     this.cardElevations = {};
-    this.items = [];
-    this.items[1] = true;
   }
 
   ngOnInit() {
@@ -186,17 +184,20 @@ export class BoardPageComponent implements OnInit {
         err => self.errorHandler());
   }
 
-  updatePost(item: any, column: any, evt: any) {
+  updatePost(item: any, column: any, post): void {
     this.board.$ref.ref
       .child(`columns/${column.$key}/items/${item.key}`)
-      .update({val: evt})
+      .update({val: post.value})
       .catch(err => {
         this.snackBar.open('Ops! looks like you cannot edit this post at the moment.', null, { duration: 6000 });
       });
+
+    this.editEl = null;
   }
 
-  bindEdit(el) {
-    this.items[el] = true;
+  discardChanges(item: any): void {
+    item.value.val = item.value.val;
+    this.editEl = null;
   }
 
   errorHandler(): Observable<any> {

@@ -20,23 +20,36 @@
              alt="edit note">
 
        <md-card-content>
-          <span *ngIf="editEl !== i" id="post-{{column}}-{{i}}">{{item.value.val}}</span>
+          <span *ngIf="editEl !== column + '-' + i"
+                id="post-{{column}}-{{i}}">
+            {{item.value.val}}
+          </span>
 
-          <md-input-container class="full-width"
-                              *ngIf="editEl === column + '-' + i">
-            <textarea mdInput
-                      class="new-item"
-                      [(ngModel)]="item.value.val"
-                      mdTextareaAutosize></textarea>
-          </md-input-container>
-          <button md-button
-                  *ngIf="editEl === i"
-                  type="button"
-                  name="update-post"
-                  class="pin-me-btn"
-                  (click)="updatePost(item, column, item.value.val)">
-            Save
-          </button>
+          <div *ngIf="editEl === column + '-' + i">
+            <md-input-container class="full-width">
+              <textarea mdInput
+                        #post
+                        class="new-item"
+                        [ngModel]="item.value.val"
+                        mdTextareaAutosize></textarea>
+            </md-input-container>
+
+            <button md-button
+                    type="button"
+                    name="update-post"
+                    class="pin-me-btn"
+                    (click)="updatePost(item, column, post)">
+              Save
+            </button>
+
+            <button md-button
+                    type="button"
+                    name="update-post"
+                    class="pin-me-btn"
+                    (click)="discardChanges(item)">
+              Discard
+            </button>
+          </div>
         </md-card-content>
 
         <md-card-footer>
