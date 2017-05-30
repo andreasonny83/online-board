@@ -4,6 +4,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { slideToLeft } from '../app.animations';
 import { EmailsGenerator } from '../../email-templates';
+import { BoardService } from '../services/board.service';
 import { MdSnackBar } from '@angular/material';
 import {
   Http,
@@ -44,9 +45,10 @@ export class BoardPageComponent implements OnInit {
 
   public pageLoading: boolean;
   editEl: null;
-  
+
   constructor(
     private fireBase: FirebaseService,
+    private boardService: BoardService,
     private route: ActivatedRoute,
     private location: Location,
     private http: Http,
@@ -64,6 +66,10 @@ export class BoardPageComponent implements OnInit {
         this.columns = this.fireBase.getBoard(`${this.boardID}/columns`);
         this.boardObj = this.fireBase.getBoardObject(this.boardID);
       });
+
+      this.boardService.currentBoard = 'miau';//this.boardID
+
+      console.log('currentBoard +++', this.boardService);
 
     this.boardObj
       .subscribe((res: IBoardObj) => {

@@ -28,9 +28,10 @@ import { LoginComponent } from './login/login.component';
 import { DialogResetEmailComponent } from './login/dialog-reset-email';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { BoardPageComponent } from './board-page/board-page.component';
-import { InviteColaboratorsComponent } from './board-page/invite-colaborators/invite-colaborators.component';
 
 import { FooterComponent } from './footer/footer.component';
+import { InviteColaboratorsComponent } from './header/invite-colaborators/invite-colaborators.component';
+import { BoardService } from './services/board.service';
 
 import { AuthGuard } from './auth-guard.service';
 import { AuthService } from './auth.service';
@@ -46,6 +47,7 @@ import { Keyobject } from './pipes';
     BoardPageComponent,
     InviteColaboratorsComponent,
     FooterComponent,
+    InviteColaboratorsComponent,
     DialogResetEmailComponent,
     Keyobject,
   ],
@@ -67,18 +69,19 @@ import { Keyobject } from './pipes';
     MdListModule,
     MdIconModule,
     MdProgressSpinnerModule,
-    MdDialogModule,
     // App Modules
     HeaderModule,
     AppRoutingModule,
   ],
   entryComponents: [
     DialogResetEmailComponent,
+    InviteColaboratorsComponent,
   ],
   providers: [
     AuthGuard,
     AuthService,
-    MdDialog
+    MdDialog,
+    BoardService,
   ],
   bootstrap: [ AppComponent ]
 })

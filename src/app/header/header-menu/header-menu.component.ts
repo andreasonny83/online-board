@@ -4,6 +4,8 @@ import { AuthService } from '../../auth.service';
 import { FirebaseService } from '../../../firebase';
 import { Observable } from 'rxjs/Observable';
 import * as firebase from 'firebase/app';
+import { MdDialog } from '@angular/material';
+import { InviteColaboratorsComponent } from '../invite-colaborators/invite-colaborators.component';
 
 @Component({
   selector: 'app-header-menu',
@@ -16,11 +18,17 @@ export class HeaderMenuComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private fireBase: FirebaseService,
+    public dialog: MdDialog,
   ) {
     this.user = fireBase.user;
   }
 
-  ngOnInit() { }
+  public inviteColaborators() {
+    this.dialog.open(InviteColaboratorsComponent);
+  }
+
+  ngOnInit() {
+   }
 
   logout() {
     this.authService.logout();
