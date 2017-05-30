@@ -45,6 +45,7 @@ export class BoardPageComponent implements OnInit {
   public sendingInvite: boolean;
   public cardElevations: any;
   public pageLoading: boolean;
+  public editEl: string;
 
   constructor(
     private fireBase: FirebaseService,
@@ -183,15 +184,20 @@ export class BoardPageComponent implements OnInit {
         err => self.errorHandler());
   }
 
-  editItem(item) {
-    // const email = this.fireBase.dbRef.child('users').orderByChild('email').equalTo('andreasonny83@gmail.com');
-    // email.once('value').then((res) => console.log(res));
+  updatePost(item: any, column: any, post): void {
+    this.board.$ref.ref
+      .child(`columns/${column.$key}/items/${item.key}`)
+      .update({val: post.value})
+      .catch(err => {
+        this.snackBar.open('Ops! looks like you cannot edit this post at the moment.', null, { duration: 6000 });
+      });
 
-    // this.board.update('members', {test: true});
+    this.editEl = null;
+  }
 
-    this.snackBar.open(`Ops! this is not yet available.
-                       Please, try again in future as we're currently working on it.`,
-                       null, { duration: 6000 });
+  discardChanges(item: any): void {
+    item.value.val = item.value.val;
+    this.editEl = null;
   }
 
   errorHandler(): Observable<any> {

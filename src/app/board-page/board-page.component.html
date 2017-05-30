@@ -15,12 +15,41 @@
                *ngFor="let item of column.items | keyobject; let i = index"
                class="note pinned-note mat-elevation-z2">
         <img class="edit-icon"
-             (click)="editItem(item)"
+             (click)="editEl = column + '-' + i"
              src="../../assets/images/marker.png"
              alt="edit note">
 
        <md-card-content>
-          <span>{{item.value.val}}</span>
+          <span *ngIf="editEl !== column + '-' + i"
+                id="post-{{column}}-{{i}}">
+            {{item.value.val}}
+          </span>
+
+          <div *ngIf="editEl === column + '-' + i">
+            <md-input-container class="full-width">
+              <textarea mdInput
+                        #post
+                        class="new-item"
+                        [ngModel]="item.value.val"
+                        mdTextareaAutosize></textarea>
+            </md-input-container>
+
+            <button md-button
+                    type="button"
+                    name="update-post"
+                    class="pin-me-btn"
+                    (click)="updatePost(item, column, post)">
+              Save
+            </button>
+
+            <button md-button
+                    type="button"
+                    name="update-post"
+                    class="pin-me-btn"
+                    (click)="discardChanges(item)">
+              Discard
+            </button>
+          </div>
         </md-card-content>
 
         <md-card-footer>
