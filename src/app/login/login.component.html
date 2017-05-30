@@ -1,4 +1,4 @@
-<md-card class="block">
+<md-card class="block form__login">
   <md-card-title>Log In</md-card-title>
 
   <md-card-content>
@@ -9,7 +9,7 @@
       <md-input-container class="full-width">
         <input mdInput
                placeholder="Email address"
-               type="text"
+               type="email"
                name="email"
                formControlName="email">
       </md-input-container>
@@ -23,17 +23,29 @@
       </md-input-container>
 
       <md-card-actions align="end">
+        <button md-button
+                type="button"
+                name="forgotten_password"
+                color="primary"
+                (click)="resetPassword()">Forgotten Password</button>
+
         <button md-raised-button
                 type="submit"
                 name="login"
-                [disabled]="!loginForm.valid"
-                color="accent">Log In</button>
+                [disabled]="!loginForm.valid || loginLoading"
+                color="accent">
+          Log In
+          <md-spinner color="primary"
+                      strokeWidth="8"
+                      *ngIf="loginLoading"
+                      class="loading-spinner-bt"></md-spinner>
+        </button>
       </md-card-actions>
     </form>
   </md-card-content>
 </md-card>
 
-<md-card class="block">
+<md-card class="block form__register">
   <md-card-title>Register</md-card-title>
 
   <md-card-content>
@@ -77,8 +89,14 @@
         <button md-raised-button
                 type="submit"
                 name="register"
-                [disabled]="!registerForm.valid"
-                color="accent">Register</button>
+                [disabled]="!registerForm.valid || registerLoading"
+                color="accent">
+          Register
+          <md-spinner color="primary"
+                      strokeWidth="8"
+                      *ngIf="registerLoading"
+                      class="loading-spinner-bt"></md-spinner>
+        </button>
       </md-card-actions>
     </form>
   </md-card-content>

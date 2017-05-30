@@ -279,32 +279,15 @@ const config = {
     new AotPlugin({
       "mainPath": "main.ts",
       "hostReplacementPaths": {
-        "environments/environment.ts": "environments/environment.ts"
+        "environments/environment.ts": process.env.NODE_ENV === 'production'
+                                       ? "environments/environment.prod.ts"
+                                       : "environments/environment.ts"
       },
       "exclude": [],
       "tsConfigPath": "src/tsconfig.app.json",
       "skipCodeGeneration": true
-    })
-  ],
-  "node": {
-    "fs": "empty",
-    "global": true,
-    "crypto": "empty",
-    "tls": "empty",
-    "net": "empty",
-    "process": true,
-    "module": false,
-    "clearImmediate": false,
-    "setImmediate": false
-  },
-  "devServer": {
-    "historyApiFallback": true,
-    contentBase: 'src/',
-  }
-};
+    }),
 
-if (process.env.NODE_ENV === 'production') {
-  config.plugins.push(
     new WebpackPwaManifest({
       "name": METADATA.title,
       "short_name": METADATA.title,
@@ -325,7 +308,29 @@ if (process.env.NODE_ENV === 'production') {
           "destination": path.join("icons", "android")
         }
       ]
-    })
+    }),
+
+  ],
+  "node": {
+    "fs": "empty",
+    "global": true,
+    "crypto": "empty",
+    "tls": "empty",
+    "net": "empty",
+    "process": true,
+    "module": false,
+    "clearImmediate": false,
+    "setImmediate": false
+  },
+  "devServer": {
+    "historyApiFallback": true,
+    contentBase: 'src/',
+  }
+};
+
+if (process.env.NODE_ENV === 'production') {
+  config.plugins.push(
+    // production only plugins
   );
 }
 

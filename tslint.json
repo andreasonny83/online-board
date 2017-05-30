@@ -28,7 +28,8 @@
     "member-ordering": [
       true,
       "static-before-instance",
-      "variables-before-functions"
+      "variables-before-functions",
+      "public-before-private"
     ],
     "no-arg": true,
     "no-bitwise": true,
@@ -53,7 +54,6 @@
     "no-switch-case-fall-through": true,
     "no-trailing-whitespace": true,
     "no-unused-expression": true,
-    "no-use-before-declare": true,
     "no-var-keyword": true,
     "object-literal-sort-keys": false,
     "one-line": [

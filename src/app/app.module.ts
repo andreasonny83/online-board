@@ -25,6 +25,7 @@ import {
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { DialogResetEmailComponent } from './login/dialog-reset-email';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { BoardPageComponent } from './board-page/board-page.component';
 import { InviteColaboratorsComponent } from './board-page/invite-colaborators/invite-colaborators.component';
@@ -45,6 +46,7 @@ import { Keyobject } from './pipes';
     BoardPageComponent,
     InviteColaboratorsComponent,
     FooterComponent,
+    DialogResetEmailComponent,
     Keyobject,
   ],
   imports: [
@@ -65,9 +67,13 @@ import { Keyobject } from './pipes';
     MdListModule,
     MdIconModule,
     MdProgressSpinnerModule,
+    MdDialogModule,
     // App Modules
     HeaderModule,
     AppRoutingModule,
+  ],
+  entryComponents: [
+    DialogResetEmailComponent,
   ],
   providers: [
     AuthGuard,

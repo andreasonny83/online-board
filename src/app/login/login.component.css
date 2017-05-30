@@ -3,3 +3,7 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+.mat-dialog-container {
+  max-width: 600px;
+}

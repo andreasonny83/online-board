@@ -10,14 +10,14 @@ import { AuthService } from '../../auth.service';
 @Component({
   selector: 'app-main-toolbar',
   templateUrl: './main-toolbar.component.html',
-  styleUrls: ['./main-toolbar.component.css']
+  styleUrls: ['./main-toolbar.component.css'],
 })
 export class MainToolbarComponent implements OnInit {
-  @Input('version') version: string;
-  @Input('floating') floating: boolean;
-  @Input('title') title: string;
+  @Input() public floating: boolean;
+  @Input() public version: boolean;
+  @Input() public title: boolean;
 
-  back = false;
+  public back = false;
 
   constructor(
     private authService: AuthService,

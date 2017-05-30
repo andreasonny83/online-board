@@ -5,31 +5,33 @@ import { RouterModule } from '@angular/router';
 import { HeaderMenuComponent } from './header-menu/header-menu.component';
 import { MainToolbarComponent } from './main-toolbar/main-toolbar.component';
 import { AuthService } from '../auth.service';
-import { FirebaseService } from '../../firebase';
+import { FirebaseModule } from '../../firebase';
 import * as firebase from 'firebase/app';
 import {
   MdToolbarModule,
   MdButtonModule,
   MdMenuModule,
   MdIconModule,
+  MdSnackBarModule,
 } from '@angular/material';
 
 @NgModule({
-  declarations: [
-    HeaderMenuComponent,
-    MainToolbarComponent,
-  ],
   imports: [
     CommonModule,
     MdToolbarModule,
     MdButtonModule,
     MdMenuModule,
     MdIconModule,
+    MdSnackBarModule,
+    FirebaseModule,
     RouterModule,
+  ],
+  declarations: [
+    HeaderMenuComponent,
+    MainToolbarComponent,
   ],
   providers: [
     AuthService,
-    FirebaseService,
   ],
   exports: [
     MainToolbarComponent,

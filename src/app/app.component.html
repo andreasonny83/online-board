@@ -1,5 +1,5 @@
 <div id="app-container"
-     [@fadeIn]="visibility">
+     @fadeIn="">
   <app-main-toolbar class="app-toolbar"
                     [title]="title"
                     [floating]="floatingClass"
@@ -7,6 +7,15 @@
 
   <div class="app-content"
        (scroll)="onScroll($event)">
-    <router-outlet></router-outlet>
+
+    <div class="page-container">
+      <router-outlet></router-outlet>
+    </div>
+
+    <app-footer class="footer"
+                [version]="version"
+                [homepage]="homepage"></app-footer>
   </div>
+
+  <cookie-law name="onlineBaordCookieLaw"></cookie-law>
 </div>

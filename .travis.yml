@@ -1,0 +1,35 @@
+language: node_js
+
+node_js:
+- '7'
+
+notifications:
+  email: false
+
+before_install:
+- curl -o- -L https://yarnpkg.com/install.sh | bash # upgrade Yarn to the latest version
+- sleep 1
+
+before_script:
+- npm rebuild phantomjs-prebuilt node-sass # phantomjs-prebuilt fails with yarn
+- sleep 3 # give server time to start
+
+script:
+- npm run lint
+- npm run test:ci
+- npm run coveralls
+
+before_deploy:
+- npm install -g firebase-tools
+- echo 'About to deploy live...'
+- npm run build
+
+deploy:
+  provider: firebase
+  skip_cleanup: true
+  on:
+    branch: master
+    tags: true
+  token:
+    secure: US1eQ1vzKkOnEMMxDXVK8gqixMyw0dtNHMa8mOXTwRbxgIYUrZciW83LV3LRbowWCKWQKhPUxCKZ+XgLHItE2DNatvVIHOYU5wi/hkdGE8PdtRV0srFyH1+wGLUhInv+OCMhXk65FrVhoxf1WIqIykAU526w1OZfDuTEvpRrV+RY9IIOSy07m1rGZq+LKwKFNuNj8xYAgp8NDUHZ/aAG7VP8ZrnKxh/Y64ryQFhZAs82Fp7HJhK3oEZFIyBDVDiCxRBL8lTkDiM2Ve6mAmJfRBEkzbMv7h8tCjcquq2QtpTaqyhXxVnPzGphQsf6KATb10OVJfbUA6G/eP2ATyRn9V3/lEr6JFtk7EK8U+PgTNC1b5XJR75dxn2mYnvNh2x8KVPc0ND/9AiibXLCYGUoRtciSl9IwQfUNQXkomH1FEWO3z9W0kVmwMvsdT9et0PGGLeo7VbJ4aqNADlfM8YamVQQ25DThPphsCIS8Qg2S/RJ4OhFH3s90ZFBMLh/0pLcgfLpzkr5olxfd5g7E1qmDqvKpiMpFH7wgSA2IyNiX93LW5IKSxkUXHAr6a/StpbaS7CHUp3/VrRBidFpEiOEzzG3PV1l+HQHKq5Jwgzk52o6NRs6jE5KRr/JasrJf54FESDwMfUK/BctfPeqI3hFiQ6Wrl5W2XjlXpNSlKlEu28=
+  project: online-board

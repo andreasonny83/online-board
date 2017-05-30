@@ -14,7 +14,8 @@ exports.config = {
     'browserName': 'chrome',
   },
 
-  baseUrl: 'http://localhost:4200/',
+  seleniumAddress: 'http://localhost:4444/wd/hub',
+  baseUrl: 'http://127.0.0.1:4200/',
 
   framework: 'jasmine2',
 
@@ -27,7 +28,7 @@ exports.config = {
     print: function() {}
   },
 
-  directConnect: true,
+  directConnect: false,
 
   beforeLaunch: function() {
     require('ts-node').register({

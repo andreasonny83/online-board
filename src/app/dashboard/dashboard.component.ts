@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostBinding } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl } from '@angular/forms';
-
+import { slideToLeft } from '../app.animations';
 import { FirebaseService } from '../../firebase';
 import { MdSnackBar } from '@angular/material';
 
@@ -9,25 +9,34 @@ import { Observable } from 'rxjs/Observable';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.css'],
+  animations: [ slideToLeft ],
 })
 export class DashboardComponent implements OnInit {
-  boards: Observable<any>;
-  user: Observable<any>;
-  newBoardForm: FormGroup;
+  @HostBinding('@routerTransition') routerTransition = '';
+
+  public boards: Observable<any>;
+  public user: Observable<any>;
+  public newBoardForm: FormGroup;
+  public pageLoading: boolean;
+  public creatingBoard: boolean;
 
   constructor(
     private fireBase: FirebaseService,
     private fb: FormBuilder,
     private snackBar: MdSnackBar,
   ) {
+    this.pageLoading = true;
+    this.createForm();
     this.boards = fireBase.userBoards;
     this.user = fireBase.user;
-
-    this.createForm();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.boards.subscribe(res => {
+      this.pageLoading = false;
+    });
+  }
 
   createForm() {
     this.newBoardForm = this.fb.group({
@@ -42,13 +51,19 @@ export class DashboardComponent implements OnInit {
       return this.snackBar.open(`Boards cannot contain ".", "#", "$", "[", or "]"`, null, {duration: 6000});
     }
 
+    this.creatingBoard = true;
+
     this.fireBase
       .createBoard(val)
       .then(() => {
         this.newBoardForm.reset();
         this.snackBar.open(`${val} board successfully created!`, null, {duration: 6000});
+        this.creatingBoard = false;
       })
-      .catch(err => this.snackBar.open(err.message, null, {duration: 6000}));
+      .catch(err => {
+        this.snackBar.open(err.message, null, {duration: 6000});
+        this.creatingBoard = false;
+      });
   }
 
   deleteBoard(board: any) {

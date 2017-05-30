@@ -1,13 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostBinding } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Http, Response, RequestOptions, Headers } from '@angular/http';
-
-import { FirebaseService, FirebaseListObservable, FirebaseObjectObservable } from '../../firebase';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { slideToLeft } from '../app.animations';
+import { EmailsGenerator } from '../../email-templates';
 import { MdSnackBar } from '@angular/material';
+import {
+  Http,
+  Response,
+  RequestOptions,
+  Headers
+} from '@angular/http';
+import {
+  FirebaseService,
+  FirebaseListObservable,
+  FirebaseObjectObservable
+} from '../../firebase';
 
 import * as firebase from 'firebase/app';
-
 import 'rxjs/add/operator/switchMap';
 
 interface IBoardObj {
@@ -19,7 +29,8 @@ interface IBoardObj {
 @Component({
   selector: 'app-board-page',
   templateUrl: './board-page.component.html',
-  styleUrls: ['./board-page.component.scss']
+  styleUrls: ['./board-page.component.scss'],
+  animations: [slideToLeft],
 })
 export class BoardPageComponent implements OnInit {
   boardID: string;
@@ -29,7 +40,11 @@ export class BoardPageComponent implements OnInit {
   columns: FirebaseListObservable<any[]>;
   sendingInvite: boolean;
   cardElevations: any;
+  @HostBinding('@routerTransition') routerTransition = '';
 
+  public pageLoading: boolean;
+  editEl: null;
+  
   constructor(
     private fireBase: FirebaseService,
     private route: ActivatedRoute,
@@ -37,6 +52,7 @@ export class BoardPageComponent implements OnInit {
     private http: Http,
     private snackBar: MdSnackBar,
   ) {
+    this.pageLoading = true;
     this.cardElevations = {};
   }
 
@@ -52,6 +68,7 @@ export class BoardPageComponent implements OnInit {
     this.boardObj
       .subscribe((res: IBoardObj) => {
         this.boardName = res.name;
+        this.pageLoading = false;
       });
   }
 
@@ -92,28 +109,33 @@ export class BoardPageComponent implements OnInit {
   }
 
   pushItem(itemVal, column) {
-    const self = this;
+    const authorName = this.fireBase.userInfo.name;
+    const authorUID = this.fireBase.userInfo.uid;
 
     this.columns.$ref.ref
       .child(column.$key)
       .child('items')
       .push({
         val: itemVal.value,
-        author: this.fireBase.userInfo.name,
+        author: authorName,
+        authorUID: authorUID,
       })
       .catch(err => {
-        self.snackBar.open('Please, make sure the feedback is not empty, then try again.', null, { duration: 6000 });
+        this.snackBar.open('Please, make sure the feedback is not empty, then try again.', null, { duration: 6000 });
       });
   }
+  updatePost(item: any, column: any, post): void {
+    this.board.$ref.ref
+      .child(`columns/${column.$key}/items/${item.key}`)
+      .update({val: post.value})
+      .catch(err => {
+        this.snackBar.open('Ops! looks like you cannot edit this post at the moment.', null, { duration: 6000 });
+      });
+    this.editEl = null;
+  }
 
-  editItem(item) {
-    // const email = this.fireBase.dbRef.child('users').orderByChild('email').equalTo('andreasonny83@gmail.com');
-    // email.once('value').then((res) => console.log(res));
-
-    // this.board.update('members', {test: true});
-
-    this.snackBar.open(`Ops! this is not yet available.
-                       Please, try again in future as we're currently working on it.`,
-                       null, { duration: 6000 });
+  discardChanges(item: any): void {
+    item.value.val = item.value.val;
+    this.editEl = null;
   }
 }
