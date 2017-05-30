@@ -4283,7 +4283,7 @@ karma-coverage-istanbul-reporter@1.2.1:
   dependencies:
     istanbul-api "^1.1.8"
 
-karma-firefox-launcher@^1.0.1:
+karma-firefox-launcher@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/karma-firefox-launcher/-/karma-firefox-launcher-1.0.1.tgz#ce58f47c2013a88156d55a5d61337c099cf5bb51"
 
@@ -8216,9 +8216,9 @@ webpack-merge@^2.4.0:
   dependencies:
     lodash "^4.17.4"
 
-webpack-pwa-manifest@2.1.4:
-  version "2.1.4"
-  resolved "https://registry.yarnpkg.com/webpack-pwa-manifest/-/webpack-pwa-manifest-2.1.4.tgz#e33e33ab2793a706c4dc89053e44de36e500b877"
+webpack-pwa-manifest@2.1.5:
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/webpack-pwa-manifest/-/webpack-pwa-manifest-2.1.5.tgz#076ef881eeead387863c31c4a1a7e753531009c4"
   dependencies:
     css-color-names "0.0.4"
     jimp "^0.2.27"
