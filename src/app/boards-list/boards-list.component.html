@@ -1,0 +1,27 @@
+<md-card class="block">
+  <md-card-title>My boards</md-card-title>
+
+  <md-card-content>
+    <md-spinner *ngIf="loading" class="loading-spinner"></md-spinner>
+
+    <md-list>
+      <h3 md-subheader>Boards:</h3>
+
+      <div class="list-items">
+        <md-list-item *ngFor="let board of boards | async; let i = index;">
+          <a md-line routerLink="/boards/{{board.$key}}">{{ board.$value }}</a>
+          <button md-icon-button
+                  (click)="deleteBoard(board, i)"
+                  [disabled]="busy === i">
+            <md-icon *ngIf="busy !== i">delete</md-icon>
+            <md-spinner color="primary"
+                        *ngIf="busy === i"
+                        strokeWidth="8"
+                        class="loading-spinner-bt"></md-spinner>
+          </button>
+        </md-list-item>
+      </div>
+    </md-list>
+
+  </md-card-content>
+</md-card>

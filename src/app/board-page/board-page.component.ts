@@ -97,7 +97,10 @@ export class BoardPageComponent implements OnInit {
         col: column,
       })
       .catch(err => {
-        this.snackBar.open('Please, make sure the feedback is not empty, then try again.', null, { duration: 6000 });
+        this.snackBar.open(`
+          Please, make sure the feedback is not empty
+          and you are a collaborator on this board.`,
+          null, { duration: 6000 });
       });
   }
 

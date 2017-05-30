@@ -28,6 +28,7 @@ import { DialogResetEmailComponent } from './login/dialog-reset-email';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { BoardPageComponent } from './board-page/board-page.component';
 import { FooterComponent } from './footer/footer.component';
+import { BoardsListComponent } from './boards-list/boards-list.component';
 
 import { AuthGuard } from './auth-guard.service';
 import { AuthService } from './auth.service';
@@ -41,6 +42,7 @@ import { Keyobject, FilterColumn } from './pipes';
     LoginComponent,
     DashboardComponent,
     BoardPageComponent,
+    BoardsListComponent,
     FooterComponent,
     DialogResetEmailComponent,
     Keyobject,
