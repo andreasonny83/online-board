@@ -11,6 +11,7 @@ import { InviteColaboratorsComponent } from '../invite-colaborators/invite-colab
   selector: 'app-header-menu',
   templateUrl: './header-menu.component.html',
   styleUrls: ['./header-menu.component.scss'],
+  entryComponents: [ InviteColaboratorsComponent ]
 })
 export class HeaderMenuComponent implements OnInit {
   user: Observable<firebase.User>;
@@ -27,10 +28,11 @@ export class HeaderMenuComponent implements OnInit {
     this.dialog.open(InviteColaboratorsComponent);
   }
 
-  ngOnInit() {
-   }
+  ngOnInit() {}
 
   logout() {
     this.authService.logout();
   }
+
+  downloadBoard() {}
 }

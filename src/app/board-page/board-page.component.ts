@@ -67,9 +67,9 @@ export class BoardPageComponent implements OnInit {
         this.boardObj = this.fireBase.getBoardObject(this.boardID);
       });
 
-      this.boardService.currentBoard = 'miau';//this.boardID
+      this.boardService.currentBoard = this.boardID;
 
-      console.log('currentBoard +++', this.boardService);
+      console.log('currentBoard >>>>>', this.boardService.currentBoard);
 
     this.boardObj
       .subscribe((res: IBoardObj) => {
