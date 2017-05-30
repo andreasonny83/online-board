@@ -1,11 +1,11 @@
 <md-spinner *ngIf="pageLoading" class="loading-spinner"></md-spinner>
 
 <div class="block-xxl" *ngIf="!pageLoading">
-  <h3 class="board-name">{{ (boardObj | async).name }}</h3>
+  <h3 class="board-name">{{ (boardObj | async)?.name }}</h3>
 
   <div class="item-list-container">
     <div class="item-list"
-         *ngFor="let column of (boardObj | async).cols; let columnID = index">
+         *ngFor="let column of (boardObj | async)?.cols; let columnID = index">
       <div class="item-list__title">
         <span>{{ column.title }}</span>
         <md-icon>{{ column.icon }}</md-icon>

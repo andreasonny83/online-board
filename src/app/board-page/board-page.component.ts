@@ -117,7 +117,7 @@ export class BoardPageComponent implements OnInit {
     this.editEl = null;
   }
 
-  private inviteCollaborator(): void {
+  public inviteCollaborator(): void {
     const html = EmailsGenerator.inviteCollaborator(
         this.fireBase.userInfo.name,
         location.origin + this.location.prepareExternalUrl(this.location.path()),
