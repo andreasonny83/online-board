@@ -170,11 +170,11 @@ export class FirebaseService {
     const boardData = {
       name: boardName,
       members: {},
-      columns: {
-        first: {title: 'Goods', color: 'lightgreen', pos: 0 },
-        second: {title: 'Bads', color: 'lightpink', pos: 1 },
-        third: {title: 'Questions', color: 'lightblue', pos: 2 },
-      }
+      cols: [
+        {title: 'Goods', icon: 'sentiment_very_satisfied', color: 'lightgreen', pos: 0 },
+        {title: 'Bads', icon: 'mood_bad', color: 'lightpink', pos: 1 },
+        {title: 'Questions', icon: 'sentiment_neutral', color: 'lightblue', pos: 2 },
+      ]
     };
 
     boardData.members[this.uid] = true;

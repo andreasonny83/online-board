@@ -1,18 +1,19 @@
 <md-spinner *ngIf="pageLoading" class="loading-spinner"></md-spinner>
 
 <div class="block-xxl" *ngIf="!pageLoading">
-  <h3 class="board-name">{{ boardName }}</h3>
+  <h3 class="board-name">{{ (boardObj | async).name }}</h3>
 
   <div class="item-list-container">
     <div class="item-list"
-         *ngFor="let column of columns | async; let columnID = index">
+         *ngFor="let column of (boardObj | async).cols; let columnID = index">
       <div class="item-list__title">
         <span>{{ column.title }}</span>
-        <md-icon>{{ cardEmoticon(column.title) }}</md-icon>
+        <md-icon>{{ column.icon }}</md-icon>
       </div>
 
-      <md-card [style.background]="column.color"
-               *ngFor="let item of column.items | keyobject; let i = index"
+      <md-card *ngFor="let post of (boardObj | async).posts | keyobject | filterColumn: columnID; let i = index;"
+               [style.background]="column.color"
+               id="post-{{columnID}}-{{i}}"
                class="note pinned-note mat-elevation-z2">
         <img class="edit-icon"
              (click)="editEl = columnID + '-' + i"
@@ -20,17 +21,16 @@
              alt="edit note">
 
        <md-card-content>
-          <span *ngIf="editEl !== columnID + '-' + i"
-                id="post-{{column}}-{{i}}">
-            {{item.value.val}}
+          <span *ngIf="editEl !== columnID + '-' + i">
+            {{post.value.val}}
           </span>
 
           <div *ngIf="editEl === columnID + '-' + i">
             <md-input-container class="full-width">
               <textarea mdInput
-                        #post
+                        #postRef
                         class="new-item"
-                        [ngModel]="item.value.val"
+                        [ngModel]="post.value.val"
                         mdTextareaAutosize></textarea>
             </md-input-container>
 
@@ -38,7 +38,7 @@
                     type="button"
                     name="update-post"
                     class="pin-me-btn"
-                    (click)="updatePost(item, column, post)">
+                    (click)="updatePost(post, postRef)">
               Save
             </button>
 
@@ -46,14 +46,14 @@
                     type="button"
                     name="update-post"
                     class="pin-me-btn"
-                    (click)="discardChanges(item)">
+                    (click)="discardChanges(post)">
               Discard
             </button>
           </div>
         </md-card-content>
 
         <md-card-footer>
-          <p class="note-author">- {{item.value.author}}</p>
+          <p class="note-author">- {{post.value.author}}</p>
         </md-card-footer>
       </md-card>
 
@@ -62,7 +62,7 @@
                (mouseleave)="removeElevation(columnID)"
                class="note unpinned-note mat-elevation-z10"
                [class.mat-elevation-z18]="isElevated(columnID)">
-        <form (ngSubmit)="pushItem(newItem, column)"
+        <form (ngSubmit)="pushPost(newItem, columnID)"
               class="form">
 
           <md-input-container class="full-width">

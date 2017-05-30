@@ -32,7 +32,7 @@ import { FooterComponent } from './footer/footer.component';
 import { AuthGuard } from './auth-guard.service';
 import { AuthService } from './auth.service';
 
-import { Keyobject } from './pipes';
+import { Keyobject, FilterColumn } from './pipes';
 
 @NgModule({
   declarations: [
@@ -44,6 +44,7 @@ import { Keyobject } from './pipes';
     FooterComponent,
     DialogResetEmailComponent,
     Keyobject,
+    FilterColumn,
   ],
   imports: [
     BrowserModule,

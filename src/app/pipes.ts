@@ -5,7 +5,7 @@ import { Pipe, PipeTransform, Injectable } from '@angular/core';
 })
 @Injectable()
 export class Keyobject implements PipeTransform {
-  transform(value, args: string[]): any {
+  transform(value, args: string[]): any[] {
     const keys = [];
 
     for (const key in value) {
@@ -15,5 +15,27 @@ export class Keyobject implements PipeTransform {
     }
 
     return keys;
+  }
+}
+
+@Pipe({
+   name: 'filterColumn'
+})
+@Injectable()
+export class FilterColumn implements PipeTransform {
+  transform(post, column: number): any[] {
+    const posts = [];
+
+    for (const key in post) {
+      if (post.hasOwnProperty(key) &&
+          post[key].hasOwnProperty('value') &&
+          post[key].value.hasOwnProperty('col')) {
+        if (post[key].value.col === column) {
+          posts.push(post[key]);
+        }
+      }
+    }
+
+    return posts;
   }
 }
