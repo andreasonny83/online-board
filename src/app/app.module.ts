@@ -18,6 +18,8 @@ import {
   MdListModule,
   MdIconModule,
   MdProgressSpinnerModule,
+  MdDialog,
+  MaterialModule,
 } from '@angular/material';
 
 import { AppComponent } from './app.component';
@@ -25,6 +27,8 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { BoardPageComponent } from './board-page/board-page.component';
+import { InviteColaboratorsComponent } from './board-page/invite-colaborators/invite-colaborators.component';
+
 import { FooterComponent } from './footer/footer.component';
 
 import { AuthGuard } from './auth-guard.service';
@@ -39,6 +43,7 @@ import { Keyobject } from './pipes';
     LoginComponent,
     DashboardComponent,
     BoardPageComponent,
+    InviteColaboratorsComponent,
     FooterComponent,
     Keyobject,
   ],
@@ -67,6 +72,7 @@ import { Keyobject } from './pipes';
   providers: [
     AuthGuard,
     AuthService,
+    MdDialog
   ],
   bootstrap: [ AppComponent ]
 })

@@ -8,7 +8,7 @@ import * as firebase from 'firebase/app';
 @Component({
   selector: 'app-header-menu',
   templateUrl: './header-menu.component.html',
-  styleUrls: ['./header-menu.component.css'],
+  styleUrls: ['./header-menu.component.css']
 })
 export class HeaderMenuComponent implements OnInit {
   user: Observable<firebase.User>;
@@ -22,7 +22,15 @@ export class HeaderMenuComponent implements OnInit {
 
   ngOnInit() { }
 
-  logout() {
+  public logout() {
     this.authService.logout();
+  }
+
+  public downloadBoard() {
+    return;
+  }
+
+  public goTo(route: string) {
+    return;
   }
 }

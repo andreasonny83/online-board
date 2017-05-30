@@ -11,6 +11,22 @@
          x-position="before">
   <button  md-menu-item
           (click)="logout()">
+          <md-icon>logout</md-icon>
           <span>Sign Out</span>
   </button>
+
+  <button md-menu-item
+          (click)="openInviteColaboratorsDialog()">
+          <md-icon>share</md-icon>
+          <span>Invite colaborators</span>
+  </button>
+
+  <!-- *ngIf="isInsideBoard()"  -->
+
+  <button  md-menu-item
+          (click)="downloadBoard()">
+          <md-icon>file_download</md-icon>
+          <span>Download board</span>
+  </button>
+
 </md-menu>
