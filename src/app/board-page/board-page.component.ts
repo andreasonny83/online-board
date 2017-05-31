@@ -5,21 +5,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { slideToLeft } from '../app.animations';
 import { EmailsGenerator } from '../../email-templates';
 import { MdSnackBar } from '@angular/material';
-import {
-  Http,
-  Response,
-  RequestOptions,
-  Headers
-} from '@angular/http';
-import {
-  FirebaseService,
-  FirebaseListObservable,
-  FirebaseObjectObservable
-} from '../../firebase';
-
-import { Observable } from 'rxjs/Observable';
+import { FirebaseService, FirebaseObjectObservable } from '../../firebase';
 import * as firebase from 'firebase/app';
-import 'rxjs/add/operator/switchMap';
 
 interface IBoardObj {
   columns: any[];
@@ -50,7 +37,6 @@ export class BoardPageComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
     private fb: FormBuilder,
-    private http: Http,
     private snackBar: MdSnackBar,
   ) {
     this.pageLoading = true;
@@ -109,7 +95,10 @@ export class BoardPageComponent implements OnInit {
       .child(`posts/${post.key}`)
       .update({val: postRef.value})
       .catch(err => {
-        this.snackBar.open('Ops! looks like you cannot edit this post at the moment.', null, { duration: 6000 });
+        this.snackBar.open(
+          'Ops! looks like you cannot edit this post at the moment.',
+          null,
+          { duration: 6000 });
       });
 
     this.editEl = null;
@@ -137,7 +126,11 @@ export class BoardPageComponent implements OnInit {
 
     this.sendingInvite = true;
 
-    this.sendEmail(body);
+    this.fireBase
+      .inviteCollaborator(body, this.collaboratorsForm.controls.collaborator.value, this.boardID, this.boardName)
+      .subscribe(
+        res => this.inviteCollaboratorSuccessHandler(),
+        err => this.inviteCollaboratorErrorHandler(err));
   }
 
   private createForm() {
@@ -150,39 +143,17 @@ export class BoardPageComponent implements OnInit {
     });
   }
 
-  private sendEmail(body: any): void {
-    const headers = new Headers({ 'Content-Type': 'application/json' }); // Set content type to JSON
-    const options = new RequestOptions({ headers: headers }); // Create a request option
-    const collaboratorEmail = this.collaboratorsForm.controls.collaborator.value;
-    const boardID = this.boardID;
-    const boardName = this.boardName;
+  private inviteCollaboratorErrorHandler(err): void {
+    this.sendingInvite = false;
+    this.collaboratorsForm.reset();
 
-    this.http
-      .post(`https://node-mailsender.herokuapp.com/send`, JSON.stringify(body), options)
-      .map(res => res.json())
-      .catch(() => this.errorHandler())
-      .subscribe(
-        res => {
-          if (!!res.sent && /^250 OK/.test(res.sent)) {
-            this.fireBase.inviteCollaborator(collaboratorEmail, boardID, boardName);
-
-            this.collaboratorsForm.reset();
-            this.sendingInvite = false;
-            this.snackBar.open('Your message has been correctly delivered.', null, { duration: 6000 });
-          } else {
-            this.errorHandler();
-          }
-        },
-        err => this.errorHandler());
+    this.snackBar.open(err, null, { duration: 6000 });
   }
 
-  private errorHandler(): Observable<any> {
+  private inviteCollaboratorSuccessHandler(): void {
     this.sendingInvite = false;
+    this.collaboratorsForm.reset();
 
-    this.snackBar.open(`Is not possible to send the email at the moment.
-                       Please, try again later or contact the support.`,
-                       null, { duration: 6000 });
-
-    return Observable.throw('Server error');
+    this.snackBar.open('Your message has been correctly delivered.', null, { duration: 6000 });
   }
 }

@@ -114,7 +114,7 @@
     "url-loader": "0.5.8",
     "webpack": "2.6.0",
     "webpack-dev-server": "2.4.5",
-    "webpack-pwa-manifest": "2.1.5"
+    "webpack-pwa-manifest": "2.1.6"
   },
   "config": {
     "commitizen": {
