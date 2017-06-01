@@ -1,22 +1,7 @@
 <div class="block-xxl">
-  <md-card class="block">
-    <md-card-title>My boards</md-card-title>
 
-    <md-card-content>
-      <md-spinner *ngIf="pageLoading" class="loading-spinner"></md-spinner>
-
-      <md-list *ngIf="!pageLoading">
-        <h3 md-subheader>Boards:</h3>
-        <md-list-item *ngFor="let board of boards | async">
-          <a md-line routerLink="/boards/{{board.$key}}">{{ board.$value }}</a>
-          <button md-icon-button (click)="deleteBoard(board)">
-            <md-icon>delete</md-icon>
-          </button>
-        </md-list-item>
-      </md-list>
-
-    </md-card-content>
-  </md-card>
+  <app-boards-list [loading]="pageLoading"
+                   [boards]="boards"></app-boards-list>
 
   <md-card class="block" *ngIf="!pageLoading">
     <md-card-title>Create a new Board</md-card-title>
@@ -50,4 +35,5 @@
       </form>
     </md-card-content>
   </md-card>
+
 </div>

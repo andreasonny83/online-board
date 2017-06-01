@@ -4,11 +4,15 @@
   display: block;
 }
 
+.board-name,
+.note * {
+  font-family: 'WhateverItTakesBold', helvetica;
+}
+
 .board-name {
   padding: 10px;
   font-size: 45px;
   text-align: center;
-  font-family: 'WhateverItTakesBold', helvetica;
 }
 
 .item-list-container {
@@ -40,7 +44,6 @@
 }
 
 .note * {
-  font-family: 'WhateverItTakesBold', helvetica;
   font-size: 32px;
 }
 

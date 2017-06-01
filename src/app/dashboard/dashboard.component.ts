@@ -1,7 +1,7 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { slideToLeft } from '../app.animations';
-import { FirebaseService } from '../../firebase';
+import { FirebaseService, FirebaseListObservable } from '../../firebase';
 import { MdSnackBar } from '@angular/material';
 
 import { Observable } from 'rxjs/Observable';
@@ -15,7 +15,7 @@ import { Observable } from 'rxjs/Observable';
 export class DashboardComponent implements OnInit {
   @HostBinding('@routerTransition') routerTransition = '';
 
-  public boards: Observable<any>;
+  public boards: FirebaseListObservable<any[]>;
   public user: Observable<any>;
   public newBoardForm: FormGroup;
   public pageLoading: boolean;
@@ -64,12 +64,6 @@ export class DashboardComponent implements OnInit {
         this.snackBar.open(err.message, null, {duration: 6000});
         this.creatingBoard = false;
       });
-  }
-
-  deleteBoard(board: any) {
-    this.fireBase
-      .removeBoard(board.$key)
-      .catch(err => this.snackBar.open(err.message, null, {duration: 6000}));
   }
 
 }

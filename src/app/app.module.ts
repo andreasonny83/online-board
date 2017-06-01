@@ -31,11 +31,12 @@ import { BoardPageComponent } from './board-page/board-page.component';
 
 import { FooterComponent } from './footer/footer.component';
 import { BoardService } from './services/board.service';
+import { BoardsListComponent } from './boards-list/boards-list.component';
 
 import { AuthGuard } from './auth-guard.service';
 import { AuthService } from './auth.service';
 
-import { Keyobject } from './pipes';
+import { Keyobject, FilterColumn } from './pipes';
 
 @NgModule({
   declarations: [
@@ -44,9 +45,11 @@ import { Keyobject } from './pipes';
     LoginComponent,
     DashboardComponent,
     BoardPageComponent,
+    BoardsListComponent,
     FooterComponent,
     DialogResetEmailComponent,
     Keyobject,
+    FilterColumn,
   ],
   imports: [
     BrowserModule,
