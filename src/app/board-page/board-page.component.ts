@@ -4,7 +4,7 @@ import { slideToLeft } from '../app.animations';
 import { BoardService, IBoardService } from '../services/board.service';
 import { MdSnackBar } from '@angular/material';
 import { FirebaseService, FirebaseObjectObservable } from '../../firebase';
-import { Subscription } from 'rxjs/subscription';
+import { Subscription } from 'rxjs/Subscription';
 import * as firebase from 'firebase/app';
 
 interface IBoardObj {
