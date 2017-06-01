@@ -9,7 +9,8 @@
 
       <div class="list-items">
         <md-list-item *ngFor="let board of boards | async; let i = index;">
-          <a md-line routerLink="/boards/{{board.$key}}">{{ board.$value }}</a>
+          <a md-line [routerLink]="['/boards/', board.$key]">{{ board.$value }}</a>
+
           <button md-icon-button
                   (click)="deleteBoard(board, i)"
                   [disabled]="busy === i">

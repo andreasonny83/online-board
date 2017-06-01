@@ -31,6 +31,8 @@ export class BoardPageComponent implements OnInit {
   public cardElevations: any;
   public pageLoading: boolean;
   public editEl: string;
+  public dragging: boolean;
+  public showDroppingBoxes: boolean;
 
   constructor(
     private fireBase: FirebaseService,
@@ -107,6 +109,32 @@ export class BoardPageComponent implements OnInit {
   public discardChanges(post: any): void {
     post.value.val = post.value.val;
     this.editEl = null;
+  }
+
+  public onDragStart(event: any, postKey: any, columnID: number) {
+    this.showDroppingBoxes = true;
+    event.dataTransfer.setData('postKey', postKey);
+    event.dataTransfer.setData('columnID', columnID);
+
+    this.dragging = true;
+    setTimeout(() => this.dragging = true, 100);
+  }
+
+  public onDrop(event: DragEvent) {
+    console.log('drop');
+    const postKey = event.dataTransfer.getData('postKey');
+    this.dragging = false;
+
+    event.preventDefault();
+  }
+
+  public allowDrop(event: DragEvent) {
+    event.preventDefault();
+  }
+
+  public onDropOutside(event: DragEvent) {
+    this.dragging = false;
+    event.preventDefault();
   }
 
   public inviteCollaborator(): void {

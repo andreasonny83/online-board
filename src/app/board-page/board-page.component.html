@@ -1,6 +1,8 @@
 <md-spinner *ngIf="pageLoading" class="loading-spinner"></md-spinner>
 
-<div class="block-xxl" *ngIf="!pageLoading">
+<div class="block-xxl"
+     *ngIf="!pageLoading"
+     (dragend)="onDropOutside($event)">
   <h3 class="board-name">{{ (boardObj | async)?.name }}</h3>
 
   <div class="item-list-container">
@@ -14,6 +16,8 @@
       <md-card *ngFor="let post of (boardObj | async).posts | keyobject | filterColumn: columnID; let i = index;"
                [style.background]="column.color"
                id="post-{{columnID}}-{{i}}"
+               draggable="true"
+               (dragstart)="onDragStart($event, post.key, columnID)"
                class="note pinned-note mat-elevation-z2">
         <img class="edit-icon"
              (click)="editEl = columnID + '-' + i"
@@ -56,6 +60,8 @@
           <p class="note-author">- {{post.value.author}}</p>
         </md-card-footer>
       </md-card>
+
+      <app-dropping-card [show-dropping-boxes]="showDroppingBoxes"></app-dropping-card>
 
       <md-card [style.background]="column.color"
                (mouseenter)="elevateCard(columnID)"

@@ -27,6 +27,7 @@ import { LoginComponent } from './login/login.component';
 import { DialogResetEmailComponent } from './login/dialog-reset-email';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { BoardPageComponent } from './board-page/board-page.component';
+import { DroppingCardComponent } from './dropping-card/dropping-card.component';
 import { FooterComponent } from './footer/footer.component';
 import { BoardsListComponent } from './boards-list/boards-list.component';
 
@@ -43,6 +44,7 @@ import { Keyobject, FilterColumn } from './pipes';
     DashboardComponent,
     BoardPageComponent,
     BoardsListComponent,
+    DroppingCardComponent,
     FooterComponent,
     DialogResetEmailComponent,
     Keyobject,
