@@ -1,13 +1,11 @@
 import { Component, OnInit} from '@angular/core';
 import { Location } from '@angular/common';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MdSnackBar } from '@angular/material';
+
 import { FirebaseService, FirebaseObjectObservable } from '../../../firebase';
 import { EmailsGenerator } from '../../../email-templates';
-import { Http, RequestOptions, Headers } from '@angular/http';
-import { MdSnackBar } from '@angular/material';
-import { Observable } from 'rxjs/Observable';
-import { ActivatedRoute, Params } from '@angular/router';
-import { BoardService } from '../../services/board.service';
+import { BoardService, IBoardService } from '../../services/board.service';
 
 interface IBoardObj {
   columns: any[];
@@ -25,16 +23,13 @@ interface IBoardObj {
 export class InviteColaboratorsComponent implements OnInit {
   collaboratorsForm: FormGroup;
   sendingInvite: boolean;
-  boardID: string;
-  boardName: string;
+  board: IBoardService;
   boardObj: FirebaseObjectObservable<any>;
 
   constructor(
     private fireBase: FirebaseService,
     private fb: FormBuilder,
-    private http: Http,
     private snackBar: MdSnackBar,
-    private route: ActivatedRoute,
     private location: Location,
     private boardService: BoardService,
   ) {
@@ -42,7 +37,7 @@ export class InviteColaboratorsComponent implements OnInit {
   }
 
   public ngOnInit() {
-    this.boardID = this.boardService.currentBoard;
+    this.board = this.boardService.currentBoard;
   }
 
   public inviteCollaborator() {
@@ -63,7 +58,7 @@ export class InviteColaboratorsComponent implements OnInit {
     this.sendingInvite = true;
 
     this.fireBase
-      .inviteCollaborator(body, this.collaboratorsForm.controls.collaborator.value, this.boardID, this.boardName)
+      .inviteCollaborator(body, this.collaboratorsForm.controls.collaborator.value, this.board)
       .subscribe(
         res => this.inviteCollaboratorSuccessHandler(),
         err => this.inviteCollaboratorErrorHandler(err));

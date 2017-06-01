@@ -4,15 +4,14 @@ import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthService } from '../../auth.service';
 import { RouterTestingModule } from '@angular/router/testing';
+import { BoardService } from '../../services/board.service';
 import { FirebaseService } from '../../../firebase';
 import { Observable } from 'rxjs/Observable';
 
 import {
-  MdToolbarModule,
-  MdButtonModule,
   MdMenuModule,
-  MdIconModule,
   MdSnackBarModule,
+  MdDialogModule,
 } from '@angular/material';
 
 import { HeaderMenuComponent } from './header-menu.component';
@@ -43,15 +42,14 @@ describe('HeaderMenuComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         NoopAnimationsModule,
-        MdToolbarModule,
-        MdButtonModule,
         MdMenuModule,
-        MdIconModule,
         MdSnackBarModule,
+        MdDialogModule,
         RouterTestingModule,
       ],
       providers: [
         AuthService,
+        BoardService,
         { provide: FirebaseService, useClass: FirebaseMockService }
       ],
       declarations: [

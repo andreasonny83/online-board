@@ -32,13 +32,6 @@
   margin-top: 100px;
 }
 
-* /deep/ .loading-spinner-bt {
-  width: 26px;
-  height: 26px;
-  margin-left: 4px;
-  display: inline-block;
-}
-
 * /deep/ .loading-spinner {
   margin: 100px auto;
 }

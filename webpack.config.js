@@ -329,11 +329,9 @@ const config = {
 };
 
 if (process.env.NODE_ENV === 'production') {
-  config.plugins.push(
-    // [
+  // config.plugins.push([
     // production only plugins
-    // ]
-  );
+  // ]);
 }
 
 module.exports = config;

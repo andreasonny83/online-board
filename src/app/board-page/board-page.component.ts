@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy, HostBinding, ElementRef } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { slideToLeft } from '../app.animations';
-import { BoardService } from '../services/board.service';
+import { BoardService, IBoardService } from '../services/board.service';
 import { MdSnackBar } from '@angular/material';
 import { FirebaseService, FirebaseObjectObservable } from '../../firebase';
-import * as firebase from 'firebase/app';
 import { Subscription } from 'rxjs/subscription';
+import * as firebase from 'firebase/app';
 
 interface IBoardObj {
   columns: any[];
@@ -21,8 +21,6 @@ interface IBoardObj {
 })
 export class BoardPageComponent implements OnInit, OnDestroy {
   @HostBinding('@routerTransition') routerTransition = '';
-  public boardID: string;
-  public boardName: string;
   public boardObj: FirebaseObjectObservable<any>;
   public sendingInvite: boolean;
   public cardElevations: any;
@@ -43,17 +41,16 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     this.cardElevations = {};
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.routerSubscriber$ = this.route.params
       .subscribe((res: {id: string}) => {
-        this.boardID = res.id;
-        this.boardService.currentBoard = this.boardID;
-        this.boardObj = this.fireBase.getBoardObject(this.boardID);
+        this.boardService.currentBoard.uid = res.id;
+        this.boardObj = this.fireBase.getBoardObject(res.id);
       });
 
     this.boardObj
       .subscribe((res: IBoardObj) => {
-        this.boardName = res.name;
+        this.boardService.currentBoard.name = res.name;
         this.pageLoading = false;
       });
   }
@@ -111,7 +108,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
 
   public onDragStart(event: DragEvent, postKey: any, columnID: number, postEl: number): void {
     this.draggingEl = `${columnID}-${postEl}`;
-    event.dataTransfer.setData('boardID', this.boardID);
+    event.dataTransfer.setData('boardID', this.boardService.currentBoard.uid);
     event.dataTransfer.setData('postKey', postKey);
 
     this.dragging = true;
@@ -127,8 +124,8 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     event.preventDefault();
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     this.routerSubscriber$.unsubscribe();
-    this.boardService.currentBoard = null;
+    this.boardService.currentBoard = <IBoardService>{};
   }
 }

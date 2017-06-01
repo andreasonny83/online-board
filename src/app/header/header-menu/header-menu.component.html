@@ -9,11 +9,6 @@
 
 <md-menu #menu="mdMenu"
          x-position="before">
-  <button  md-menu-item
-          (click)="logout()">
-          <md-icon>logout</md-icon>
-          <span>Sign Out</span>
-  </button>
 
   <button md-menu-item
           *ngIf="isInsideBoard()"
@@ -26,6 +21,12 @@
           (click)="downloadBoard()">
           <md-icon>file_download</md-icon>
           <span>Download board</span>
+  </button>
+
+  <button  md-menu-item
+          (click)="logout()">
+          <md-icon>logout</md-icon>
+          <span>Sign Out</span>
   </button>
 
 </md-menu>
