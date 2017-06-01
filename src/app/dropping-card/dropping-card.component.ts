@@ -1,35 +1,41 @@
-import { Component, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, HostBinding, EventEmitter } from '@angular/core';
+import { FirebaseService, FirebaseObjectObservable } from '../../firebase';
+import { fadeInOut } from '../app.animations';
 
 @Component({
   selector: 'app-dropping-card',
-  template: `
-  <div class="dropping-card"
-       (dragover)="allowDrop($event)"
-       (drop)="onDrop($event)">
-    <div class="dropping-card__box"
-         [class.show]="dragging">
-      Drop Here
-    </div>
-  </div>
-  `,
+  templateUrl: './dropping-card.component.html',
+  styleUrls: ['./dropping-card.component.scss'],
+  animations: [fadeInOut],
 })
-export class DroppingCardComponent {
-  @Input() public showDroppingBoxes: boolean;
-  dragging: boolean;
+export class DroppingCardComponent implements OnInit {
+  @HostBinding('@fadeInOut') routerTransition = '';
+
+  @Input() public show: boolean;
+  @Input() public columnID: string;
+  @Output() onDropped = new EventEmitter<DragEvent>();
+
+  private boardObj: FirebaseObjectObservable<any>;
+
+  constructor(
+    private fireBase: FirebaseService,
+  ) { }
+
+  ngOnInit() { }
 
   public onDrop(event: DragEvent) {
+    const boardID = event.dataTransfer.getData('boardID');
     const postKey = event.dataTransfer.getData('postKey');
-    this.dragging = false;
 
-    event.preventDefault();
+
+    this.fireBase
+      .getBoardObject(`${boardID}/posts/${postKey}`)
+      .update({col: this.columnID});
+
+    this.onDropped.emit(event);
   }
 
   public allowDrop(event: DragEvent) {
-    event.preventDefault();
-  }
-
-  public onDropOutside(event: DragEvent) {
-    this.dragging = false;
     event.preventDefault();
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, HostBinding } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostBinding, ElementRef } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { slideToLeft } from '../app.animations';
 import { BoardService } from '../services/board.service';
@@ -29,7 +29,8 @@ export class BoardPageComponent implements OnInit, OnDestroy {
   public pageLoading: boolean;
   public editEl: string;
   public dragging: boolean;
-  public showDroppingBoxes: boolean;
+
+  private draggingEl: string;
   private routerSubscriber$: Subscription;
 
   constructor(
@@ -108,29 +109,21 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     this.editEl = null;
   }
 
-  public onDragStart(event: any, postKey: any, columnID: number) {
-    this.showDroppingBoxes = true;
+  public onDragStart(event: DragEvent, postKey: any, columnID: number, postEl: number): void {
+    this.draggingEl = `${columnID}-${postEl}`;
+    event.dataTransfer.setData('boardID', this.boardID);
     event.dataTransfer.setData('postKey', postKey);
-    event.dataTransfer.setData('columnID', columnID);
 
     this.dragging = true;
-    setTimeout(() => this.dragging = true, 100);
+  }
+
+  public isDragging(columnID: number, index: number): boolean {
+    return this.draggingEl === `${columnID}-${index}`;
   }
 
   public onDrop(event: DragEvent) {
-    console.log('drop');
-    const postKey = event.dataTransfer.getData('postKey');
     this.dragging = false;
-
-    event.preventDefault();
-  }
-
-  public allowDrop(event: DragEvent) {
-    event.preventDefault();
-  }
-
-  public onDropOutside(event: DragEvent) {
-    this.dragging = false;
+    this.draggingEl = null;
     event.preventDefault();
   }
 

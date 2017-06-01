@@ -2,7 +2,7 @@
 
 <div class="block-xxl"
      *ngIf="!pageLoading"
-     (dragend)="onDropOutside($event)">
+     (dragend)="onDrop($event)">
   <h3 class="board-name">{{ (boardObj | async)?.name }}</h3>
 
   <div class="item-list-container">
@@ -17,7 +17,8 @@
                [style.background]="column.color"
                id="post-{{columnID}}-{{i}}"
                draggable="true"
-               (dragstart)="onDragStart($event, post.key, columnID)"
+               (dragstart)="onDragStart($event, post.key, columnID, i)"
+               [class.dragging]="isDragging(columnID, i)"
                class="note pinned-note mat-elevation-z2">
         <img class="edit-icon"
              (click)="editEl = columnID + '-' + i"
@@ -61,7 +62,10 @@
         </md-card-footer>
       </md-card>
 
-      <app-dropping-card [show-dropping-boxes]="showDroppingBoxes"></app-dropping-card>
+      <app-dropping-card *ngIf="dragging"
+                         [columnID]="columnID"
+                         (onDropped)="onDrop($event)">
+      </app-dropping-card>
 
       <md-card [style.background]="column.color"
                (mouseenter)="elevateCard(columnID)"

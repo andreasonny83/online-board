@@ -1,7 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { Location } from '@angular/common';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { FirebaseService, FirebaseListObservable, FirebaseObjectObservable } from '../../../firebase';
+import { FirebaseService, FirebaseObjectObservable } from '../../../firebase';
 import { EmailsGenerator } from '../../../email-templates';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { MdSnackBar } from '@angular/material';
@@ -29,10 +29,6 @@ export class InviteColaboratorsComponent implements OnInit {
   boardName: string;
   boardObj: FirebaseObjectObservable<any>;
 
-  ngOnInit() {
-    this.boardID = this.boardService.currentBoard;
-  }
-
   constructor(
     private fireBase: FirebaseService,
     private fb: FormBuilder,
@@ -42,8 +38,12 @@ export class InviteColaboratorsComponent implements OnInit {
     private location: Location,
     private boardService: BoardService,
   ) {
-      this.createForm();
-    }
+    this.createForm();
+  }
+
+  public ngOnInit() {
+    this.boardID = this.boardService.currentBoard;
+  }
 
   public inviteCollaborator() {
     const html = EmailsGenerator.inviteCollaborator(
@@ -67,7 +67,7 @@ export class InviteColaboratorsComponent implements OnInit {
       .subscribe(
         res => this.inviteCollaboratorSuccessHandler(),
         err => this.inviteCollaboratorErrorHandler(err));
-    }
+  }
 
   private createForm() {
     this.collaboratorsForm = this.fb.group({

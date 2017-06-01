@@ -1,5 +1,8 @@
-.dropping-card__box {
-  opacity: 0;
+:host {
+  display: block;
+}
+
+.dropping-card {
   padding: 36px 0;
   font-size: 18px;
   text-align: center;
@@ -7,9 +10,4 @@
   color: rgba(0, 0, 0, 0.6);
   border: 2px dashed rgba(0, 0, 0, 0.6);
   transition: opacity .5s ease-in-out;
-}
-
-.dropping-card__box.show {
-  transition: opacity .5s ease-in-out;
-  opacity: 1;
 }
