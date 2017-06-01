@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostBinding } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Params } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -19,6 +19,7 @@ import {
 } from '../../firebase';
 
 import * as firebase from 'firebase/app';
+import { Subscription } from 'rxjs/subscription';
 import 'rxjs/add/operator/switchMap';
 
 interface IBoardObj {
@@ -33,7 +34,7 @@ interface IBoardObj {
   styleUrls: ['./board-page.component.scss'],
   animations: [slideToLeft],
 })
-export class BoardPageComponent implements OnInit {
+export class BoardPageComponent implements OnInit, OnDestroy {
   boardID: string;
   boardName: string;
   board: FirebaseListObservable<any[]>;
@@ -41,6 +42,7 @@ export class BoardPageComponent implements OnInit {
   columns: FirebaseListObservable<any[]>;
   sendingInvite: boolean;
   cardElevations: any;
+  routerSubscriber$: Subscription;
   @HostBinding('@routerTransition') routerTransition = '';
 
   public pageLoading: boolean;
@@ -59,17 +61,14 @@ export class BoardPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.params
+    this.routerSubscriber$ = this.route.params
       .subscribe((res: {id: string}) => {
         this.boardID = res.id;
+        this.boardService.currentBoard = this.boardID;
         this.board = this.fireBase.getBoard(this.boardID);
         this.columns = this.fireBase.getBoard(`${this.boardID}/columns`);
         this.boardObj = this.fireBase.getBoardObject(this.boardID);
       });
-
-      this.boardService.currentBoard = this.boardID;
-
-      console.log('currentBoard >>>>>', this.boardService.currentBoard);
 
     this.boardObj
       .subscribe((res: IBoardObj) => {
@@ -143,5 +142,10 @@ export class BoardPageComponent implements OnInit {
   discardChanges(item: any): void {
     item.value.val = item.value.val;
     this.editEl = null;
+  }
+
+  ngOnDestroy() {
+    this.routerSubscriber$.unsubscribe();
+    this.boardService.currentBoard = null;
   }
 }

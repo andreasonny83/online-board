@@ -30,7 +30,6 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { BoardPageComponent } from './board-page/board-page.component';
 
 import { FooterComponent } from './footer/footer.component';
-import { InviteColaboratorsComponent } from './header/invite-colaborators/invite-colaborators.component';
 import { BoardService } from './services/board.service';
 
 import { AuthGuard } from './auth-guard.service';
@@ -45,9 +44,7 @@ import { Keyobject } from './pipes';
     LoginComponent,
     DashboardComponent,
     BoardPageComponent,
-    InviteColaboratorsComponent,
     FooterComponent,
-    InviteColaboratorsComponent,
     DialogResetEmailComponent,
     Keyobject,
   ],
@@ -75,7 +72,6 @@ import { Keyobject } from './pipes';
   ],
   entryComponents: [
     DialogResetEmailComponent,
-    InviteColaboratorsComponent,
   ],
   providers: [
     AuthGuard,

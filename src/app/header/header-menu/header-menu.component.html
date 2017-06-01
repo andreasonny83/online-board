@@ -16,6 +16,7 @@
   </button>
 
   <button md-menu-item
+          *ngIf="isInsideBoard()"
           (click)="inviteColaborators()">
           <md-icon>share</md-icon>
           <span>Invite colaborators</span>

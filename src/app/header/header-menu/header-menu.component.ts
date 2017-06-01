@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { AuthService } from '../../auth.service';
 import { FirebaseService } from '../../../firebase';
+import { BoardService } from '../../services/board.service';
 import { Observable } from 'rxjs/Observable';
 import * as firebase from 'firebase/app';
 import { MdDialog } from '@angular/material';
@@ -11,7 +12,6 @@ import { InviteColaboratorsComponent } from '../invite-colaborators/invite-colab
   selector: 'app-header-menu',
   templateUrl: './header-menu.component.html',
   styleUrls: ['./header-menu.component.scss'],
-  entryComponents: [ InviteColaboratorsComponent ]
 })
 export class HeaderMenuComponent implements OnInit {
   user: Observable<firebase.User>;
@@ -19,6 +19,7 @@ export class HeaderMenuComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private fireBase: FirebaseService,
+    private boardService: BoardService,
     public dialog: MdDialog,
   ) {
     this.user = fireBase.user;
@@ -33,6 +34,12 @@ export class HeaderMenuComponent implements OnInit {
   logout() {
     this.authService.logout();
   }
-
   downloadBoard() {}
+
+  isInsideBoard() {;
+    if (!this.boardService.currentBoard) {
+      return false;
+    }
+    return true;
+  }
 }

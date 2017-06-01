@@ -7,6 +7,7 @@ import { Http, RequestOptions, Headers } from '@angular/http';
 import { MdSnackBar } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Params } from '@angular/router';
+import { BoardService } from '../../services/board.service';
 
 interface IBoardObj {
   columns: any[];
@@ -29,17 +30,7 @@ export class InviteColaboratorsComponent implements OnInit {
   boardObj: FirebaseObjectObservable<any>;
 
   ngOnInit() {
-    this.route.params
-      .subscribe((res: {id: string}) => {
-        this.boardID = res.id;
-        console.log('boardID', this.boardID);
-        this.boardObj = this.fireBase.getBoardObject(this.boardID);
-      });
-
-    this.boardObj
-      .subscribe((res: IBoardObj) => {
-        this.boardName = res.name;
-      });
+    this.boardID = this.boardService.currentBoard;
   }
 
   constructor(
@@ -48,7 +39,8 @@ export class InviteColaboratorsComponent implements OnInit {
     private http: Http,
     private snackBar: MdSnackBar,
     private route: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    private boardService: BoardService,
   ) {
       this.createForm();
     }
@@ -108,7 +100,7 @@ export class InviteColaboratorsComponent implements OnInit {
     });
   }
 
-  errorHandler(): Observable<any> {
+  private errorHandler(): Observable<any> {
     this.sendingInvite = false;
 
     this.snackBar.open(`Is not possible to send the email at the moment.
