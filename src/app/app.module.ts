@@ -18,7 +18,8 @@ import {
   MdListModule,
   MdIconModule,
   MdProgressSpinnerModule,
-  MdDialogModule,
+  MdDialog,
+  MaterialModule,
 } from '@angular/material';
 
 import { AppComponent } from './app.component';
@@ -28,7 +29,9 @@ import { DialogResetEmailComponent } from './login/dialog-reset-email';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { BoardPageComponent } from './board-page/board-page.component';
 import { DroppingCardComponent } from './dropping-card/dropping-card.component';
+
 import { FooterComponent } from './footer/footer.component';
+import { BoardService } from './services/board.service';
 import { BoardsListComponent } from './boards-list/boards-list.component';
 
 import { AuthGuard } from './auth-guard.service';
@@ -68,7 +71,6 @@ import { Keyobject, FilterColumn } from './pipes';
     MdListModule,
     MdIconModule,
     MdProgressSpinnerModule,
-    MdDialogModule,
     // App Modules
     HeaderModule,
     AppRoutingModule,
@@ -79,6 +81,8 @@ import { Keyobject, FilterColumn } from './pipes';
   providers: [
     AuthGuard,
     AuthService,
+    MdDialog,
+    BoardService,
   ],
   bootstrap: [ AppComponent ]
 })

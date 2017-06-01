@@ -93,40 +93,4 @@
 
     </div>
   </div>
-
-  <md-card class="invite-collaborators">
-    <md-card-title>
-      Invite more collaborators to this board:
-    </md-card-title>
-
-    <md-card-content>
-      <form [formGroup]="collaboratorsForm"
-            (ngSubmit)="inviteCollaborator()"
-            class="form"
-            novalidate>
-        <md-input-container class="full-width">
-          <input mdInput
-                 placeholder="Email address"
-                 type="email"
-                 name="collaborator"
-                 formControlName="collaborator">
-        </md-input-container>
-
-        <md-card-actions align="end">
-          <button md-raised-button
-                  type="submit"
-                  name="invite-collaborator"
-                  [disabled]="!collaboratorsForm.valid || sendingInvite"
-                  color="accent">
-            <span>Invite</span>
-            <md-spinner color="primary"
-                        strokeWidth="8"
-                        *ngIf="sendingInvite"
-                        class="loading-spinner-bt"></md-spinner>
-          </button>
-        </md-card-actions>
-      </form>
-    </md-card-content>
-  </md-card>
-
 </div>

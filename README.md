@@ -111,4 +111,5 @@ Changelog available [here](https://github.com/andreasonny83/online-board/release
 
 ## License
 
+
 [MIT License](https://github.com/andreasonny83/online-board/blob/master/LICENSE) © Andrea SonnY
