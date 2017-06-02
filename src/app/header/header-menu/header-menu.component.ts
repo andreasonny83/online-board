@@ -34,7 +34,6 @@ export class HeaderMenuComponent implements OnInit {
   logout() {
     this.authService.logout();
   }
-  downloadBoard() {}
 
   isInsideBoard() {;
     if (!this.boardService.currentBoard) {
@@ -42,4 +41,16 @@ export class HeaderMenuComponent implements OnInit {
     }
     return true;
   }
+
+  public downloadBoard() {
+     const a = document.createElement('a');
+     document.body.appendChild(a);
+     const blob = new Blob(['test'], {type: 'text/markdown'}),
+     url = window.URL.createObjectURL(blob);
+     a.href = url;
+     a.download = 'testa.md';
+     a.click();
+     window.URL.revokeObjectURL(url);
+     document.body.removeChild(a);
+  };
 }
