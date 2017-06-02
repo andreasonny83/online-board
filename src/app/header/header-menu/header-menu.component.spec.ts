@@ -2,11 +2,11 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthService } from '../../auth.service';
 import { RouterTestingModule } from '@angular/router/testing';
+import { Observable } from 'rxjs/Observable';
+import { AuthService } from '../../auth.service';
 import { BoardService } from '../../services/board.service';
 import { FirebaseService } from '../../../firebase';
-import { Observable } from 'rxjs/Observable';
 
 import {
   MdMenuModule,
