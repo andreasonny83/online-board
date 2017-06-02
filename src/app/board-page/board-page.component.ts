@@ -11,6 +11,7 @@ interface IBoardObj {
   columns: any[];
   invites: any[];
   name: string;
+  posts?: any[];
 }
 
 @Component({
@@ -51,6 +52,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     this.boardObj
       .subscribe((res: IBoardObj) => {
         this.boardService.currentBoard.name = res.name;
+        this.boardService.currentBoard.posts = res.posts;
         this.pageLoading = false;
       });
   }
