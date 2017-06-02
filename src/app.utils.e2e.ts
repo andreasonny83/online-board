@@ -5,11 +5,12 @@ export class Utils {
 
   constructor() {
     browser.ignoreSynchronization = true;
-    this.timeout = 6000;
   }
 
-  navigateTo(target?: string): any {
-    return browser.get(`/${target || ''}`);
+  navigateTo(target = ''): any {
+    browser.get(`/${target}`);
+    browser.driver.sleep(250); // wait for routing animations to be completed
+    return;
   }
 
   waitForCurrentUrl(): any {
@@ -41,5 +42,9 @@ export class Utils {
       .wait(() => el.isPresent().then((isPresent: boolean) => {
           return !isPresent;
         }), timeout);
+  }
+
+  waitForUrlChange(target: RegExp): any {
+    expect(this.waitForCurrentUrl()).toMatch(target);
   }
 }

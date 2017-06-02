@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
   public title: string;
   public homepage: string;
   public floatingClass: boolean;
-  public version: number;
+  public version: string;
 
   constructor() { }
 

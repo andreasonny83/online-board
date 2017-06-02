@@ -1,3 +1,8 @@
+interface IPackage {
+  name: string;
+  version: string;
+}
+
 interface IUserLogin {
   email: string;
   password: string;
