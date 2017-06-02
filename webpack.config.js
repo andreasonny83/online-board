@@ -288,28 +288,6 @@ const config = {
       "skipCodeGeneration": true
     }),
 
-  ],
-  "node": {
-    "fs": "empty",
-    "global": true,
-    "crypto": "empty",
-    "tls": "empty",
-    "net": "empty",
-    "process": true,
-    "module": false,
-    "clearImmediate": false,
-    "setImmediate": false
-  },
-  "devServer": {
-    "historyApiFallback": true,
-    contentBase: 'src/',
-  }
-};
-
-if (process.env.NODE_ENV === 'production') {
-  config.plugins.push([
-    // production only plugins
-
     new WebpackPwaManifest({
       "name": METADATA.title,
       "short_name": METADATA.title,
@@ -332,7 +310,28 @@ if (process.env.NODE_ENV === 'production') {
       ]
     }),
 
-  ]);
+  ],
+  "node": {
+    "fs": "empty",
+    "global": true,
+    "crypto": "empty",
+    "tls": "empty",
+    "net": "empty",
+    "process": true,
+    "module": false,
+    "clearImmediate": false,
+    "setImmediate": false
+  },
+  "devServer": {
+    "historyApiFallback": true,
+    contentBase: 'src/',
+  }
+};
+
+if (process.env.NODE_ENV === 'production') {
+  // config.plugins.push([
+    // production only plugins
+  // ]);
 }
 
 module.exports = config;

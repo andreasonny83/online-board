@@ -190,21 +190,20 @@ export class FirebaseService {
       });
   }
 
-  public inviteCollaborator(body: any, collaboratorEmail: string, boardID: string, boardName: string): Observable<any> {
+  public inviteCollaborator(body: any, collaboratorEmail: string, board: {uid: string, name: string}): Observable<any> {
     const headers = new Headers({ 'Content-Type': 'application/json' }); // Set content type to JSON
     const options = new RequestOptions({ headers: headers }); // Create a request option
-    const self = this;
 
     if (!collaboratorEmail) {
       return Observable.throw('An email address is required.');
     }
 
-    if (!body || !boardID || !boardName) {
+    if (!body || !board.uid || !board.name) {
       return Observable.throw('Something wen wrong while trying to send the email.');
     }
 
     return new Observable(observer => {
-      this.addCollaborator(collaboratorEmail, boardID, boardName)
+      this.addCollaborator(collaboratorEmail, board.uid, board.name)
         .toPromise()
         .then(() => this.sendEmail(body, options, observer))
         .catch(err => observer.error(`Ops! It looks like you don't have permissions to add collaboartors to this board.`));

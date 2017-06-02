@@ -1,17 +1,15 @@
-import { Injectable, Input } from '@angular/core';
+import { Injectable } from '@angular/core';
 
+export interface IBoardService {
+  name: string;
+  uid: string;
+}
 
 @Injectable()
 export class BoardService {
+  public currentBoard: IBoardService;
 
-  @Input()
-  _currentBoard: string;
-
-  set currentBoard(value: string) {
-    this._currentBoard = value;
-  }
-
-  get currentBoard(): string {
-    return this._currentBoard;
+  constructor() {
+    this.currentBoard = <IBoardService>{};
   }
 }

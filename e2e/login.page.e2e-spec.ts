@@ -15,17 +15,26 @@ describe('Login screen', () => {
   });
 
   it('and a login form should be rendered on the page', () => {
-    expect(element(by.css('md-card.form__login')).isDisplayed())
+    expect(utils.waitForElement(element(by.css('md-card.form__login'))))
+      .toBe(true);
+
+    expect(utils.waitForElement(element(by.css('md-card.form__login'))))
       .toBe(true);
   });
 
   it('and a register form should be rendered on the page', () => {
-    expect(element(by.css('md-card.form__register')).isDisplayed())
+    expect(utils.waitForElement(element(by.css('md-card.form__register'))))
       .toBe(true);
   });
 
   describe('login form', () => {
-    const submitBtn = element(by.css('md-card.form__login button[type="submit"]'));
+    let submitBtn;
+
+    beforeEach(() => {
+      expect(utils.waitForCurrentUrl()).toMatch(/\/login/);
+      utils.waitForElement(element(by.css('md-card.form__login button[type="submit"]')));
+      submitBtn = element(by.css('md-card.form__login button[type="submit"]'));
+    });
 
     it('the login button is initially disabled', () => {
       expect(submitBtn.getAttribute('disabled'))
@@ -93,14 +102,26 @@ describe('Login screen', () => {
   });
 
   describe('forgotten password', () => {
-    const forgottenPwdBtn = element(by.css('md-card.form__login button[name="forgotten_password"]'));
-    const dialog = element(by.css('app-dialog-reset-email'));
+    let forgottenPwdBtn;
+    let dialog;
 
     beforeAll(() => {
       // force a user log out
       browser.driver.manage().deleteAllCookies();
       browser.executeScript('window.sessionStorage.clear(); window.localStorage.clear();');
-      utils.navigateTo('');
+      utils.navigateTo();
+    });
+
+    beforeEach(() => {
+      expect(utils.waitForCurrentUrl()).toMatch(/\/login/);
+      expect(utils.waitForElement(element(by.css('md-card.form__login button[name="forgotten_password"]'))))
+        .toBe(true);
+
+      // wait for animations to be completed
+      browser.driver.sleep(400);
+
+      forgottenPwdBtn = element(by.css('md-card.form__login button[name="forgotten_password"]'));
+      dialog = element(by.css('app-dialog-reset-email'));
     });
 
     it('clicking the button should open a dialog', () => {
@@ -119,7 +140,7 @@ describe('Login screen', () => {
       expect(utils.waitForElement(dialog))
         .toBe(true);
 
-      browser.actions().mouseMove(dialog, {x: -50, y: -50}).click().perform();
+      browser.actions().mouseMove(dialog, {x: -100, y: -100}).click().perform();
 
       expect(utils.waitForElementToDisappear(dialog))
         .toBe(true);

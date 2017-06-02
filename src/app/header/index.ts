@@ -7,7 +7,7 @@ import { MainToolbarComponent } from './main-toolbar/main-toolbar.component';
 import { InviteColaboratorsComponent } from './invite-colaborators/invite-colaborators.component';
 import { AuthService } from '../auth.service';
 import { FirebaseModule } from '../../firebase';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import * as firebase from 'firebase/app';
 import {
   MdToolbarModule,
@@ -17,6 +17,7 @@ import {
   MdSnackBarModule,
   MdDialogModule,
   MdInputModule,
+  MdProgressSpinnerModule,
 } from '@angular/material';
 
 @NgModule({
@@ -29,10 +30,10 @@ import {
     MdSnackBarModule,
     MdDialogModule,
     MdInputModule,
+    MdProgressSpinnerModule,
     FirebaseModule,
-    RouterModule,
-    FormsModule,
     ReactiveFormsModule,
+    RouterModule,
   ],
   declarations: [
     HeaderMenuComponent,

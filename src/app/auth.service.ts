@@ -13,7 +13,6 @@ export class AuthService {
   constructor(
     private fireBase: FirebaseService,
     private router: Router,
-    private route: ActivatedRoute,
     private snackBar: MdSnackBar,
   ) {
     fireBase.user

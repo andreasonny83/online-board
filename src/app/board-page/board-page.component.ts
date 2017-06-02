@@ -1,27 +1,11 @@
-import { Component, OnInit, OnDestroy, HostBinding } from '@angular/core';
-import { Location } from '@angular/common';
+import { Component, OnInit, OnDestroy, HostBinding, ElementRef } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { slideToLeft } from '../app.animations';
-import { EmailsGenerator } from '../../email-templates';
-import { BoardService } from '../services/board.service';
+import { BoardService, IBoardService } from '../services/board.service';
 import { MdSnackBar } from '@angular/material';
-
-import {
-  Http,
-  Response,
-  RequestOptions,
-  Headers
-} from '@angular/http';
-import {
-  FirebaseService,
-  FirebaseListObservable,
-  FirebaseObjectObservable
-} from '../../firebase';
-
+import { FirebaseService, FirebaseObjectObservable } from '../../firebase';
+import { Subscription } from 'rxjs/Subscription';
 import * as firebase from 'firebase/app';
-import { Subscription } from 'rxjs/subscription';
-import 'rxjs/add/operator/switchMap';
 
 interface IBoardObj {
   columns: any[];
@@ -37,37 +21,36 @@ interface IBoardObj {
 })
 export class BoardPageComponent implements OnInit, OnDestroy {
   @HostBinding('@routerTransition') routerTransition = '';
-  public boardID: string;
-  public boardName: string;
   public boardObj: FirebaseObjectObservable<any>;
   public sendingInvite: boolean;
   public cardElevations: any;
   public pageLoading: boolean;
-  public editEl: null;
+  public editEl: string;
+  public dragging: boolean;
+
+  private draggingEl: string;
   private routerSubscriber$: Subscription;
 
   constructor(
     private fireBase: FirebaseService,
     private boardService: BoardService,
     private route: ActivatedRoute,
-    private location: Location,
     private snackBar: MdSnackBar,
   ) {
     this.pageLoading = true;
     this.cardElevations = {};
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.routerSubscriber$ = this.route.params
       .subscribe((res: {id: string}) => {
-        this.boardID = res.id;
-        this.boardService.currentBoard = this.boardID;
-        this.boardObj = this.fireBase.getBoardObject(this.boardID);
+        this.boardService.currentBoard.uid = res.id;
+        this.boardObj = this.fireBase.getBoardObject(res.id);
       });
 
     this.boardObj
       .subscribe((res: IBoardObj) => {
-        this.boardName = res.name;
+        this.boardService.currentBoard.name = res.name;
         this.pageLoading = false;
       });
   }
@@ -123,8 +106,26 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     this.editEl = null;
   }
 
-  ngOnDestroy() {
+  public onDragStart(event: DragEvent, postKey: any, columnID: number, postEl: number): void {
+    this.draggingEl = `${columnID}-${postEl}`;
+    event.dataTransfer.setData('boardID', this.boardService.currentBoard.uid);
+    event.dataTransfer.setData('postKey', postKey);
+
+    this.dragging = true;
+  }
+
+  public isDragging(columnID: number, index: number): boolean {
+    return this.draggingEl === `${columnID}-${index}`;
+  }
+
+  public onDrop(event: DragEvent) {
+    this.dragging = false;
+    this.draggingEl = null;
+    event.preventDefault();
+  }
+
+  public ngOnDestroy() {
     this.routerSubscriber$.unsubscribe();
-    this.boardService.currentBoard = null;
+    this.boardService.currentBoard = <IBoardService>{};
   }
 }
