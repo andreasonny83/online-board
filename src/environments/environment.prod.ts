@@ -1,5 +1,7 @@
+import * as pkg from '../../package.json';
+
 export const environment = {
   production: true,
-  version: require('../../package.json').version,
-  homepage: require('../../package.json').homepage,
+  version: pkg.version,
+  homepage: pkg.homepage,
 };

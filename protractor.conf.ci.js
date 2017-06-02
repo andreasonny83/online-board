@@ -7,7 +7,7 @@ exports.config = {
   allScriptsTimeout: 110000,
 
   specs: [
-    './e2e/**/*.e2e-spec.ts'
+    './src/**/*.e2e-spec.ts'
   ],
 
   capabilities: {
@@ -32,7 +32,7 @@ exports.config = {
 
   beforeLaunch: function() {
     require('ts-node').register({
-      project: 'e2e/tsconfig.e2e.json'
+      project: 'src/tsconfig.e2e.json'
     });
 
   },

@@ -1,5 +1,6 @@
 import { browser, element, by } from 'protractor';
-import { Utils } from './app.utils';
+import { Utils } from '../app.utils.e2e';
+import * as pkg from '../../package.json';
 
 describe('Online Board App', () => {
   let utils: Utils;
@@ -8,13 +9,12 @@ describe('Online Board App', () => {
     utils = new Utils();
 
     utils.navigateTo();
+    utils.waitForUrlChange(/\/login/);
   });
 
   it('should display the app toolbar', () => {
-    const version = require('../package.json').version;
-
     expect(element(by.css('app-root .app-toolbar .toolbar-title')).getText())
-      .toEqual(`Online Board v.${version}`);
+      .toEqual(`Online Board v.${pkg.version}`);
   });
 
   it('should display a cookie policy notification', () => {

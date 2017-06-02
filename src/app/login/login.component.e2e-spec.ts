@@ -1,5 +1,5 @@
 import { browser, element, by } from 'protractor';
-import { Utils } from './app.utils';
+import { Utils } from '../../app.utils.e2e';
 
 describe('Login screen', () => {
   let utils: Utils;
