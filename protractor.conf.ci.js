@@ -37,7 +37,6 @@ exports.config = {
 
   },
   onPrepare() {
-    ignoreSynchronization = true;
     jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
   },
 

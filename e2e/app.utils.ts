@@ -4,7 +4,7 @@ export class Utils {
   private timeout: number;
 
   constructor() {
-    browser.ignoreSynchronization = true;
+    // browser.ignoreSynchronization = true; // Enabling the ignoreSynchronization makes Protractor work
     this.timeout = 6000;
   }
 
