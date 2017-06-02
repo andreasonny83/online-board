@@ -18,6 +18,7 @@
   </button>
 
   <button  md-menu-item
+          *ngIf="isInsideBoard()"
           (click)="downloadBoard()">
           <md-icon>file_download</md-icon>
           <span>Download board</span>
