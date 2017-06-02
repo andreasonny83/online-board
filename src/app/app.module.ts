@@ -17,9 +17,8 @@ import {
   MdSnackBarModule,
   MdListModule,
   MdIconModule,
+  MdDialogModule,
   MdProgressSpinnerModule,
-  MdDialog,
-  MaterialModule,
 } from '@angular/material';
 
 import { AppComponent } from './app.component';
@@ -71,6 +70,7 @@ import { Keyobject, FilterColumn } from './pipes';
     MdListModule,
     MdIconModule,
     MdProgressSpinnerModule,
+    MdDialogModule,
     // App Modules
     HeaderModule,
     AppRoutingModule,
@@ -81,7 +81,6 @@ import { Keyobject, FilterColumn } from './pipes';
   providers: [
     AuthGuard,
     AuthService,
-    MdDialog,
     BoardService,
   ],
   bootstrap: [ AppComponent ]

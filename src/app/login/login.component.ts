@@ -44,8 +44,12 @@ export class LoginComponent implements OnInit {
       this.authService
         .login(this.loginForm.value)
         .then(res => {
-          this.loginForm.reset();
           this.loginLoading = false;
+          this.loginForm.reset();
+        })
+        .catch(err => {
+          this.loginLoading = false;
+          this.snackBar.open(err.message || 'Server error.', null, { duration: 6000 });
         });
     }
   }

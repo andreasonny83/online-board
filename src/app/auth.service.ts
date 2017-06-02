@@ -48,13 +48,13 @@ export class AuthService {
       );
   }
 
-  isLoggedIn(): Observable<boolean> {
+  public isLoggedIn(): Observable<boolean> {
     return this.fireBase
       .user
       .map(res => res && !!res.uid);
   }
 
-  register(formModel: IUserRegister): firebase.Promise<any> {
+  public register(formModel: IUserRegister): firebase.Promise<any> {
     return this.fireBase
       .register(formModel.email, formModel.password, formModel.displayName)
       .then(() => this.snackBar
@@ -64,20 +64,16 @@ export class AuthService {
       });
   }
 
-  login(formModel: IUserLogin): firebase.Promise<any> {
+  public login(formModel: IUserLogin): firebase.Promise<any> {
     return this.fireBase
-      .login(formModel.email, formModel.password)
-      .then(() => {})
-      .catch((err) => {
-        this.snackBar.open(err.message || 'Server error.', null, { duration: 6000 });
-      });
+      .login(formModel.email, formModel.password);
   }
 
-  redirectToDasboard(): void {
+  public redirectToDasboard(): void {
     this.router.navigate(['/dashboard']);
   }
 
-  logout(): void {
+  public logout(): void {
     this.fireBase.logout();
   }
 }
