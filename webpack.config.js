@@ -222,7 +222,9 @@ const config = {
       }
     }),
 
-    new ProgressPlugin(),
+    new ProgressPlugin({
+      autoUpdate: 1000 * 60 * 60 * 24, // auto update the cache every day
+    }),
 
     new HtmlWebpackPlugin({
       "template": "./src/index.template.sjs",

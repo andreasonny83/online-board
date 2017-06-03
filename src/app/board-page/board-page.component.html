@@ -13,13 +13,13 @@
         <md-icon>{{ column.icon }}</md-icon>
       </div>
 
-      <md-card *ngFor="let post of (boardObj | async).posts | keyobject | filterColumn: columnID; let i = index;"
+      <md-card *ngFor="let post of (boardObj | async).posts | keyobject | filterColumn: columnID;
+                       let i = index;"
                [style.background]="column.color"
+               [class]="postClass(columnID, i)"
                id="post-{{columnID}}-{{i}}"
                draggable="true"
-               (dragstart)="onDragStart($event, post.key, columnID, i)"
-               [class.dragging]="isDragging(columnID, i)"
-               class="note pinned-note mat-elevation-z2">
+               (dragstart)="onDragStart($event, post.key, columnID, i)">
         <img class="edit-icon"
              (click)="editEl = columnID + '-' + i"
              src="../../assets/images/marker.png"

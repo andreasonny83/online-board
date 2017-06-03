@@ -116,17 +116,19 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     this.dragging = true;
   }
 
-  public isDragging(columnID: number, index: number): boolean {
-    return this.draggingEl === `${columnID}-${index}`;
+  public postClass(columnID: number, index: number): string {
+    return this.draggingEl === `${columnID}-${index}` ?
+      'mat-card note pinned-note dragging mat-elevation-z20' :
+      'mat-card note pinned-note mat-elevation-z2';
   }
 
-  public onDrop(event: DragEvent) {
+  public onDrop(event: DragEvent): void {
     this.dragging = false;
     this.draggingEl = null;
     event.preventDefault();
   }
 
-  public ngOnDestroy() {
+  public ngOnDestroy(): void {
     this.routerSubscriber$.unsubscribe();
     this.boardService.currentBoard = <IBoardService>{};
   }

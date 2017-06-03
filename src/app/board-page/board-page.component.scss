@@ -69,12 +69,12 @@
 }
 
 .pinned-note:active {
+  opacity: 0.8;
+  border: 2px dashed rgba(0, 0, 0, 0.5);
   cursor: grabbing;
 }
 
 .pinned-note.dragging {
-  cursor: grabbing;
-  border: 2px dashed rgba(0, 0, 0, 0.5);
 }
 
 .pinned-note .mat-card-footer .note-author:hover {

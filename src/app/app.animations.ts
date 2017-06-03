@@ -3,6 +3,7 @@ import {
   state,
   style,
   animate,
+  group,
   transition
 } from '@angular/animations';
 
@@ -48,16 +49,31 @@ export const fadeIn =
 
 export const fadeInOut =
   trigger('fadeInOut', [
-    state('void', style({ opacity: 1 })),
-    state('*', style({ opacity: 1 })),
+    state('void', style({
+      opacity: 0,
+      transform: 'scale(0.8)',
+      height: '1px',
+    })),
+    state('*', style({
+      opacity: '0.8',
+      transform: 'scale(1)',
+      height: '*',
+    })),
 
     transition(':enter', [
-      style({ opacity: 0 }),
-      animate('.3s ease-in-out', style({ opacity: 1 })),
+      style({ opacity: '0', transform: 'scale(0.8)', height: '0' }),
+      group([
+        animate('.15s ease-in', style({ height: '*' })),
+        animate('.2s ease-in', style({ transform: 'scale(1)' })),
+        animate('.3s ease-in', style({ opacity: '0.8' })),
+      ]),
     ]),
 
     transition(':leave', [
-      style({ opacity: 1 }),
-      animate('.3s ease-in-out', style({ opacity: 0 })),
+      group([
+        animate('.2s ease-out', style({ transform: 'scale(0.8)' })),
+        animate('.25s ease-out', style({ opacity: '0' })),
+        animate('.1s .25s ease-out', style({ height: '0' })),
+      ]),
     ]),
   ]);
