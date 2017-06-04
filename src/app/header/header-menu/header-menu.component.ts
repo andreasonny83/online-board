@@ -21,6 +21,7 @@ interface IMDColumns {
 })
 export class HeaderMenuComponent implements OnInit {
   user: Observable<firebase.User>;
+  boardColumns: IMDColumns[];
 
   constructor(
     private authService: AuthService,
@@ -33,117 +34,82 @@ export class HeaderMenuComponent implements OnInit {
 
   public ngOnInit() { }
 
-  public inviteColaborators() {
+  public inviteColaborators(): void {
     this.dialog.open(InviteColaboratorsComponent);
   }
 
-  public logout() {
+  public logout(): void {
     this.authService.logout();
   }
 
-  public isInsideBoard() {
+  public isInsideBoard(): boolean {
     return !!this.boardService.currentBoard && !!this.boardService.currentBoard.uid;
   }
 
-  public downloadBoard() {
-    const createdMd = this.goodsTable() + '\n' + this.badsTable() + '\n' + this.questionsList();
+  public downloadBoard(): void {
+    const a = document.createElement('a');
 
-     const a = document.createElement('a');
-     document.body.appendChild(a);
-     const blob = new Blob([createdMd], {type: 'text/markdown'}),
-     url = window.URL.createObjectURL(blob);
-     a.href = url;
-     a.download = this.boardService.currentBoard.name + '.md';
-     a.click();
-     window.URL.revokeObjectURL(url);
-     document.body.removeChild(a);
-  };
+    this.generateBoardColumns(3, 3);
 
-  private goodsTableHeader() {
-    return  '=== Goods ===\n' +
-            '{| class="wikitable" style="background-color:#ffffff"\n' +
-            '! style="background-color:#f0fff0" | Item\n' +
-            '! style="background-color:#f0fff0" | Description\n' +
-            '! style="background-color:#f0fff0" | Action\n' +
-            '|-\n'
+    const createdMd = this.generateTable('Goods', 0) +
+                      this.generateTable('Bads', 1) +
+                      this.generateList('Questions', 2);
+    const blob = new Blob([createdMd], {type: 'text/markdown'});
+    const url = window.URL.createObjectURL(blob);
+
+    document.body.appendChild(a);
+    a.href = url;
+    a.download = `${this.boardService.currentBoard.name}.md`;
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
   }
 
-  private goodsTable() {
-    const column = this.createBoardColumns();
-    const header = this.goodsTableHeader();
-    const tableEnd = '|-\n|}';
+  private generateTable(title: string, column: number): string {
+    const header = this.tableHeader(title);
+    const tableEnd = '|-\n|}\n';
 
-    return header + column[0].value + tableEnd;
+    return header + this.boardColumns[column].value + tableEnd;
   }
 
-  private badsTableHeader() {
-    return  '=== Bads ===\n' +
-            '{| class="wikitable" style="background-color:#ffffff"\n' +
-            '! style="background-color:#FFE4E1" | Item\n' +
-            '! style="background-color:#FFE4E1" | Description\n' +
-            '! style="background-color:#FFE4E1" | Action\n' +
-            '|-\n'
+  private generateList(title: string, column: number): string {
+    const header = `=== ${title} ===\n`;
+
+    return header + this.boardColumns[column].value;
   }
 
-  private badsTable() {
-    const column = this.createBoardColumns();
-    const header = this.badsTableHeader();
-    const tableEnd = '|-\n|}';
-
-    return header + column[1].value + tableEnd;
+  private tableHeader(title: string): string {
+    return `=== ${title} ===\n` +
+      '{| class="wikitable" style="background-color:#ffffff"\n' +
+      '! style="background-color:#FFE4E1" | Item\n' +
+      '! style="background-color:#FFE4E1" | Description\n' +
+      '! style="background-color:#FFE4E1" | Action\n|-\n';
   }
 
-  private questionsHeader() {
-    return  '=== Questions ===\n'
-  }
+  private generateBoardColumns(columns: number, questionColumn: number): void {
+    let posts = [];
+    this.boardColumns = [];
 
-  private questionsList() {
-    const column = this.createBoardColumns();
-    const header = this.questionsHeader();
-    const tableEnd = '|-\n|}';
+    for (let i = 0; i < columns; i++) {
+      this.boardColumns.push({count: 0, value: ''});
+    }
 
-    return header + column[2].value;
-  }
-
-  private createBoardColumns() {
-    const mdColumns: IMDColumns[] = [
-      {
-        count: 0,
-        value: ''
-      },
-      {
-        count: 0,
-        value: ''
-      },
-      {
-        count: 0,
-        value: ''
+    for (let key in this.boardService.currentBoard.posts) {
+      if (this.boardService.currentBoard.posts.hasOwnProperty(key)) {
+        posts.push(this.boardService.currentBoard.posts[key]);
       }
-    ];
+    }
 
-    const posts = this.boardService.currentBoard.posts;
-      for ( const key in posts) {
-        if (key) {
-          const post = posts[key];
-          const author = post.author;
-          const col = post.col;
-          const value = post.val;
-          mdColumns[col].count += 1;
+    posts.map(post => {
+      this.boardColumns[post.col].count++;
 
-          if (col !== 2) {
-            mdColumns[col].value +=
-            '| ' + mdColumns[col].count + '\n' +
-            '| ' + value + ' (' + author + ')' + '\n' +
-            '|\n' +
-            '|-\n';
-          } else {
-            mdColumns[col].value +=
-            '\n' +
-            '- ' + value + ' (' + author + ')' + '\n';
-          }
-        }
+      if (post.col === questionColumn - 1) {
+        return this.boardColumns[post.col]
+          .value += `\n- ${post.val} (${post.author})\n`;
       }
 
-      return mdColumns;
+      return this.boardColumns[post.col]
+        .value += `| ${this.boardColumns[post.col].count}\n| ${post.val} (${post.author})\n|\n|-\n`;
+    });
   }
 }

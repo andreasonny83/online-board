@@ -30,3 +30,30 @@ interface IMailSender {
   text?: string;
   html?: string;
 }
+
+interface IBoardObj {
+  readonly name: string;
+  readonly cols: IBoradCol[];
+
+  members: { [key: string]: boolean };
+  invites?: { [key: string]: IBoardInvite } | null;
+  posts?: { [key: string]: IBoardPost } | null;
+}
+
+interface IBoradCol {
+  color: string;
+  icon: string;
+  pos: number;
+  title: string;
+}
+
+interface IBoardInvite {
+  email: string
+}
+
+interface IBoardPost {
+  author: string;
+  authorUID: string;
+  col: number;
+  val: string;
+}

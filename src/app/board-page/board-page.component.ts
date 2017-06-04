@@ -7,13 +7,6 @@ import { FirebaseService, FirebaseObjectObservable } from '../../firebase';
 import { Subscription } from 'rxjs/Subscription';
 import * as firebase from 'firebase/app';
 
-interface IBoardObj {
-  columns: any[];
-  invites: any[];
-  name: string;
-  posts?: any[];
-}
-
 @Component({
   selector: 'app-board-page',
   templateUrl: './board-page.component.html',
@@ -42,7 +35,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     this.cardElevations = {};
   }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.routerSubscriber$ = this.route.params
       .subscribe((res: {id: string}) => {
         this.boardService.currentBoard.uid = res.id;

@@ -7,19 +7,11 @@ import { FirebaseService, FirebaseObjectObservable } from '../../../firebase';
 import { EmailsGenerator } from '../../../email-templates';
 import { BoardService, IBoardService } from '../../services/board.service';
 
-interface IBoardObj {
-  columns: any[];
-  invites: any[];
-  name: string;
-}
-
 @Component({
   selector: 'app-invite-colaborators',
   templateUrl: './invite-colaborators.component.html',
   styleUrls: ['./invite-colaborators.component.css']
 })
-
-
 export class InviteColaboratorsComponent implements OnInit {
   collaboratorsForm: FormGroup;
   sendingInvite: boolean;

@@ -17,12 +17,14 @@ export class MainToolbarComponent implements OnInit {
   @Input() public version: boolean;
   @Input() public title: boolean;
 
-  public back = false;
+  public back: boolean;
 
   constructor(
     private authService: AuthService,
     private route: Router,
   ) {
+    this.back = false;
+
     route.events.subscribe((url: any) => {
       const page: string = url.urlAfterRedirects;
 

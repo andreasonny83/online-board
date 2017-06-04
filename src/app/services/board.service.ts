@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 export interface IBoardService {
   name: string;
   uid: string;
-  posts?: any[];
+  posts?: { [key: string]: IBoardPost } | null;
 }
 
 @Injectable()
