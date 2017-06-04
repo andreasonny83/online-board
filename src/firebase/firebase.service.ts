@@ -254,9 +254,13 @@ export class FirebaseService {
   }
 
   private addCollaborator(email: string, boardID: string, boardName: string): Observable<any> {
+    const userEmail = {};
+    const emailStr = email.replace(/\./g, '%2E');
+    userEmail[emailStr] = true;
+
     return new Observable(observer => {
-      this.getBoard(`${boardID}/invites`)
-        .push({'email': email})
+      this.getBoard(`${boardID}`)
+        .update('invites', userEmail)
         .then(() => {
           this.db
             .list('/invites')
@@ -268,7 +272,7 @@ export class FirebaseService {
             .then(() => observer.complete())
             .catch(() => observer.error());
         })
-        .catch(() => observer.error());
+        .catch((err) => observer.error());
       });
   }
 }

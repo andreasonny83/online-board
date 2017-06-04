@@ -1,0 +1,40 @@
+{
+  "rules": {
+
+    "invites": {
+    	".indexOn": ["email"],
+      ".read": "auth !== null",
+      ".write": "auth !== null"
+    },
+
+    "users": {
+      ".read": "auth !== null",
+      "$uid": {
+      	".write": "$uid === auth.uid",
+        "boards": {
+          ".validate": "auth.email_verified === true"
+        }
+      }
+    },
+
+    "boards": {
+      ".read": "auth != null && auth.email_verified === true",
+    	"$board": {
+       	".write": "auth != null && auth.email_verified === true && (!data.exists() || !data.child('members').exists() || (data.child('members').val().length === 1 && data.child('members').hasChild(auth.uid)))",
+       	"posts": {
+          ".write": "data.parent().child('members').hasChild(auth.uid)",
+          "val": {
+            ".write": "data.parent().child('authorUID').val() === auth.uid"
+          }
+        },
+        "members": {
+          ".write": "root.child('users').child(auth.uid).child('boards').child($board).exists() || data.parent().child('invites').hasChild(root.child('users').child(auth.uid).child('email').val().replace('.', '%2E'))"
+        },
+        "invites": {
+          ".write": "data.parent().child('members').hasChild(auth.uid)"
+        }
+      }
+    }
+
+  }
+}
