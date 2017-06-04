@@ -87,14 +87,14 @@ export class HeaderMenuComponent implements OnInit {
   }
 
   private generateBoardColumns(columns: number, questionColumn: number): void {
-    let posts = [];
+    const posts = [];
     this.boardColumns = [];
 
     for (let i = 0; i < columns; i++) {
       this.boardColumns.push({count: 0, value: ''});
     }
 
-    for (let key in this.boardService.currentBoard.posts) {
+    for (const key in this.boardService.currentBoard.posts) {
       if (this.boardService.currentBoard.posts.hasOwnProperty(key)) {
         posts.push(this.boardService.currentBoard.posts[key]);
       }
