@@ -21,6 +21,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
   public pageLoading: boolean;
   public editEl: string;
   public dragging: boolean;
+  public isDraggable: boolean;
 
   private draggingEl: string;
   private routerSubscriber$: Subscription;
@@ -32,6 +33,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     private snackBar: MdSnackBar,
   ) {
     this.pageLoading = true;
+    this.isDraggable = true;
     this.cardElevations = {};
   }
 
@@ -119,6 +121,24 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     this.dragging = false;
     this.draggingEl = null;
     event.preventDefault();
+  }
+
+  public deletePost(post: any): void {
+    let undo;
+    const snackBarRef = this.snackBar.open('Deleting post...', 'Undo', { duration: 5000 });
+
+    snackBarRef.afterDismissed().subscribe(() => {
+      if (undo) {
+        return;
+      }
+
+      this.boardObj.$ref.ref
+        .child(`posts/${post.key}`)
+        .remove()
+        .catch(() => this.snackBar.open('You cannot bin this post. Make sure ou are the author.', null, { duration: 6000 }))
+    });
+
+    snackBarRef.onAction().subscribe(() => undo = true);
   }
 
   public ngOnDestroy(): void {

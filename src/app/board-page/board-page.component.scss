@@ -53,47 +53,51 @@
   font-size: 28px;
 }
 
-.pinned-note .mat-card-footer .note-author {
-  padding-right: 24px;
-  text-align: right;
-  text-transform: capitalize;
-  font-style: italic;
-  font-size: 18px;
-  opacity: 0.6;
-  transition: opacity .2s ease-in-out;
-}
-
 .pinned-note {
   cursor: move;
   cursor: grab;
 }
 
 .pinned-note:active {
+}
+
+.pinned-note.dragging {
   opacity: 0.8;
   border: 2px dashed rgba(0, 0, 0, 0.5);
   cursor: grabbing;
 }
 
-.pinned-note.dragging {
+.pinned-note .mat-card-content {
+  margin-bottom: 0;
 }
 
-.pinned-note .mat-card-footer .note-author:hover {
-  opacity: 1;
-  animation: all;
-  font-weight: bold;
-}
-.pinned-note .edit-icon {
+.pinned-note .mat-card-actions {
+  cursor: default;
+  padding-top: 0;
   opacity: 0;
-  height: 40px;
-  width: 40px;
-  cursor: pointer;
-  position: absolute;
-  right: 3px;
-  top: 3px;
+  transition: opacity .25s ease-in-out;
 }
 
-.pinned-note:hover .edit-icon {
-  transition: opacity 0.25s ease-in-out;
+.pinned-note:hover .mat-card-actions {
+  opacity: 1;
+}
+
+.pinned-note .mat-card-actions .material-icons {
+  font-family: 'Material Icons';
+  font-size: 24px;
+  opacity: 0.6;
+}
+
+.pinned-note .mat-card-actions .material-icons:hover {
+  opacity: 0.85;
+}
+
+.pinned-note .note-author {
+  display: block;
+  text-align: right;
+  text-transform: capitalize;
+  font-style: italic;
+  font-size: 16px;
   opacity: 0.6;
 }
 

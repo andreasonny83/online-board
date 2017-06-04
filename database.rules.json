@@ -22,9 +22,16 @@
     	"$board": {
        	".write": "auth != null && auth.email_verified === true && (!data.exists() || !data.child('members').exists() || (data.child('members').val().length === 1 && data.child('members').hasChild(auth.uid)))",
        	"posts": {
-          ".write": "data.parent().child('members').hasChild(auth.uid)",
-          "val": {
-            ".write": "data.parent().child('authorUID').val() === auth.uid"
+          "$post": {
+          	".write": "!data.exists() || data.child('authorUID').val() === auth.uid",
+
+            "val": {
+              ".write": "data.parent().parent().parent().child('members').hasChild(auth.uid)"
+            },
+
+            "col": {
+              ".write": "data.parent().parent().parent().child('members').hasChild(auth.uid)"
+            }
           }
         },
         "members": {
