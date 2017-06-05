@@ -163,8 +163,8 @@ export class FirebaseService {
       name: boardName,
       members: {},
       cols: [
-        {title: 'Goods', icon: 'sentiment_very_satisfied', color: 'lightgreen', pos: 0 },
-        {title: 'Bads', icon: 'mood_bad', color: 'lightpink', pos: 1 },
+        {title: 'Continue doing', icon: 'sentiment_very_satisfied', color: 'lightgreen', pos: 0 },
+        {title: 'Start doing', icon: 'mood_bad', color: 'lightpink', pos: 1 },
         {title: 'Questions', icon: 'sentiment_neutral', color: 'lightblue', pos: 2 },
       ]
     };

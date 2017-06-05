@@ -51,8 +51,8 @@ export class HeaderMenuComponent implements OnInit {
 
     this.generateBoardColumns(3, 3);
 
-    const createdMd = this.generateTable('Goods', 0) +
-                      this.generateTable('Bads', 1) +
+    const createdMd = this.generateTable('Continue doing', 0) +
+                      this.generateTable('Start doing', 1) +
                       this.generateList('Questions', 2);
     const blob = new Blob([createdMd], {type: 'text/markdown'});
     const url = window.URL.createObjectURL(blob);
