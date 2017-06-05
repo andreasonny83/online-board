@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
-import { AngularFireModule } from 'angularfire2';
+import { NgModule, Inject, InjectionToken } from '@angular/core';
+import { AngularFireModule, FirebaseAppConfig } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { FirebaseService } from './firebase.service';
+import { FirebaseService, EMAIL_API_URL } from './firebase.service';
 
 import {
   AngularFireDatabase,
@@ -10,7 +10,6 @@ import {
   FirebaseObjectObservable,
 } from 'angularfire2/database';
 
-// Must export the config
 const firebaseConfig = {
   apiKey: 'AIzaSyDFLkSi_sP-TYSSrb9OPbXYyLI681VcTXE',
   authDomain: 'online-board.firebaseapp.com',
@@ -35,4 +34,5 @@ export {
   AngularFireDatabase,
   FirebaseListObservable,
   FirebaseObjectObservable,
+  EMAIL_API_URL,
 };

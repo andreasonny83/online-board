@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppRoutingModule } from './app-routing.module';
-import { FirebaseModule } from '../firebase';
+import { FirebaseModule, EMAIL_API_URL } from '../firebase';
 import { CookieLawModule } from 'angular2-cookie-law';
 import { HeaderModule } from './header';
 import {
@@ -35,8 +35,17 @@ import { BoardsListComponent } from './boards-list/boards-list.component';
 
 import { AuthGuard } from './auth-guard.service';
 import { AuthService } from './auth.service';
+import { environment } from '../environments/environment';
 
 import { Keyobject, FilterColumn } from './pipes';
+
+// Must export the config
+const firebaseConfig = {
+  apiKey: 'AIzaSyDFLkSi_sP-TYSSrb9OPbXYyLI681VcTXE',
+  authDomain: 'online-board.firebaseapp.com',
+  databaseURL: 'https://online-board.firebaseio.com',
+  storageBucket: 'online-board.appspot.com',
+};
 
 @NgModule({
   declarations: [
@@ -82,6 +91,7 @@ import { Keyobject, FilterColumn } from './pipes';
     AuthGuard,
     AuthService,
     BoardService,
+    { provide: EMAIL_API_URL, useValue: environment.EMAIL_API_URL },
   ],
   bootstrap: [ AppComponent ]
 })
