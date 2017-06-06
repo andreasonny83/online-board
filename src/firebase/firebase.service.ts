@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, InjectionToken } from '@angular/core';
 
 import {
   AngularFireDatabase,
@@ -23,6 +23,8 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
+export const EMAIL_API_URL = new InjectionToken<string>('email-api-url');
+
 @Injectable()
 export class FirebaseService {
   public user: Observable<firebase.User>;
@@ -36,9 +38,11 @@ export class FirebaseService {
   public uid: string;
   public userInfo: IUserInfo;
 
+  private API_URL: InjectionToken<string>;
   private isRegistering: boolean;
 
   constructor(
+    @Inject(EMAIL_API_URL) private emailAPIUrl: string,
     private afAuth: AngularFireAuth,
     private db: AngularFireDatabase,
     private snackBar: MdSnackBar,
@@ -235,7 +239,7 @@ export class FirebaseService {
 
   private sendEmail(body: any, options: RequestOptions, observer: Observer<any>) {
     return this.http
-      .post(`https://node-mailsender.herokuapp.com/send`, JSON.stringify(body), options)
+      .post(this.emailAPIUrl, JSON.stringify(body), options)
       .map(res => res.json())
       .subscribe(
         res => {
