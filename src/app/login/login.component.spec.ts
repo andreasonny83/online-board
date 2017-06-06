@@ -13,7 +13,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthService } from '../auth.service';
 import { LoginComponent } from './login.component';
-import { FirebaseService } from '../../firebase';
+import { FirebaseService, EMAIL_API_URL } from '../../firebase';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
   MdInputModule,
@@ -21,6 +21,7 @@ import {
   MdDialogModule,
   MdSnackBar,
 } from '@angular/material';
+import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs/Observable';
 import * as firebase from 'firebase/app';
 
@@ -77,6 +78,7 @@ describe('LoginComponent', () => {
       providers: [
         { provide: AuthService, useClass: AuthServiceStub },
         { provide: FirebaseService, useClass: FirebaseServiceStub },
+        { provide: EMAIL_API_URL, useValue: environment.EMAIL_API_URL },
       ],
       declarations: [
         LoginComponent,
