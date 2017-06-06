@@ -1,7 +1,7 @@
 {
   "name": "online-board",
   "description": "Create and share interactive boards online",
-  "version": "1.13.1",
+  "version": "1.13.2",
   "license": "MIT",
   "homepage": "https://online-board.firebaseapp.com",
   "author": "andreasonny <andreasonny83@gmail.com>",
