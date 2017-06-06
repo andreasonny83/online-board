@@ -14,6 +14,34 @@
         <md-icon>{{ column.icon }}</md-icon>
       </div>
 
+      <md-card [style.background]="column.color"
+               (mouseenter)="elevateCard(columnID)"
+               (mouseleave)="removeElevation(columnID)"
+               class="note unpinned-note mat-elevation-z10"
+               [class.mat-elevation-z18]="isElevated(columnID)">
+        <form (ngSubmit)="pushPost(newItem, columnID)"
+              class="form">
+
+          <md-input-container class="full-width">
+            <textarea mdInput
+                      #newItem
+                      class="new-item"
+                      placeholder="Write your feedback"
+                      mdTextareaAutosize></textarea>
+          </md-input-container>
+
+          <button md-button
+                  type="submit"
+                  name="new-item"
+                  class="pin-me-btn">
+            Pin me
+            <img class="pin-icon"
+                 src="../../assets/images/pushpin.png"
+                 alt="Pin me">
+          </button>
+        </form>
+      </md-card>
+
       <md-card *ngFor="let post of (boardObj | async).posts | keyobject | filterColumn: columnID;
                        let i = index;"
                [style.background]="column.color"
@@ -74,35 +102,6 @@
                          [columnID]="columnID"
                          (onDropped)="onDrop($event)">
       </app-dropping-card>
-
-      <md-card [style.background]="column.color"
-               (mouseenter)="elevateCard(columnID)"
-               (mouseleave)="removeElevation(columnID)"
-               class="note unpinned-note mat-elevation-z10"
-               [class.mat-elevation-z18]="isElevated(columnID)">
-        <form (ngSubmit)="pushPost(newItem, columnID)"
-              class="form">
-
-          <md-input-container class="full-width">
-            <textarea mdInput
-                      #newItem
-                      class="new-item"
-                      placeholder="Write your feedback"
-                      mdTextareaAutosize></textarea>
-          </md-input-container>
-
-          <button md-button
-                  type="submit"
-                  name="new-item"
-                  class="pin-me-btn">
-            Pin me
-            <img class="pin-icon"
-                 src="../../assets/images/pushpin.png"
-                 alt="Pin me">
-          </button>
-        </form>
-      </md-card>
-
     </div>
   </div>
 </div>
