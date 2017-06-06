@@ -65,7 +65,7 @@ export class FirebaseService {
             this.userList = this.db.list(`/users/${this.uid}`);
             this.userBoards = this.db.list(`/users/${this.uid}/boards`);
             this.boardsList = this.db.list(`/boards`);
-            this.userInvites = this.db.list('/invites', {query: { orderByChild: 'email', equalTo: res.email }} );
+            this.userInvites = this.db.list('/invites', {query: { orderByChild: 'email', equalTo: res.email.toLowerCase() }} );
 
             this.updateUserInfo();
             this.checkForInvites();
@@ -145,7 +145,7 @@ export class FirebaseService {
     self.db
       .list('/users')
       .update(uid, {
-        email: email,
+        email: email.toLowerCase(),
         name: displayName,
         uid: uid,
       })
@@ -207,7 +207,7 @@ export class FirebaseService {
     }
 
     return new Observable(observer => {
-      this.addCollaborator(collaboratorEmail, board.uid, board.name)
+      this.addCollaborator(collaboratorEmail.toLowerCase(), board.uid, board.name)
         .toPromise()
         .then(() => this.sendEmail(body, options, observer))
         .catch(err => observer.error(`Ops! It looks like you don't have permissions to add collaboartors to this board.`));
