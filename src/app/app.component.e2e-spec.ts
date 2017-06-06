@@ -1,6 +1,6 @@
 import { browser, element, by } from 'protractor';
 import { Utils } from '../app.utils.e2e';
-import * as pkg from '../../package.json';
+const pkg = require('../../package.json');
 
 describe('Online Board App', () => {
   let utils: Utils;

@@ -1,4 +1,4 @@
-import * as pkg from '../../package.json';
+const pkg = require('../../package.json');
 
 export const environment = {
   production: false,
