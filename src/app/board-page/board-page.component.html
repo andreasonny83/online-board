@@ -19,7 +19,7 @@
                (mouseleave)="removeElevation(columnID)"
                class="note unpinned-note mat-elevation-z10"
                [class.mat-elevation-z18]="isElevated(columnID)">
-        <form (ngSubmit)="pushPost(newItem, columnID)"
+        <form (ngSubmit)="pushPost(columnID)"
               class="form">
 
           <md-input-container class="full-width">
@@ -27,7 +27,9 @@
                       #newItem
                       class="new-item"
                       placeholder="Write your feedback"
-                      mdTextareaAutosize></textarea>
+                      mdTextareaAutosize
+                      [(ngModel)]="newItems[columnID]"
+                      name="item"></textarea>
           </md-input-container>
 
           <button md-button
@@ -60,7 +62,7 @@
               <textarea mdInput
                         #postRef
                         class="new-item"
-                        [ngModel]="post.value.val"
+                        [(ngModel)]="post.value.val"
                         mdTextareaAutosize></textarea>
             </md-input-container>
 

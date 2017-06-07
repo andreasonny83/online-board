@@ -22,6 +22,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
   public editEl: string;
   public dragging: boolean;
   public isDraggable: boolean;
+  public newItems: string[] = ['', '', ''];
 
   private draggingEl: string;
   private routerSubscriber$: Subscription;
@@ -64,14 +65,14 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     this.cardElevations[i] = false;
   }
 
-  public pushPost(itemVal: any, column: number): void {
+  public pushPost(column: number): void {
     const authorName = this.fireBase.userInfo.name;
     const authorUID = this.fireBase.userInfo.uid;
-
+    
     this.boardObj.$ref.ref
       .child('posts')
       .push({
-        val: itemVal.value,
+        val: this.newItems[column],
         author: authorName,
         authorUID: authorUID,
         col: column,
@@ -82,6 +83,8 @@ export class BoardPageComponent implements OnInit, OnDestroy {
           and you are a collaborator on this board.`,
           null, { duration: 6000 });
       });
+
+      this.newItems[column] = '';
   }
 
   public updatePost(post: any, postRef): void {
