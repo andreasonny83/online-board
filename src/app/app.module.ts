@@ -19,6 +19,7 @@ import {
   MdIconModule,
   MdDialogModule,
   MdProgressSpinnerModule,
+  MdRadioModule,
 } from '@angular/material';
 
 import { AppComponent } from './app.component';
@@ -28,6 +29,8 @@ import { DialogResetEmailComponent } from './login/dialog-reset-email';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { BoardPageComponent } from './board-page/board-page.component';
 import { DroppingCardComponent } from './dropping-card/dropping-card.component';
+import { FloatingStickyNoteComponent } from './floating-sticky-note/floating-sticky-note.component';
+import { ClickOutsideDirective } from './click-outside.directive';
 
 import { FooterComponent } from './footer/footer.component';
 import { BoardService } from './services/board.service';
@@ -58,8 +61,12 @@ const firebaseConfig = {
     DroppingCardComponent,
     FooterComponent,
     DialogResetEmailComponent,
+    FloatingStickyNoteComponent,
+    // Pipes
     Keyobject,
     FilterColumn,
+    // Directives
+    ClickOutsideDirective,
   ],
   imports: [
     BrowserModule,
@@ -80,6 +87,7 @@ const firebaseConfig = {
     MdIconModule,
     MdProgressSpinnerModule,
     MdDialogModule,
+    MdRadioModule,
     // App Modules
     HeaderModule,
     AppRoutingModule,

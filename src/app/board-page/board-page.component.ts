@@ -53,40 +53,6 @@ export class BoardPageComponent implements OnInit, OnDestroy {
       });
   }
 
-  public elevateCard(i: number): void {
-    this.cardElevations[i] = true;
-  }
-
-  public isElevated(i: number): boolean {
-    return this.cardElevations[i];
-  }
-
-  public removeElevation(i: number): void {
-    this.cardElevations[i] = false;
-  }
-
-  public pushPost(column: number): void {
-    const authorName = this.fireBase.userInfo.name;
-    const authorUID = this.fireBase.userInfo.uid;
-    
-    this.boardObj.$ref.ref
-      .child('posts')
-      .push({
-        val: this.newItems[column],
-        author: authorName,
-        authorUID: authorUID,
-        col: column,
-      })
-      .catch(err => {
-        this.snackBar.open(`
-          Please, make sure the feedback is not empty
-          and you are a collaborator on this board.`,
-          null, { duration: 6000 });
-      });
-
-      this.newItems[column] = '';
-  }
-
   public updatePost(post: any, postRef): void {
     this.boardObj.$ref.ref
       .child(`posts/${post.key}`)
