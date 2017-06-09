@@ -57,12 +57,13 @@
             {{post.value.val}}
           </span>
 
-          <div *ngIf="editEl === columnID + '-' + i">
+          <div *ngIf="isCurrentlyEdited(columnID, i)">
             <md-input-container class="full-width">
               <textarea mdInput
                         #postRef
                         class="new-item"
-                        [(ngModel)]="post.value.val"
+                        [ngModel]="getBoardModel(post, columnID, i)"
+                        (ngModelChange)="setBoardNewValue($event)"
                         mdTextareaAutosize></textarea>
             </md-input-container>
 
@@ -70,7 +71,7 @@
                     type="button"
                     name="update-post"
                     class="pin-me-btn"
-                    (click)="updatePost(post, postRef)">
+                    (click)="updatePost(post)">
               Save
             </button>
 
@@ -89,7 +90,7 @@
 
         <md-card-actions (mousedown)="isDraggable = false">
           <button md-icon-button
-                  (click)="editEl = columnID + '-' + i">
+                  (click)="initEditing(columnID, i, post.value.val)">
             <md-icon class="material-icons">edit</md-icon>
           </button>
 

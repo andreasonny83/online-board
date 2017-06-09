@@ -13,6 +13,7 @@ import * as firebase from 'firebase/app';
   styleUrls: ['./board-page.component.scss'],
   animations: [slideToLeft],
 })
+
 export class BoardPageComponent implements OnInit, OnDestroy {
   @HostBinding('@routerTransition') routerTransition = '';
   public boardObj: FirebaseObjectObservable<any>;
@@ -20,6 +21,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
   public cardElevations: any;
   public pageLoading: boolean;
   public editEl: string;
+  public editElTempModel: string;
   public dragging: boolean;
   public isDraggable: boolean;
   public newItems: string[] = ['', '', ''];
@@ -68,7 +70,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
   public pushPost(column: number): void {
     const authorName = this.fireBase.userInfo.name;
     const authorUID = this.fireBase.userInfo.uid;
-    
+
     this.boardObj.$ref.ref
       .child('posts')
       .push({
@@ -86,11 +88,16 @@ export class BoardPageComponent implements OnInit, OnDestroy {
 
       this.newItems[column] = '';
   }
+  public initEditing(columnID: string, index: number, value: string): void {
+    this.editEl = columnID + '-' + index;
+    this.editElTempModel = value;
+  }
 
   public updatePost(post: any, postRef): void {
     this.boardObj.$ref.ref
       .child(`posts/${post.key}`)
-      .update({val: postRef.value})
+      // .update({val: postRef.value})
+      .update({val: this.editElTempModel})
       .catch(err => {
         this.snackBar.open(
           'Ops! looks like you cannot edit this post at the moment.',
@@ -98,12 +105,28 @@ export class BoardPageComponent implements OnInit, OnDestroy {
           { duration: 6000 });
       });
 
+    console.log('this.editElTempModel', this.editElTempModel);
     this.editEl = null;
   }
 
   public discardChanges(post: any): void {
     post.value.val = post.value.val;
     this.editEl = null;
+  }
+
+  public isCurrentlyEdited(columnID, i): boolean {
+    return this.editEl === columnID + '-' + i;
+  }
+
+  public getBoardModel(post, columnID, i) {
+    if (this.isCurrentlyEdited(columnID, i)) {
+      return this.editElTempModel;
+    }
+    return post.value.val;
+  }
+
+  public setBoardNewValue(newValue) {
+    this.editElTempModel = newValue;
   }
 
   public onDragStart(event: DragEvent, postKey: any, columnID: number, postEl: number): void {
