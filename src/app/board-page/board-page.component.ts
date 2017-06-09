@@ -125,7 +125,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
     return post.value.val;
   }
 
-  public setBoardNewValue(newValue) {
+  public setBoardModel(newValue) {
     this.editElTempModel = newValue;
   }
 
