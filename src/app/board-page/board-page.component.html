@@ -7,9 +7,7 @@
 
   <h3 class="board-name">{{ (boardObj | async)?.name }}</h3>
 
-  <app-floating-sticky-note [activeSticky]="floatingStickyNoteActive"
-                            (clickOutside)="floatingStickyNoteActive = false"
-                            (click)="floatingStickyNoteActive = true"></app-floating-sticky-note>
+  <app-floating-sticky-note></app-floating-sticky-note>
 
   <div class="item-list-container">
     <div class="item-list"

@@ -5,6 +5,11 @@ const pkg = require('../../package.json');
 describe('Online Board App', () => {
   let utils: Utils;
 
+  beforeAll(() => {
+    // force a user log out
+    browser.driver.manage().deleteAllCookies();
+  });
+
   beforeEach(() => {
     utils = new Utils();
 
@@ -18,7 +23,7 @@ describe('Online Board App', () => {
   });
 
   it('should display a cookie policy notification', () => {
-    expect(element(by.css('cookie-law[name="onlineBaordCookieLaw"] .cookie-law-wrapper')).isDisplayed())
+    expect(element(by.css('cookie-law .cookie-law-wrapper')).isDisplayed())
       .toBe(true);
   });
 });

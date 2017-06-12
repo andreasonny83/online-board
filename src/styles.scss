@@ -30,6 +30,10 @@ md-card {
   margin: 20px auto;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 .block {
   max-width: 800px;
 }

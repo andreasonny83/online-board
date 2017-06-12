@@ -1,5 +1,21 @@
-[hidden] {
-  display: none !important;
+.floating-sticky-note-overlay-container {
+  position: sticky;
+  display: inline;
+  transition: background .15s ease-in-out;
+  z-index: 99;
+}
+
+.floating-sticky-note-overlay-container.active {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+  background: rgba(0,0,0,0.5);
+  pointer-events: all;
 }
 
 .placeholder {
@@ -22,7 +38,7 @@
   z-index: 9;
 }
 
-.unpinned-note.active {
+.active .unpinned-note {
   background: hsl(58, 80%, 57%);
   padding: 15px 24px 0;
 }
@@ -47,6 +63,10 @@
 
 .unpinned-note .pin-me-btn .pin-icon {
   height: 30px;
+}
+
+.mat-radio-button {
+  padding: 0 10px;
 }
 
 * /deep/ .mat-radio-ripple .mat-ripple-element {
