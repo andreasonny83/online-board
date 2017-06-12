@@ -49,10 +49,6 @@
   resize: none;
 }
 
-.unpinned-note .new-item {
-  font-size: 28px;
-}
-
 .pinned-note {
   cursor: move;
   cursor: grab;
@@ -99,13 +95,4 @@
   font-style: italic;
   font-size: 16px;
   opacity: 0.6;
-}
-
-.unpinned-note .pin-me-btn {
-  background-color: rgba(0, 0, 0, 0.08);
-  font-size: 30px;
-}
-
-.unpinned-note .pin-me-btn .pin-icon {
-  height: 30px;
 }

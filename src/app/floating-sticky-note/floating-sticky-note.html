@@ -1,0 +1,56 @@
+<div class="floating-sticky-note-overlay-container"
+     [class.active]="active">
+
+  <md-card class="note unpinned-note mat-elevation-z10"
+           (click)="active = true"
+           (clickOutside)="active = false">
+    <form class="form"
+          novalidate
+          [formGroup]="stickyForm"
+          (ngSubmit)="pushPost()">
+
+      <md-card-content (click)="focus()">
+        <div class="placeholder"
+             [hidden]="active">
+          <span>
+            Write your feedback
+          </span>
+        </div>
+
+        <md-input-container class="full-width"
+                            [hidden]="!active">
+          <textarea mdInput
+                    mdTextareaAutosize
+                    #textArea
+                    class="new-item"
+                    formControlName="newPost"
+                    placeholder="Write your feedback"
+                    name="item"></textarea>
+        </md-input-container>
+
+        <md-radio-group class="radio-group"
+                        [hidden]="!active"
+                        formControlName="chose">
+          <md-radio-button *ngFor="let column of (boardObj | async)?.cols"
+                           [value]="column">{{ column.title }}</md-radio-button>
+        </md-radio-group>
+
+      </md-card-content>
+
+      <md-card-actions align="end" [hidden]="!active">
+
+        <button md-button
+                type="submit"
+                name="new-item"
+                [disabled]="!stickyForm.valid"
+                class="pin-me-btn">
+          Pin me
+          <img class="pin-icon"
+               src="../../assets/images/pushpin.png"
+               alt="Pin me">
+        </button>
+      </md-card-actions>
+    </form>
+  </md-card>
+
+</div>

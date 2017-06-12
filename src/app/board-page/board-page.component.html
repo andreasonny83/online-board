@@ -4,7 +4,10 @@
      *ngIf="!pageLoading"
      (mouseup)="isDraggable = true"
      (dragend)="onDrop($event)">
+
   <h3 class="board-name">{{ (boardObj | async)?.name }}</h3>
+
+  <app-floating-sticky-note></app-floating-sticky-note>
 
   <div class="item-list-container">
     <div class="item-list"
@@ -13,36 +16,6 @@
         <span>{{ column.title }}</span>
         <md-icon>{{ column.icon }}</md-icon>
       </div>
-
-      <md-card [style.background]="column.color"
-               (mouseenter)="elevateCard(columnID)"
-               (mouseleave)="removeElevation(columnID)"
-               class="note unpinned-note mat-elevation-z10"
-               [class.mat-elevation-z18]="isElevated(columnID)">
-        <form (ngSubmit)="pushPost(columnID)"
-              class="form">
-
-          <md-input-container class="full-width">
-            <textarea mdInput
-                      #newItem
-                      class="new-item"
-                      placeholder="Write your feedback"
-                      mdTextareaAutosize
-                      [(ngModel)]="newItems[columnID]"
-                      name="item"></textarea>
-          </md-input-container>
-
-          <button md-button
-                  type="submit"
-                  name="new-item"
-                  class="pin-me-btn">
-            Pin me
-            <img class="pin-icon"
-                 src="../../assets/images/pushpin.png"
-                 alt="Pin me">
-          </button>
-        </form>
-      </md-card>
 
       <md-card *ngFor="let post of (boardObj | async).posts | keyobject | filterColumn: columnID;
                        let i = index;"
