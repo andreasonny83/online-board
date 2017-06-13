@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, HostBinding, EventEmitter } from '@angular/core';
-import { FirebaseService, FirebaseObjectObservable } from '../../firebase';
-import { fadeInOut } from '../app.animations';
+import { FirebaseService, FirebaseObjectObservable } from '../../../firebase';
+import { fadeInOut } from '../../app.animations';
 
 @Component({
   selector: 'app-dropping-card',

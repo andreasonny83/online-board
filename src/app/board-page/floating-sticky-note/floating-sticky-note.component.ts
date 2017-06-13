@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FirebaseService, FirebaseObjectObservable } from '../../firebase';
-import { BoardService } from '../services/board.service';
+import { FirebaseService, FirebaseObjectObservable } from '../../../firebase';
+import { BoardService } from '../../services/board.service';
 import { MdSnackBar } from '@angular/material';
 
 @Component ({

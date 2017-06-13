@@ -1,7 +1,6 @@
 <md-spinner *ngIf="pageLoading" class="loading-spinner"></md-spinner>
 
 <div class="block-xxl"
-     *ngIf="!pageLoading"
      (mouseup)="isDraggable = true"
      (dragend)="onDrop($event)">
 

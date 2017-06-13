@@ -26,19 +26,23 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { DialogResetEmailComponent } from './login/dialog-reset-email';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { BoardPageComponent } from './board-page/board-page.component';
-import { DroppingCardComponent } from './dropping-card/dropping-card.component';
-import { FloatingStickyNoteComponent } from './floating-sticky-note/floating-sticky-note.component';
-import { ClickOutsideDirective } from './click-outside.directive';
-
+import {
+  DashboardComponent,
+  BoardsListComponent,
+} from './dashboard';
+import {
+  BoardPageComponent,
+  DroppingCardComponent,
+  FloatingStickyNoteComponent,
+} from './board-page';
 import { FooterComponent } from './footer/footer.component';
-import { BoardService } from './services/board.service';
-import { BoardsListComponent } from './boards-list/boards-list.component';
+
+import { ClickOutsideDirective } from './click-outside.directive';
 
 import { AuthGuard } from './auth-guard.service';
 import { AuthService } from './auth.service';
 import { environment } from '../environments/environment';
+import { BoardService } from './services/board.service';
 
 import { Keyobject, FilterColumn } from './pipes';
 

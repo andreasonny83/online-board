@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FirebaseService } from '../../firebase';
+import { FirebaseService } from '../../../firebase';
 import { MdSnackBar } from '@angular/material';
 
 import { Observable } from 'rxjs/Observable';
