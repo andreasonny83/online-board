@@ -12,13 +12,13 @@ const HtmlElementsPlugin = require('./config/html-elements-plugin');
 
 const { NoEmitOnErrorsPlugin } = require('webpack');
 const { GlobCopyWebpackPlugin } = require('@angular/cli/plugins/webpack');
-const { CommonsChunkPlugin } = require('webpack').optimize;
+const { CommonsChunkPlugin, UglifyJsPlugin } = require('webpack').optimize;
 const { AotPlugin } = require('@ngtools/webpack');
 
 const nodeModules = path.join(process.cwd(), 'node_modules');
 const genDirNodeModules = path.join(process.cwd(), 'src', '$$_gendir', 'node_modules');
 const entryPoints = ["inline","polyfills","sw-register","styles","vendor","main"];
-const minimizeCss = false;
+const minimizeCss = true;
 
 const METADATA = {
   title: "Online Board",
@@ -278,18 +278,6 @@ const config = {
       ]
     }),
 
-    new AotPlugin({
-      "mainPath": "main.ts",
-      "hostReplacementPaths": {
-        "environments/environment.ts": process.env.NODE_ENV === 'production'
-                                       ? "environments/environment.prod.ts"
-                                       : "environments/environment.ts"
-      },
-      "exclude": [],
-      "tsConfigPath": "src/tsconfig.app.json",
-      "skipCodeGeneration": true
-    }),
-
     new WebpackPwaManifest({
       "name": METADATA.title,
       "short_name": METADATA.title,
@@ -310,6 +298,29 @@ const config = {
           "destination": path.join("icons", "android")
         }
       ]
+    }),
+
+    new UglifyJsPlugin({
+      "mangle": {
+        "screw_ie8": true
+      },
+      "compress": {
+        "screw_ie8": true,
+        "warnings": false
+      },
+      "sourceMap": false
+    }),
+
+    new AotPlugin({
+      "mainPath": "main.ts",
+      "hostReplacementPaths": {
+        "environments/environment.ts": process.env.NODE_ENV === 'production'
+                                       ? "environments/environment.prod.ts"
+                                       : "environments/environment.ts"
+      },
+      "exclude": [],
+      "tsConfigPath": "src/tsconfig.app.json",
+      "skipCodeGeneration": true
     }),
 
   ],
