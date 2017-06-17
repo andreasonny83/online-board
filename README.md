@@ -21,6 +21,7 @@ $ npm install
 $ yarn upgrade
 ```
 
+
 ## Prerequisites
 
 The project has dependencies that require Node 6.9.0 or higher, together
